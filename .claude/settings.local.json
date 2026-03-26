@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:developer.sophos.com)",
+      "WebFetch(domain:docs.sophos.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:deepwiki.com)",
+      "WebFetch(domain:news.sophos.com)",
+      "WebFetch(domain:www.sophos.com)",
+      "WebFetch(domain:www.postman.com)",
+      "WebFetch(domain:images.contentstack.io)",
+      "WebFetch(domain:www.brandcolorcode.com)",
+      "WebFetch(domain:partnernews.sophos.com)",
+      "WebFetch(domain:logotyp.us)"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+name: CentralMobileApp
+options:
+  bundleIdPrefix: com.sophos
+  deploymentTarget:
+    iOS: "18.0"
+  defaultConfig: Debug
+
+settings:
+  MARKETING_VERSION: "1.0"
+  CURRENT_PROJECT_VERSION: "1"
+  SWIFT_VERSION: "5.10"
+
+targets:
+  CentralMobileApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: CentralMobileApp
+    info:
+      path: CentralMobileApp/Resources/Info.plist
+      properties:
+        CFBundleName: "Sophos Central"
+        CFBundleDisplayName: "Sophos Central"
+        CFBundleIdentifier: "com.sophos.central.mobile"
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        UILaunchStoryboardName: ""
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIRequiresFullScreen: false
+        NSFaceIDUsageDescription: "Sophos Central uses Face ID to confirm high-impact actions like isolating endpoints and running scans."
+        UIBackgroundModes:
+          - fetch
+          - remote-notification
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sophos.central.mobile
+      INFOPLIST_FILE: CentralMobileApp/Resources/Info.plist
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      TARGETED_DEVICE_FAMILY: "1"
+    dependencies:
+      []
+    scheme:
+      testTargets:
+        - CentralMobileAppTests

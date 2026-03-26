@@ -1,0 +1,168 @@
+import SwiftUI
+import SwiftData
+
+struct SettingsView: View {
+
+    @Environment(\.modelContext) private var modelContext
+    @State private var authViewModel = AuthViewModel()
+    @State private var showSignOutConfirm = false
+    @State private var showNotificationSettings = false
+
+    private let keychain = KeychainService.shared
+    private var tenantId:   String { keychain.read(.tenantId) ?? "—" }
+    private var dataRegion: String { keychain.read(.dataRegionURL) ?? "—" }
+
+    var body: some View {
+        ZStack {
+            SophosTheme.Colors.backgroundPrimary.ignoresSafeArea()
+
+            List {
+
+                // MARK: - Logo header
+                Section {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: SophosTheme.Spacing.sm) {
+                            SophosLogoView(height: 36, showWordmark: true)
+                            Text("Central Mobile")
+                                .font(SophosTheme.Typography.footnote())
+                                .foregroundColor(SophosTheme.Colors.textSecondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, SophosTheme.Spacing.md)
+                    .listRowBackground(Color.clear)
+                }
+
+                // MARK: - Notifications
+                Section {
+                    NavigationLink {
+                        NotificationSettingsView()
+                    } label: {
+                        SettingsRow(icon: "bell.badge", label: "Push Notifications", color: SophosTheme.Colors.statusCritical)
+                    }
+                } header: {
+                    Text("Alerts").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
+                // MARK: - Connection
+                Section {
+                    SettingsInfoRow(label: "Tenant ID",    value: String(tenantId.prefix(12)) + "...")
+                    SettingsInfoRow(label: "Data Region",  value: dataRegionShort)
+                    SettingsInfoRow(label: "Token Status", value: keychain.isTokenValid ? "Valid" : "Expired")
+                } header: {
+                    Text("Connection").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
+                // MARK: - Cache
+                Section {
+                    Button {
+                        clearCache()
+                    } label: {
+                        SettingsRow(icon: "trash.circle", label: "Clear Offline Cache", color: SophosTheme.Colors.statusWarning)
+                    }
+                } header: {
+                    Text("Data").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
+                // MARK: - Account
+                Section {
+                    Button {
+                        showSignOutConfirm = true
+                    } label: {
+                        SettingsRow(icon: "rectangle.portrait.and.arrow.right", label: "Sign Out", color: SophosTheme.Colors.statusCritical)
+                    }
+                } header: {
+                    Text("Account").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
+                // MARK: - About
+                Section {
+                    SettingsInfoRow(label: "Version",  value: appVersion)
+                    SettingsInfoRow(label: "iOS",      value: UIDevice.current.systemVersion)
+                } header: {
+                    Text("About").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+            }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
+            .background(SophosTheme.Colors.backgroundPrimary)
+        }
+        .confirmationDialog(
+            "Sign Out",
+            isPresented: $showSignOutConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Sign Out", role: .destructive) { authViewModel.signOut() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Your credentials will be removed from this device.")
+        }
+    }
+
+    // MARK: - Helpers
+
+    private var dataRegionShort: String {
+        let full = keychain.read(.dataRegionURL) ?? "—"
+        return full
+            .replacingOccurrences(of: "https://", with: "")
+            .replacingOccurrences(of: "api-", with: "")
+            .components(separatedBy: "/").first ?? full
+    }
+
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build   = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "\(version) (\(build))"
+    }
+
+    private func clearCache() {
+        do {
+            try modelContext.delete(model: CachedAlert.self)
+            try modelContext.delete(model: CachedEndpoint.self)
+            try modelContext.delete(model: CachedCase.self)
+            try modelContext.delete(model: CachedAccountHealth.self)
+        } catch {}
+    }
+}
+
+// MARK: - Settings row components
+
+struct SettingsRow: View {
+    let icon: String
+    let label: String
+    let color: Color
+
+    var body: some View {
+        HStack(spacing: SophosTheme.Spacing.sm) {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .frame(width: 24)
+            Text(label)
+                .font(SophosTheme.Typography.body())
+                .foregroundColor(SophosTheme.Colors.textPrimary)
+        }
+    }
+}
+
+struct SettingsInfoRow: View {
+    let label: String
+    let value: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(SophosTheme.Typography.body())
+                .foregroundColor(SophosTheme.Colors.textPrimary)
+            Spacer()
+            Text(value)
+                .font(SophosTheme.Typography.body())
+                .foregroundColor(SophosTheme.Colors.textSecondary)
+        }
+    }
+}
