@@ -37,7 +37,7 @@ actor SophosAPIService {
     func acknowledgeAlert(alertId: String) async throws {
         let url = "\(baseURL)/common/v1/alerts/actions"
         let body = ["alertIds": [alertId], "action": "acknowledge", "comment": "Acknowledged via Sophos Central Mobile"] as [String: Any]
-        try await post(url: url, body: body)
+        let _: EmptyResponse = try await post(url: url, body: body)
     }
 
     // MARK: - Endpoints

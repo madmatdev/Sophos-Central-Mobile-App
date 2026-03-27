@@ -291,3 +291,5 @@ struct SophosAPIError: Codable, Error {
     let requestId: String?
     let createdAt: String?
 }
+
+struct EmptyResponse: Decodable {}

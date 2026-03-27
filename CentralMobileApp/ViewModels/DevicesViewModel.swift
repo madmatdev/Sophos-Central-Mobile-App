@@ -34,6 +34,14 @@ final class DevicesViewModel {
         return list
     }
 
+    var healthyEndpointCount: Int {
+        endpoints.filter { $0.health?.overall.lowercased() == "good" }.count
+    }
+
+    var unhealthyEndpointCount: Int {
+        endpoints.filter { $0.health?.overall.lowercased() != "good" }.count
+    }
+
     // MARK: - Load
 
     func load() async {

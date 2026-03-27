@@ -34,87 +34,15 @@ struct AlertDetailView: View {
                         .padding(SophosTheme.Spacing.md)
                         .sophosCard()
 
-                        // Details
-                        VStack(spacing: 0) {
-                            if let category = alert.category {
-                                DetailRow(label: "Category", value: category)
-                                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
-                            }
-                            if let product = alert.product {
-                                DetailRow(label: "Product", value: product)
-                                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
-                            }
-                            if let date = alert.raisedDate {
-                                DetailRow(label: "Raised", value: date.formatted(date: .abbreviated, time: .shortened))
-                                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
-                            }
-                            if let person = alert.person?.name {
-                                DetailRow(label: "User", value: person)
-                                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
-                            }
-                            if let agentType = alert.managedAgent?.type {
-                                DetailRow(label: "Device Type", value: agentType.capitalized)
-                            }
-                        }
-                        .sophosCard()
-
-                        // Alert ID
-                        VStack(alignment: .leading, spacing: SophosTheme.Spacing.xs) {
-                            Text("Alert ID")
-                                .sophosSectionHeader()
-                            Text(alert.id)
-                                .font(SophosTheme.Typography.caption(.init(.monospaced)))
-                                .foregroundColor(SophosTheme.Colors.textSecondary)
-                                .textSelection(.enabled)
-                        }
-                        .padding(SophosTheme.Spacing.md)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .sophosCard()
-
-                        // Actions
-                        if let actions = alert.allowedActions, actions.contains("acknowledge") {
-                            VStack(spacing: SophosTheme.Spacing.sm) {
-                                if acknowledgeSuccess {
-                                    HStack {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(SophosTheme.Colors.statusHealthy)
-                                        Text("Alert acknowledged")
-                                            .font(SophosTheme.Typography.subheadline())
-                                            .foregroundColor(SophosTheme.Colors.statusHealthy)
-                                    }
-                                    .padding(SophosTheme.Spacing.sm)
-                                    .frame(maxWidth: .infinity)
-                                    .background(SophosTheme.Colors.statusHealthy.opacity(0.1))
-                                    .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
-                                } else {
-                                    Button {
-                                        Task { await acknowledge() }
-                                    } label: {
-                                        HStack {
-                                            if isAcknowledging {
-                                                ProgressView().tint(.white).scaleEffect(0.8)
-                                            } else {
-                                                Image(systemName: "checkmark.circle")
-                                            }
-                                            Text(isAcknowledging ? "Acknowledging..." : "Acknowledge Alert")
-                                        }
-                                        .font(SophosTheme.Typography.headline())
-                                        .foregroundColor(.white)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 48)
-                                        .background(SophosTheme.Colors.sophosBlue)
-                                        .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
-                                    }
-                                    .disabled(isAcknowledging)
-                                }
-
-                                if let error = acknowledgeError {
-                                    Text(error)
-                                        .font(SophosTheme.Typography.caption())
-                                        .foregroundColor(SophosTheme.Colors.statusCritical)
-                                }
-                            }
-                        }
+                        AlertDetailsCard(alert: alert)
+                        AlertIdCard(alertId: alert.id)
+                        AlertActionsCard(
+                            alert: alert,
+                            isAcknowledging: isAcknowledging,
+                            acknowledgeSuccess: acknowledgeSuccess,
+                            acknowledgeError: acknowledgeError,
+                            onAcknowledge: { Task { await acknowledge() } }
+                        )
 
                         Spacer().frame(height: SophosTheme.Spacing.xl)
                     }
@@ -165,5 +93,99 @@ struct DetailRow: View {
         }
         .padding(.horizontal, SophosTheme.Spacing.md)
         .padding(.vertical, SophosTheme.Spacing.sm)
+    }
+}
+
+private struct AlertIdCard: View {
+    let alertId: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: SophosTheme.Spacing.xs) {
+            Text("Alert ID").sophosSectionHeader()
+            Text(alertId)
+                .font(SophosTheme.Typography.caption())
+                .foregroundColor(SophosTheme.Colors.textSecondary)
+                .textSelection(.enabled)
+        }
+        .padding(SophosTheme.Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .sophosCard()
+    }
+}
+
+private struct AlertActionsCard: View {
+    let alert: SophosAlert
+    let isAcknowledging: Bool
+    let acknowledgeSuccess: Bool
+    let acknowledgeError: String?
+    let onAcknowledge: () -> Void
+    var body: some View {
+        if let actions = alert.allowedActions, actions.contains("acknowledge") {
+            VStack(spacing: SophosTheme.Spacing.sm) {
+                if acknowledgeSuccess {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(SophosTheme.Colors.statusHealthy)
+                        Text("Alert acknowledged")
+                            .font(SophosTheme.Typography.subheadline())
+                            .foregroundColor(SophosTheme.Colors.statusHealthy)
+                    }
+                    .padding(SophosTheme.Spacing.sm)
+                    .frame(maxWidth: .infinity)
+                    .background(SophosTheme.Colors.statusHealthy.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+                } else {
+                    Button(action: onAcknowledge) {
+                        HStack {
+                            if isAcknowledging {
+                                ProgressView().tint(.white).scaleEffect(0.8)
+                            } else {
+                                Image(systemName: "checkmark.circle")
+                            }
+                            Text(isAcknowledging ? "Acknowledging..." : "Acknowledge Alert")
+                        }
+                        .font(SophosTheme.Typography.headline())
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 48)
+                        .background(SophosTheme.Colors.sophosBlue)
+                        .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+                    }
+                    .disabled(isAcknowledging)
+                }
+                if let error = acknowledgeError {
+                    Text(error)
+                        .font(SophosTheme.Typography.caption())
+                        .foregroundColor(SophosTheme.Colors.statusCritical)
+                }
+            }
+        }
+    }
+}
+
+private struct AlertDetailsCard: View {
+    let alert: SophosAlert
+    var body: some View {
+        VStack(spacing: 0) {
+            if let category = alert.category {
+                DetailRow(label: "Category", value: category)
+                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
+            }
+            if let product = alert.product {
+                DetailRow(label: "Product", value: product)
+                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
+            }
+            if let date = alert.raisedDate {
+                DetailRow(label: "Raised", value: date.formatted(date: .abbreviated, time: .shortened))
+                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
+            }
+            if let person = alert.person?.name {
+                DetailRow(label: "User", value: person)
+                Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
+            }
+            if let agentType = alert.managedAgent?.type {
+                DetailRow(label: "Device Type", value: agentType.capitalized)
+            }
+        }
+        .sophosCard()
     }
 }

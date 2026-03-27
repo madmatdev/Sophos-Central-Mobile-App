@@ -43,7 +43,7 @@ final class AuthViewModel {
     }
 
     func signOut() {
-        auth.signOut()
+        Task { await auth.signOut() }
         isAuthenticated = false
         clientId = ""
         clientSecret = ""

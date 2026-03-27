@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */; };
+		07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */; };
+		1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */; };
+		15DDE9EDB953CC5C192F50CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6BE63B376556071E843BB3 /* AppDelegate.swift */; };
+		16DF6F73E2DC9F9995E6E3D8 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D550ECF1253A6851AFB923 /* APIModels.swift */; };
+		28AF65E9AED5B63AE82242AE /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA06D396A83D8C9440BBCF4 /* AuthService.swift */; };
+		29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */; };
+		31E96D1A705C29CCC682A2BF /* AlertsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */; };
+		32C449B036B62758BE6E7463 /* CacheModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC16BB1211425D814975CC /* CacheModels.swift */; };
+		3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD813FF3117892BD34BF352 /* SophosTheme.swift */; };
+		4257C337E4347AB8648AE898 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */; };
+		43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */; };
+		4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */; };
+		4DB4C7507EDFB3FC62CFAE13 /* AlertsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE621700155C067571F32803 /* AlertsListView.swift */; };
+		59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A299AC3225E11F52205B34D /* DashboardView.swift */; };
+		645851B21C82DCAFCF9AF6BC /* CaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1684F100099693D4E1B38B8A /* CaseDetailView.swift */; };
+		6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B35BE34839143A913F1B48 /* CredentialsView.swift */; };
+		7395484274B6F28C9346B853 /* CasesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */; };
+		7B6B274FDD876F4798D2DB45 /* AccountHealthCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */; };
+		814D62333694B7F3588A4A3F /* AlertDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */; };
+		93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */; };
+		951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0E477711D399C6A3787C9 /* KeychainService.swift */; };
+		B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A12503453517D47E1301D1 /* NotificationSettingsView.swift */; };
+		B516A94FCDDB4CFB92F22914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C40ED3C422F970B140B113FA /* Assets.xcassets */; };
+		E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */; };
+		F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236156C5BB9150176F8C6480 /* AuthViewModel.swift */; };
+		FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A299AC3225E11F52205B34D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		1684F100099693D4E1B38B8A /* CaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseDetailView.swift; sourceTree = "<group>"; };
+		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
+		236156C5BB9150176F8C6480 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
+		5BA06D396A83D8C9440BBCF4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPriorityCasesCard.swift; sourceTree = "<group>"; };
+		6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsCard.swift; sourceTree = "<group>"; };
+		72BC16BB1211425D814975CC /* CacheModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModels.swift; sourceTree = "<group>"; };
+		7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailView.swift; sourceTree = "<group>"; };
+		84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailView.swift; sourceTree = "<group>"; };
+		95B35BE34839143A913F1B48 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
+		99A12503453517D47E1301D1 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
+		A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasesListView.swift; sourceTree = "<group>"; };
+		AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosAPIService.swift; sourceTree = "<group>"; };
+		AE621700155C067571F32803 /* AlertsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListView.swift; sourceTree = "<group>"; };
+		B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSummaryCard.swift; sourceTree = "<group>"; };
+		BAD813FF3117892BD34BF352 /* SophosTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosTheme.swift; sourceTree = "<group>"; };
+		BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CentralMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHealthCard.swift; sourceTree = "<group>"; };
+		C40ED3C422F970B140B113FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C4D550ECF1253A6851AFB923 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
+		CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListView.swift; sourceTree = "<group>"; };
+		D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralMobileAppApp.swift; sourceTree = "<group>"; };
+		EB6BE63B376556071E843BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F068894226D8A09F3C92078D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FEF0E477711D399C6A3787C9 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		10802DF0D2C81F416715805E /* CentralMobileApp */ = {
+			isa = PBXGroup;
+			children = (
+				E2A970100D0617B9E68F7FF8 /* App */,
+				54CDC3DC1676B12428B57F0F /* Models */,
+				5249E78CA2E73149ED2DBD90 /* Resources */,
+				AC452514B8EB65FBC4C3B44B /* Services */,
+				85AEEAB2459D212C49DD8685 /* Theme */,
+				D4857AA4581AFE4F5F162082 /* ViewModels */,
+				167948F0EE2535C4D59C7669 /* Views */,
+			);
+			path = CentralMobileApp;
+			sourceTree = "<group>";
+		};
+		167948F0EE2535C4D59C7669 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A46C949D28D79F20C98A1E41 /* Alerts */,
+				7451878D4F5C073DDCF84A72 /* Auth */,
+				85B1F1DB742CEE160789B958 /* Cases */,
+				AA1186747485D1FE17F2AE4A /* Dashboard */,
+				F2EB6207B1CAAB0E318B2696 /* Devices */,
+				6E44BA6CE45D94D015151F15 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		23092C26D6A1A6F77EDCF030 = {
+			isa = PBXGroup;
+			children = (
+				10802DF0D2C81F416715805E /* CentralMobileApp */,
+				FA834A376463607827FE10A3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5249E78CA2E73149ED2DBD90 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C40ED3C422F970B140B113FA /* Assets.xcassets */,
+				F068894226D8A09F3C92078D /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		54CDC3DC1676B12428B57F0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C4D550ECF1253A6851AFB923 /* APIModels.swift */,
+				72BC16BB1211425D814975CC /* CacheModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6E44BA6CE45D94D015151F15 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				99A12503453517D47E1301D1 /* NotificationSettingsView.swift */,
+				2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7451878D4F5C073DDCF84A72 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				95B35BE34839143A913F1B48 /* CredentialsView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		85AEEAB2459D212C49DD8685 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				BAD813FF3117892BD34BF352 /* SophosTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		85B1F1DB742CEE160789B958 /* Cases */ = {
+			isa = PBXGroup;
+			children = (
+				1684F100099693D4E1B38B8A /* CaseDetailView.swift */,
+				A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */,
+			);
+			path = Cases;
+			sourceTree = "<group>";
+		};
+		A46C949D28D79F20C98A1E41 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */,
+				AE621700155C067571F32803 /* AlertsListView.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
+		AA1186747485D1FE17F2AE4A /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */,
+				6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */,
+				0A299AC3225E11F52205B34D /* DashboardView.swift */,
+				B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */,
+				63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		AC452514B8EB65FBC4C3B44B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5BA06D396A83D8C9440BBCF4 /* AuthService.swift */,
+				FEF0E477711D399C6A3787C9 /* KeychainService.swift */,
+				5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */,
+				AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D4857AA4581AFE4F5F162082 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				236156C5BB9150176F8C6480 /* AuthViewModel.swift */,
+				468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */,
+				1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E2A970100D0617B9E68F7FF8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EB6BE63B376556071E843BB3 /* AppDelegate.swift */,
+				D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		F2EB6207B1CAAB0E318B2696 /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */,
+				CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
+		FA834A376463607827FE10A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5134EEAF144007727D8393C1 /* CentralMobileApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4D05170A2F121DF1355279F /* Build configuration list for PBXNativeTarget "CentralMobileApp" */;
+			buildPhases = (
+				1ECE6FBBB7207BED22432DF5 /* Sources */,
+				27091A2FCDE53250CE2B4ED4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CentralMobileApp;
+			productName = CentralMobileApp;
+			productReference = BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B26C260C4D0CC251A44BB8D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					5134EEAF144007727D8393C1 = {
+						DevelopmentTeam = MU4W3R6KHY;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 2FD48A756FE81184AFB194CA /* Build configuration list for PBXProject "CentralMobileApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 23092C26D6A1A6F77EDCF030;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5134EEAF144007727D8393C1 /* CentralMobileApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		27091A2FCDE53250CE2B4ED4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B516A94FCDDB4CFB92F22914 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1ECE6FBBB7207BED22432DF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16DF6F73E2DC9F9995E6E3D8 /* APIModels.swift in Sources */,
+				7B6B274FDD876F4798D2DB45 /* AccountHealthCard.swift in Sources */,
+				814D62333694B7F3588A4A3F /* AlertDetailView.swift in Sources */,
+				31E96D1A705C29CCC682A2BF /* AlertsCard.swift in Sources */,
+				4DB4C7507EDFB3FC62CFAE13 /* AlertsListView.swift in Sources */,
+				15DDE9EDB953CC5C192F50CE /* AppDelegate.swift in Sources */,
+				28AF65E9AED5B63AE82242AE /* AuthService.swift in Sources */,
+				F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */,
+				32C449B036B62758BE6E7463 /* CacheModels.swift in Sources */,
+				645851B21C82DCAFCF9AF6BC /* CaseDetailView.swift in Sources */,
+				7395484274B6F28C9346B853 /* CasesListView.swift in Sources */,
+				FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */,
+				6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */,
+				59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */,
+				07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */,
+				050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */,
+				29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */,
+				43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */,
+				E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */,
+				4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */,
+				951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */,
+				B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */,
+				4257C337E4347AB8648AE898 /* PushNotificationService.swift in Sources */,
+				1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */,
+				93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */,
+				3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		02A75D62B2B0719F9C329B2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		038E700F6A68D4FD8EA591AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
+				INFOPLIST_FILE = CentralMobileApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sophos.central.mobile;
+				PROVISIONING_PROFILE_SPECIFIER = "Matthew Hickey";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		0CFA478581823B9370614CB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		15854AB10BB9FDF36B7B057A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
+				INFOPLIST_FILE = CentralMobileApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sophos.central.mobile;
+				PROVISIONING_PROFILE_SPECIFIER = "Matthew Hickey";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2FD48A756FE81184AFB194CA /* Build configuration list for PBXProject "CentralMobileApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CFA478581823B9370614CB0 /* Debug */,
+				02A75D62B2B0719F9C329B2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4D05170A2F121DF1355279F /* Build configuration list for PBXNativeTarget "CentralMobileApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				038E700F6A68D4FD8EA591AB /* Debug */,
+				15854AB10BB9FDF36B7B057A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6B26C260C4D0CC251A44BB8D /* Project object */;
+}
