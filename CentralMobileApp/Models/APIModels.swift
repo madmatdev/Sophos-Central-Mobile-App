@@ -3,9 +3,9 @@ import Foundation
 // MARK: - Auth / Token
 
 struct TokenResponse: Codable {
-    let accessToken: String
-    let tokenType: String
-    let expiresIn: Int
+    let accessToken: String?   // nil when Sophos returns a pure error body
+    let tokenType: String?
+    let expiresIn: Int?
     let refreshToken: String?
     let errorCode: String?
     let message: String?

@@ -14,13 +14,16 @@ actor AuthService {
     /// Authenticates with client credentials, fetches tenant info, caches everything.
     func authenticate(clientId: String, clientSecret: String) async throws {
         let token = try await fetchToken(clientId: clientId, clientSecret: clientSecret)
-        try await fetchWhoami(token: token.accessToken)
+
+        // accessToken is guaranteed non-nil/non-empty here (fetchToken throws otherwise)
+        let accessToken = token.accessToken!
+        try await fetchWhoami(token: accessToken)
 
         keychain.save(clientId, for: .clientId)
         keychain.save(clientSecret, for: .clientSecret)
-        keychain.save(token.accessToken, for: .accessToken)
+        keychain.save(accessToken, for: .accessToken)
 
-        let expiry = Date().timeIntervalSince1970 + Double(token.expiresIn)
+        let expiry = Date().timeIntervalSince1970 + Double(token.expiresIn ?? 3600)
         keychain.save(String(expiry), for: .tokenExpiry)
     }
 
@@ -42,12 +45,13 @@ actor AuthService {
         else { throw AuthError.noCredentials }
 
         let tokenResponse = try await fetchToken(clientId: clientId, clientSecret: clientSecret)
-        keychain.save(tokenResponse.accessToken, for: .accessToken)
+        let accessToken = tokenResponse.accessToken!   // guaranteed by fetchToken
+        keychain.save(accessToken, for: .accessToken)
 
-        let expiry = Date().timeIntervalSince1970 + Double(tokenResponse.expiresIn)
+        let expiry = Date().timeIntervalSince1970 + Double(tokenResponse.expiresIn ?? 3600)
         keychain.save(String(expiry), for: .tokenExpiry)
 
-        return tokenResponse.accessToken
+        return accessToken
     }
 
     // MARK: - Sign out
@@ -88,8 +92,13 @@ actor AuthService {
 
         let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
 
-        if let errorCode = tokenResponse.errorCode, !errorCode.isEmpty {
-            throw AuthError.apiError(tokenResponse.message ?? errorCode)
+        // Sophos sometimes returns errorCode:"Ok" even on success — use the
+        // presence of a non-empty access_token as the real success signal.
+        guard let token = tokenResponse.accessToken, !token.isEmpty else {
+            let reason = tokenResponse.message
+                ?? tokenResponse.errorCode
+                ?? "Authentication failed"
+            throw AuthError.apiError(reason)
         }
 
         return tokenResponse
