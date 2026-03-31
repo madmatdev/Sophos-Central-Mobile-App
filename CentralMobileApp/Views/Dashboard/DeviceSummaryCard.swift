@@ -5,13 +5,17 @@ struct DeviceSummaryCard: View {
     let endpoints: [SophosEndpoint]
     let isLoading: Bool
     var onViewAll: (() -> Void)?
+    var viewModel: DevicesViewModel
+
+    @State private var showIsolateConfirm = false
+    @State private var showScanConfirm    = false
+    @State private var actionEndpoint: SophosEndpoint? = nil
 
     private var healthy:    Int { endpoints.filter { $0.health?.overall.lowercased() == "good" }.count }
     private var suspicious: Int { endpoints.filter { $0.health?.overall.lowercased() == "suspicious" }.count }
     private var bad:        Int { endpoints.filter { $0.health?.overall.lowercased() == "bad" }.count }
     private var total:      Int { endpoints.count }
     private var servers:    Int { endpoints.filter { $0.os?.isServer == true }.count }
-    private var workstations: Int { total - servers }
 
     var body: some View {
         VStack(alignment: .leading, spacing: SophosTheme.Spacing.md) {
@@ -43,17 +47,17 @@ struct DeviceSummaryCard: View {
 
                 // Stat row
                 HStack(spacing: SophosTheme.Spacing.md) {
-                    DeviceStatCell(value: total, label: "Total", color: SophosTheme.Colors.sophosBlue)
-                    DeviceStatCell(value: healthy, label: "Healthy", color: SophosTheme.Colors.statusHealthy)
-                    DeviceStatCell(value: suspicious + bad, label: "At Risk", color: suspicious + bad > 0 ? SophosTheme.Colors.statusCritical : SophosTheme.Colors.textTertiary)
-                    DeviceStatCell(value: servers, label: "Servers", color: SophosTheme.Colors.textSecondary)
+                    DeviceStatCell(value: total,               label: "Total",   color: SophosTheme.Colors.sophosBlue)
+                    DeviceStatCell(value: healthy,             label: "Healthy", color: SophosTheme.Colors.statusHealthy)
+                    DeviceStatCell(value: suspicious + bad,    label: "At Risk", color: suspicious + bad > 0 ? SophosTheme.Colors.statusCritical : SophosTheme.Colors.textTertiary)
+                    DeviceStatCell(value: servers,             label: "Servers", color: SophosTheme.Colors.textSecondary)
                 }
 
                 Divider().background(SophosTheme.Colors.divider)
 
-                // At-risk devices preview (up to 3)
+                // At-risk devices preview (up to 3) — long-press for actions
                 let atRisk = endpoints
-                    .filter { ["bad","suspicious"].contains($0.health?.overall.lowercased() ?? "") }
+                    .filter { ["bad", "suspicious"].contains($0.health?.overall.lowercased() ?? "") }
                     .prefix(3)
 
                 if atRisk.isEmpty {
@@ -66,18 +70,90 @@ struct DeviceSummaryCard: View {
                     }
                 } else {
                     VStack(spacing: SophosTheme.Spacing.xs) {
-                        Text("At Risk")
-                            .sophosSectionHeader()
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            Text("At Risk")
+                                .sophosSectionHeader()
+                            Spacer()
+                            Text("Hold to act")
+                                .font(SophosTheme.Typography.caption2())
+                                .foregroundColor(SophosTheme.Colors.textTertiary)
+                        }
                         ForEach(Array(atRisk)) { endpoint in
-                            DeviceRowMini(endpoint: endpoint)
+                            DeviceRowMini(
+                                endpoint: endpoint,
+                                isActing: viewModel.actionInProgress == endpoint.id
+                            )
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    actionEndpoint = endpoint
+                                    showIsolateConfirm = true
+                                } label: {
+                                    Label("Isolate Device", systemImage: "network.slash")
+                                }
+                                Button {
+                                    actionEndpoint = endpoint
+                                    showScanConfirm = true
+                                } label: {
+                                    Label("Run Security Scan", systemImage: "magnifyingglass.circle")
+                                }
+                            }
                         }
                     }
+                }
+
+                // Action feedback
+                if let success = viewModel.actionSuccess {
+                    feedbackBanner(message: success, isError: false)
+                }
+                if let error = viewModel.actionError {
+                    feedbackBanner(message: error, isError: true)
                 }
             }
         }
         .padding(SophosTheme.Spacing.md)
         .sophosCard()
+        // Isolate confirmation
+        .confirmationDialog(
+            "Isolate \(actionEndpoint?.hostname ?? "this device")?",
+            isPresented: $showIsolateConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Isolate Device", role: .destructive) {
+                guard let ep = actionEndpoint else { return }
+                Task { _ = await viewModel.isolateEndpoint(ep) }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will remove the device from the network. Use Face ID or Touch ID to confirm.")
+        }
+        // Scan confirmation
+        .confirmationDialog(
+            "Scan \(actionEndpoint?.hostname ?? "this device")?",
+            isPresented: $showScanConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Start Scan") {
+                guard let ep = actionEndpoint else { return }
+                Task { _ = await viewModel.scanEndpoint(ep) }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("A full security scan will be initiated on this device. Use Face ID or Touch ID to confirm.")
+        }
+    }
+
+    private func feedbackBanner(message: String, isError: Bool) -> some View {
+        HStack(spacing: SophosTheme.Spacing.xs) {
+            Image(systemName: isError ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
+                .foregroundColor(isError ? SophosTheme.Colors.statusCritical : SophosTheme.Colors.statusHealthy)
+            Text(message)
+                .font(SophosTheme.Typography.caption())
+                .foregroundColor(isError ? SophosTheme.Colors.statusCritical : SophosTheme.Colors.statusHealthy)
+        }
+        .padding(SophosTheme.Spacing.xs)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background((isError ? SophosTheme.Colors.statusCritical : SophosTheme.Colors.statusHealthy).opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
     }
 }
 
@@ -144,6 +220,7 @@ struct DeviceStatCell: View {
 
 struct DeviceRowMini: View {
     let endpoint: SophosEndpoint
+    var isActing: Bool = false
 
     var body: some View {
         HStack(spacing: SophosTheme.Spacing.sm) {
@@ -164,7 +241,11 @@ struct DeviceRowMini: View {
                 }
             }
             Spacer()
-            HealthStatusDot(status: endpoint.health?.overall ?? "unknown")
+            if isActing {
+                ProgressView().tint(SophosTheme.Colors.sophosBlue).scaleEffect(0.7)
+            } else {
+                HealthStatusDot(status: endpoint.health?.overall ?? "unknown")
+            }
         }
     }
 }

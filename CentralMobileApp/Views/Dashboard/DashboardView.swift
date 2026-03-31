@@ -4,7 +4,8 @@ import SwiftData
 struct DashboardView: View {
 
     @Environment(\.modelContext) private var modelContext
-    @State private var viewModel = DashboardViewModel()
+    @State private var viewModel        = DashboardViewModel()
+    @State private var devicesViewModel = DevicesViewModel()
     @State private var selectedTab: DashboardTab = .dashboard
 
     // Navigation state
@@ -154,7 +155,8 @@ struct DashboardView: View {
                     DeviceSummaryCard(
                         endpoints: viewModel.endpoints,
                         isLoading: viewModel.isLoadingEndpoints,
-                        onViewAll: { selectedTab = .devices }
+                        onViewAll: { selectedTab = .devices },
+                        viewModel: devicesViewModel
                     )
                     .padding(.horizontal, SophosTheme.Spacing.md)
 
