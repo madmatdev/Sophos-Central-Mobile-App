@@ -143,6 +143,15 @@ struct DeviceListRow: View {
                 }
 
                 HStack(spacing: SophosTheme.Spacing.xs) {
+                    if let online = endpoint.online {
+                        Circle()
+                            .fill(online ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.textTertiary)
+                            .frame(width: 6, height: 6)
+                        Text(online ? "Online" : "Offline")
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(online ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.textTertiary)
+                        Text("·").foregroundColor(SophosTheme.Colors.textTertiary)
+                    }
                     if let os = endpoint.os?.name {
                         Text(os)
                             .font(SophosTheme.Typography.caption2())

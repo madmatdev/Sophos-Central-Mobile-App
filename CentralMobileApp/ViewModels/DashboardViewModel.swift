@@ -180,6 +180,7 @@ final class DashboardViewModel {
                 existing.healthOverall = endpoint.health?.overall
                 existing.healthThreats = endpoint.health?.threats?.status
                 existing.lastSeenAt = endpoint.lastSeenDate
+                existing.isOnline = endpoint.online
                 existing.lastUpdated = Date()
             } else {
                 context.insert(CachedEndpoint(from: endpoint))
@@ -276,7 +277,8 @@ final class DashboardViewModel {
                     },
                     assignedProducts: nil,
                     lastSeenAt: c.lastSeenAt.map { ISO8601DateFormatter().string(from: $0) },
-                    tamperProtectionEnabled: c.tamperProtectionEnabled
+                    tamperProtectionEnabled: c.tamperProtectionEnabled,
+                    online: c.isOnline
                 )
             }
         }

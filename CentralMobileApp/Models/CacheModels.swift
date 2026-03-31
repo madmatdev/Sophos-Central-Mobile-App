@@ -85,6 +85,7 @@ final class CachedEndpoint {
     var lastSeenAt: Date?
     var tamperProtectionEnabled: Bool
     var isIsolated: Bool
+    var isOnline: Bool?
     var lastUpdated: Date
 
     init(from endpoint: SophosEndpoint) {
@@ -104,6 +105,7 @@ final class CachedEndpoint {
         self.lastSeenAt = endpoint.lastSeenDate
         self.tamperProtectionEnabled = endpoint.tamperProtectionEnabled ?? false
         self.isIsolated = false
+        self.isOnline = endpoint.online
         self.lastUpdated = Date()
     }
 

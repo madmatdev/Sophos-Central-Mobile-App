@@ -133,6 +133,14 @@ struct DeviceDetailView: View {
 
                 HStack(spacing: SophosTheme.Spacing.xs) {
                     HealthStatusDot(status: endpoint.health?.overall ?? "unknown")
+                    if let online = endpoint.online {
+                        Label(online ? "Online" : "Offline",
+                              systemImage: online ? "wifi" : "wifi.slash")
+                            .font(SophosTheme.Typography.caption2(.semibold))
+                            .foregroundColor(online
+                                ? SophosTheme.Colors.statusHealthy
+                                : SophosTheme.Colors.textTertiary)
+                    }
                     if isIsolated {
                         Label("Isolated", systemImage: "network.slash")
                             .font(SophosTheme.Typography.caption2(.semibold))

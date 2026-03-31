@@ -43,13 +43,13 @@ actor SophosAPIService {
     // MARK: - Endpoints
 
     func fetchEndpoints(pageSize: Int = 500) async throws -> EndpointsResponse {
-        let params = ["pageSize": "\(pageSize)"]
+        let params = ["pageSize": "\(pageSize)", "view": "full"]
         let url = buildURL("\(baseURL)/endpoint/v1/endpoints", params: params)
         return try await get(url: url)
     }
 
     func fetchEndpoint(id: String) async throws -> SophosEndpoint {
-        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)"
+        let url = buildURL("\(baseURL)/endpoint/v1/endpoints/\(id)", params: ["view": "full"])
         return try await get(url: url)
     }
 

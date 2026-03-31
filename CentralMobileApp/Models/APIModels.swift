@@ -314,6 +314,7 @@ struct SophosEndpoint: Codable, Identifiable {
     let assignedProducts: [AssignedProduct]?
     let lastSeenAt: String?
     let tamperProtectionEnabled: Bool?
+    let online: Bool?
 
     struct TenantRef: Codable {
         let id: String
