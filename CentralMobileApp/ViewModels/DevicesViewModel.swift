@@ -70,7 +70,7 @@ final class DevicesViewModel {
         defer { actionInProgress = nil }
 
         do {
-            _ = try await api.isolateEndpoint(id: endpoint.id)
+            try await api.isolateEndpoint(id: endpoint.id)
             actionSuccess = "\(endpoint.hostname ?? "Device") has been isolated."
             // Update local state
             if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }) {
@@ -98,7 +98,7 @@ final class DevicesViewModel {
         defer { actionInProgress = nil }
 
         do {
-            _ = try await api.deIsolateEndpoint(id: endpoint.id)
+            try await api.deIsolateEndpoint(id: endpoint.id)
             actionSuccess = "\(endpoint.hostname ?? "Device") isolation removed."
             if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }),
                let updated = try? await api.fetchEndpoint(id: endpoint.id) {

@@ -58,19 +58,23 @@ actor SophosAPIService {
 
     // MARK: - Isolation
 
-    func isolateEndpoint(id: String, comment: String? = nil) async throws -> IsolationResponse {
-        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)/isolation"
+    func isolateEndpoint(id: String, comment: String? = nil) async throws {
+        let url = "\(baseURL)/endpoint/v1/endpoints/isolation"
         let body: [String: Any] = [
             "enabled": true,
+            "ids": [id],
             "comment": comment ?? "Isolated via Sophos Central Mobile"
         ]
-        return try await post(url: url, body: body)
+        let _: EmptyResponse = try await post(url: url, body: body)
     }
 
-    func deIsolateEndpoint(id: String) async throws -> IsolationResponse {
-        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)/isolation"
-        let body: [String: Any] = ["enabled": false]
-        return try await patch(url: url, body: body)
+    func deIsolateEndpoint(id: String) async throws {
+        let url = "\(baseURL)/endpoint/v1/endpoints/isolation"
+        let body: [String: Any] = [
+            "enabled": false,
+            "ids": [id]
+        ]
+        let _: EmptyResponse = try await post(url: url, body: body)
     }
 
     func fetchIsolationStatus(id: String) async throws -> IsolationResponse {
