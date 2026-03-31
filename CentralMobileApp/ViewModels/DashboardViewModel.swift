@@ -132,25 +132,13 @@ final class DashboardViewModel {
         let descriptor = FetchDescriptor<CachedAccountHealth>()
         let existing = (try? context.fetch(descriptor))?.first
 
-        let score = response.overall.score ?? 0
         if let existing {
-            existing.overallStatus = response.overall.status
-            existing.overallScore = score
-            existing.endpointStatus = response.endpoint?.status
-            existing.serverStatus = response.server?.status
-            existing.firewallStatus = response.firewall?.status
-            existing.emailStatus = response.email?.status
-            existing.lastUpdated = Date()
+            existing.responseJSON  = try? JSONEncoder().encode(response)
+            existing.overallStatus = response.overallStatus
+            existing.overallScore  = response.computedScore
+            existing.lastUpdated   = Date()
         } else {
-            let cached = CachedAccountHealth(
-                overallStatus: response.overall.status,
-                overallScore: score,
-                endpointStatus: response.endpoint?.status,
-                serverStatus: response.server?.status,
-                firewallStatus: response.firewall?.status,
-                emailStatus: response.email?.status
-            )
-            context.insert(cached)
+            context.insert(CachedAccountHealth(from: response))
         }
         try? context.save()
     }
@@ -224,13 +212,7 @@ final class DashboardViewModel {
     private func loadCachedHealth(context: ModelContext) {
         let descriptor = FetchDescriptor<CachedAccountHealth>()
         if let cached = (try? context.fetch(descriptor))?.first {
-            accountHealth = AccountHealthResponse(
-                overall: .init(score: cached.overallScore, status: cached.overallStatus, checks: nil),
-                endpoint: cached.endpointStatus.map { .init(score: nil, status: $0, checks: nil) },
-                server: cached.serverStatus.map { .init(score: nil, status: $0, checks: nil) },
-                firewall: cached.firewallStatus.map { .init(score: nil, status: $0, checks: nil) },
-                email: cached.emailStatus.map { .init(score: nil, status: $0, checks: nil) }
-            )
+            accountHealth = cached.decoded()
         }
     }
 

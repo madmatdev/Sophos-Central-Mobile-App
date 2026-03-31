@@ -36,24 +36,218 @@ struct WhoamiResponse: Codable {
 // MARK: - Account Health
 
 struct AccountHealthResponse: Codable {
-    let overall: HealthScore
-    let endpoint: HealthScore?
-    let server: HealthScore?
-    let firewall: HealthScore?
-    let email: HealthScore?
 
-    struct HealthScore: Codable {
-        let score: Int?
-        let status: String          // "good" | "fair" | "bad"
-        let checks: [HealthCheck]?
+    let tenant: TenantInfo?
+    let endpoint: EndpointHealth?
+    let networkDevice: NetworkDeviceHealth?
+
+    // MARK: Tenant
+
+    struct TenantInfo: Codable {
+        let id: String
+        let name: String?
     }
 
-    struct HealthCheck: Codable, Identifiable {
-        let id: String
-        let title: String
-        let status: String
-        let description: String?
+    // MARK: Endpoint
+
+    struct EndpointHealth: Codable {
+        let protection: ProtectionHealth?
+        let policy: PolicyHealth?
+        let exclusions: ExclusionsHealth?
+        let tamperProtection: TamperProtectionHealth?
+    }
+
+    // --- Protection ---
+
+    struct ProtectionHealth: Codable {
+        let computer: SoftwareCheck?
+        let server: SoftwareCheck?
+    }
+
+    struct SoftwareCheck: Codable {
+        let score: Int?
+        let total: Int?
+        let notFullyProtected: Int?
         let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    // --- Policy ---
+    // Keys under computer/server use hyphens ("threat-protection",
+    // "server-threat-protection") so we decode them as dictionaries.
+
+    struct PolicyHealth: Codable {
+        let computer: [String: PolicyCheck]?
+        let server: [String: PolicyCheck]?
+
+        var computerThreatProtection: PolicyCheck? { computer?["threat-protection"] }
+        var serverThreatProtection: PolicyCheck?   { server?["server-threat-protection"] }
+    }
+
+    struct PolicyCheck: Codable {
+        let score: Int?
+        let total: Int?
+        let notOnRecommended: Int?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    // --- Exclusions ---
+
+    struct ExclusionsHealth: Codable {
+        let policy: PolicyExclusionsHealth?
+        let global: GlobalExclusionsCheck?
+    }
+
+    struct PolicyExclusionsHealth: Codable {
+        let computer: PolicyExclusionsCheck?
+        let server: PolicyExclusionsCheck?
+    }
+
+    struct PolicyExclusionsCheck: Codable {
+        let score: Int?
+        let total: Int?
+        let numberOfSecurityRisks: Int?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    struct GlobalExclusionsCheck: Codable {
+        let score: Int?
+        let numberOfSecurityRisks: Int?
+        let lockedByManagingAccount: Bool?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    // --- Tamper Protection ---
+
+    struct TamperProtectionHealth: Codable {
+        let computer: TamperCheck?
+        let server: TamperCheck?
+        let globalDetail: GlobalTamperCheck?
+    }
+
+    struct TamperCheck: Codable {
+        let score: Int?
+        let total: Int?
+        let disabled: Int?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    struct GlobalTamperCheck: Codable {
+        let score: Int?
+        let enabled: Bool?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    // --- Network / Firewall ---
+
+    struct NetworkDeviceHealth: Codable {
+        let firewall: FirewallHealth?
+    }
+
+    struct FirewallHealth: Codable {
+        let firewallAutomaticBackup: BackupCheck?
+    }
+
+    struct BackupCheck: Codable {
+        let score: Int?
+        let total: Int?
+        let notOnRecommended: Int?
+        let snoozed: Bool?
+        let snoozeDetail: SnoozeDetail?
+    }
+
+    // --- Snooze ---
+
+    struct SnoozeDetail: Codable {
+        let start: String?
+        let end: String?
+        let expiry: String?
+        let expired: Bool?
+        let comment: String?
+    }
+
+    // MARK: Computed helpers (used by the widget)
+
+    /// Average of all available check scores (0–100).
+    var computedScore: Int {
+        var scores: [Int] = []
+        if let s = endpoint?.protection?.computer?.score      { scores.append(s) }
+        if let s = endpoint?.protection?.server?.score        { scores.append(s) }
+        if let s = endpoint?.policy?.computerThreatProtection?.score { scores.append(s) }
+        if let s = endpoint?.policy?.serverThreatProtection?.score   { scores.append(s) }
+        if let s = endpoint?.exclusions?.policy?.computer?.score     { scores.append(s) }
+        if let s = endpoint?.exclusions?.policy?.server?.score       { scores.append(s) }
+        if let s = endpoint?.exclusions?.global?.score               { scores.append(s) }
+        if let s = endpoint?.tamperProtection?.computer?.score       { scores.append(s) }
+        if let s = endpoint?.tamperProtection?.server?.score         { scores.append(s) }
+        if let s = endpoint?.tamperProtection?.globalDetail?.score   { scores.append(s) }
+        if let s = networkDevice?.firewall?.firewallAutomaticBackup?.score { scores.append(s) }
+        guard !scores.isEmpty else { return 0 }
+        return scores.reduce(0, +) / scores.count
+    }
+
+    /// Derived status label from computedScore.
+    var overallStatus: String {
+        let s = computedScore
+        if s >= 80 { return "good" }
+        if s >= 50 { return "fair" }
+        return "bad"
+    }
+
+    /// Total endpoints not fully protected.
+    var protectionIssues: Int {
+        (endpoint?.protection?.computer?.notFullyProtected ?? 0) +
+        (endpoint?.protection?.server?.notFullyProtected   ?? 0)
+    }
+
+    var protectionTotal: Int {
+        (endpoint?.protection?.computer?.total ?? 0) +
+        (endpoint?.protection?.server?.total   ?? 0)
+    }
+
+    /// Policies not on recommended settings.
+    var policyIssues: Int {
+        (endpoint?.policy?.computerThreatProtection?.notOnRecommended ?? 0) +
+        (endpoint?.policy?.serverThreatProtection?.notOnRecommended   ?? 0)
+    }
+
+    var policyTotal: Int {
+        (endpoint?.policy?.computerThreatProtection?.total ?? 0) +
+        (endpoint?.policy?.serverThreatProtection?.total   ?? 0)
+    }
+
+    /// Risky exclusions across policy and global.
+    var exclusionRisks: Int {
+        (endpoint?.exclusions?.policy?.computer?.numberOfSecurityRisks ?? 0) +
+        (endpoint?.exclusions?.policy?.server?.numberOfSecurityRisks   ?? 0) +
+        (endpoint?.exclusions?.global?.numberOfSecurityRisks           ?? 0)
+    }
+
+    /// Endpoints with tamper protection disabled, plus global-off flag.
+    var tamperIssues: Int {
+        let comp   = endpoint?.tamperProtection?.computer?.disabled ?? 0
+        let srv    = endpoint?.tamperProtection?.server?.disabled   ?? 0
+        let global = endpoint?.tamperProtection?.globalDetail?.enabled == false ? 1 : 0
+        return comp + srv + global
+    }
+
+    var tamperTotal: Int {
+        (endpoint?.tamperProtection?.computer?.total ?? 0) +
+        (endpoint?.tamperProtection?.server?.total   ?? 0)
+    }
+
+    var anyCheckSnoozed: Bool {
+        endpoint?.protection?.computer?.snoozed == true ||
+        endpoint?.protection?.server?.snoozed == true ||
+        endpoint?.tamperProtection?.computer?.snoozed == true ||
+        endpoint?.tamperProtection?.server?.snoozed == true ||
+        endpoint?.tamperProtection?.globalDetail?.snoozed == true ||
+        endpoint?.exclusions?.global?.snoozed == true
     }
 }
 

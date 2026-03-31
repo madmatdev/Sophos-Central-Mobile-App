@@ -6,33 +6,24 @@ import SwiftData
 @Model
 final class CachedAccountHealth {
     @Attribute(.unique) var id: String = "singleton"
+    // Serialised AccountHealthResponse — source of truth for the widget
+    var responseJSON: Data?
+    // Legacy columns kept to avoid migration failures on existing installs
     var overallStatus: String
     var overallScore: Int
-    var endpointStatus: String?
-    var serverStatus: String?
-    var firewallStatus: String?
-    var emailStatus: String?
-    var checksJSON: Data?           // Encoded [HealthCheck] array
     var lastUpdated: Date
 
-    init(
-        overallStatus: String,
-        overallScore: Int,
-        endpointStatus: String? = nil,
-        serverStatus: String? = nil,
-        firewallStatus: String? = nil,
-        emailStatus: String? = nil,
-        checksJSON: Data? = nil
-    ) {
+    init(from response: AccountHealthResponse) {
         self.id = "singleton"
-        self.overallStatus = overallStatus
-        self.overallScore = overallScore
-        self.endpointStatus = endpointStatus
-        self.serverStatus = serverStatus
-        self.firewallStatus = firewallStatus
-        self.emailStatus = emailStatus
-        self.checksJSON = checksJSON
-        self.lastUpdated = Date()
+        self.responseJSON = try? JSONEncoder().encode(response)
+        self.overallStatus = response.overallStatus
+        self.overallScore  = response.computedScore
+        self.lastUpdated   = Date()
+    }
+
+    func decoded() -> AccountHealthResponse? {
+        guard let data = responseJSON else { return nil }
+        return try? JSONDecoder().decode(AccountHealthResponse.self, from: data)
     }
 }
 
