@@ -58,6 +58,16 @@ final class DashboardViewModel {
     // MARK: - Refresh all
 
     func refreshAll(modelContext: ModelContext) async {
+        // Demo mode: use fake data
+        if DemoDataService.isDemoMode {
+            accountHealth = DemoDataService.accountHealth()
+            alerts = DemoDataService.alerts()
+            endpoints = DemoDataService.endpoints()
+            cases = DemoDataService.cases()
+            lastRefreshed = Date()
+            return
+        }
+
         await withTaskGroup(of: Void.self) { group in
             group.addTask { await self.refreshHealth(modelContext: modelContext) }
             group.addTask { await self.refreshAlerts(modelContext: modelContext) }

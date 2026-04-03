@@ -105,6 +105,24 @@ struct SettingsView: View {
                 }
                 .listRowBackground(SophosTheme.Colors.backgroundCard)
 
+                // MARK: - Demo Mode
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { DemoDataService.isDemoMode },
+                        set: { DemoDataService.isDemoMode = $0 }
+                    )) {
+                        SettingsRow(icon: "play.rectangle", label: "Demo Mode", color: .purple)
+                    }
+                    .tint(SophosTheme.Colors.sophosBlue)
+                } header: {
+                    Text("Demo").sophosSectionHeader()
+                } footer: {
+                    Text("Uses realistic fake data for customer demos. No real tenant connection needed.")
+                        .font(SophosTheme.Typography.caption2())
+                        .foregroundStyle(SophosTheme.Colors.textTertiary)
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
                 // MARK: - Account
                 Section {
                     Button {
