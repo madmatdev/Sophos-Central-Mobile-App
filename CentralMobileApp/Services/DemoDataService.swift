@@ -17,12 +17,21 @@ enum DemoDataService {
 
     static func accountHealth() -> AccountHealthResponse {
         AccountHealthResponse(
-            endpoint: EndpointHealth(
-                protection: HealthComponent(status: "warning", score: 85),
-                policy: HealthComponent(status: "good", score: 95),
-                tamperProtection: HealthComponent(status: "warning", score: 80),
-                exclusions: HealthComponent(status: "good", score: 100)
-            )
+            tenant: AccountHealthResponse.TenantInfo(id: "demo-tenant", name: "Acme Corp"),
+            endpoint: AccountHealthResponse.EndpointHealth(
+                protection: AccountHealthResponse.ProtectionHealth(
+                    computer: AccountHealthResponse.SoftwareCheck(score: 85, total: 10, notFullyProtected: 2, snoozed: false, snoozeDetail: nil),
+                    server: AccountHealthResponse.SoftwareCheck(score: 100, total: 4, notFullyProtected: 0, snoozed: false, snoozeDetail: nil)
+                ),
+                policy: nil,
+                exclusions: nil,
+                tamperProtection: AccountHealthResponse.TamperProtectionHealth(
+                    computer: AccountHealthResponse.TamperCheck(score: 80, total: 10, disabled: 2, snoozed: false, snoozeDetail: nil),
+                    server: nil,
+                    globalDetail: nil
+                )
+            ),
+            networkDevice: nil
         )
     }
 

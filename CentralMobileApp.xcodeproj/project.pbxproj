@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,45 +16,63 @@
 		29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */; };
 		31E96D1A705C29CCC682A2BF /* AlertsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */; };
 		32C449B036B62758BE6E7463 /* CacheModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC16BB1211425D814975CC /* CacheModels.swift */; };
+		3669E7D7EACCEF48CEB8324B /* ExclusionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */; };
 		3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD813FF3117892BD34BF352 /* SophosTheme.swift */; };
 		4257C337E4347AB8648AE898 /* PushNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */; };
 		43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */; };
+		454E2576D9508D256B860B02 /* PlaywrightStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */; };
 		4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */; };
 		4DB4C7507EDFB3FC62CFAE13 /* AlertsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE621700155C067571F32803 /* AlertsListView.swift */; };
 		59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A299AC3225E11F52205B34D /* DashboardView.swift */; };
+		6127B87849E9AB2905E4684E /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */; };
+		61F1724B5940E2557F31F1E6 /* PoliciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B829FEB139FB6490023D77 /* PoliciesView.swift */; };
 		645851B21C82DCAFCF9AF6BC /* CaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1684F100099693D4E1B38B8A /* CaseDetailView.swift */; };
 		6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B35BE34839143A913F1B48 /* CredentialsView.swift */; };
+		6F0907EE2E19859694B5E3E7 /* ScreenshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */; };
 		7395484274B6F28C9346B853 /* CasesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */; };
 		7B6B274FDD876F4798D2DB45 /* AccountHealthCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */; };
 		814D62333694B7F3588A4A3F /* AlertDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */; };
+		9032C93DBA2D7BA3AE633845 /* DemoDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0CFFEC4D894E40227A8AAC /* DemoDataService.swift */; };
 		93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */; };
 		951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0E477711D399C6A3787C9 /* KeychainService.swift */; };
+		B085B8D3861B4824A38884D2 /* FirewallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74406CC9552E445E2E21351E /* FirewallListView.swift */; };
 		B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A12503453517D47E1301D1 /* NotificationSettingsView.swift */; };
 		B516A94FCDDB4CFB92F22914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C40ED3C422F970B140B113FA /* Assets.xcassets */; };
 		E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */; };
+		E2B0AB6F8941720239AC3A2D /* AIAgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3BC44BA89F7A36955884E /* AIAgentService.swift */; };
+		ED2752A0B5D16E8FD8378ADC /* PlaywrightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */; };
 		F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236156C5BB9150176F8C6480 /* AuthViewModel.swift */; };
 		FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */; };
+		FFE0DA9A5C06CB4EB61BF43B /* AgentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DB720AEF63D3E12CB96859 /* AgentChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A299AC3225E11F52205B34D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		13B829FEB139FB6490023D77 /* PoliciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliciesView.swift; sourceTree = "<group>"; };
 		1684F100099693D4E1B38B8A /* CaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseDetailView.swift; sourceTree = "<group>"; };
 		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
+		1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaywrightService.swift; sourceTree = "<group>"; };
 		236156C5BB9150176F8C6480 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		2AD3BC44BA89F7A36955884E /* AIAgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgentService.swift; sourceTree = "<group>"; };
+		2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		5BA06D396A83D8C9440BBCF4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		60DB720AEF63D3E12CB96859 /* AgentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentChatView.swift; sourceTree = "<group>"; };
 		63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPriorityCasesCard.swift; sourceTree = "<group>"; };
 		6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsCard.swift; sourceTree = "<group>"; };
 		72BC16BB1211425D814975CC /* CacheModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModels.swift; sourceTree = "<group>"; };
+		74406CC9552E445E2E21351E /* FirewallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailView.swift; sourceTree = "<group>"; };
 		84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailView.swift; sourceTree = "<group>"; };
+		8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotView.swift; sourceTree = "<group>"; };
 		95B35BE34839143A913F1B48 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		99A12503453517D47E1301D1 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasesListView.swift; sourceTree = "<group>"; };
 		AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosAPIService.swift; sourceTree = "<group>"; };
 		AE621700155C067571F32803 /* AlertsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListView.swift; sourceTree = "<group>"; };
+		B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaywrightStatusView.swift; sourceTree = "<group>"; };
 		B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSummaryCard.swift; sourceTree = "<group>"; };
 		BAD813FF3117892BD34BF352 /* SophosTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosTheme.swift; sourceTree = "<group>"; };
 		BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CentralMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,7 +80,9 @@
 		C40ED3C422F970B140B113FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4D550ECF1253A6851AFB923 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListView.swift; sourceTree = "<group>"; };
+		CF0CFFEC4D894E40227A8AAC /* DemoDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDataService.swift; sourceTree = "<group>"; };
 		D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralMobileAppApp.swift; sourceTree = "<group>"; };
+		DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionsListView.swift; sourceTree = "<group>"; };
 		EB6BE63B376556071E843BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F068894226D8A09F3C92078D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FEF0E477711D399C6A3787C9 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -86,11 +106,15 @@
 		167948F0EE2535C4D59C7669 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				88631A24D96EB2082907882D /* Agent */,
 				A46C949D28D79F20C98A1E41 /* Alerts */,
 				7451878D4F5C073DDCF84A72 /* Auth */,
 				85B1F1DB742CEE160789B958 /* Cases */,
 				AA1186747485D1FE17F2AE4A /* Dashboard */,
 				F2EB6207B1CAAB0E318B2696 /* Devices */,
+				619951F2A52BD5550DA0C8DC /* Exclusions */,
+				2660DCF8285ECB202D9D2B9B /* Firewall */,
+				5019252673AAD0E625B20F5F /* Playwright */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
 			);
 			path = Views;
@@ -102,6 +126,24 @@
 				10802DF0D2C81F416715805E /* CentralMobileApp */,
 				FA834A376463607827FE10A3 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		2660DCF8285ECB202D9D2B9B /* Firewall */ = {
+			isa = PBXGroup;
+			children = (
+				74406CC9552E445E2E21351E /* FirewallListView.swift */,
+			);
+			path = Firewall;
+			sourceTree = "<group>";
+		};
+		5019252673AAD0E625B20F5F /* Playwright */ = {
+			isa = PBXGroup;
+			children = (
+				B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */,
+				13B829FEB139FB6490023D77 /* PoliciesView.swift */,
+				8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */,
+			);
+			path = Playwright;
 			sourceTree = "<group>";
 		};
 		5249E78CA2E73149ED2DBD90 /* Resources */ = {
@@ -122,9 +164,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		619951F2A52BD5550DA0C8DC /* Exclusions */ = {
+			isa = PBXGroup;
+			children = (
+				DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */,
+			);
+			path = Exclusions;
+			sourceTree = "<group>";
+		};
 		6E44BA6CE45D94D015151F15 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */,
 				99A12503453517D47E1301D1 /* NotificationSettingsView.swift */,
 				2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */,
 			);
@@ -156,6 +207,14 @@
 			path = Cases;
 			sourceTree = "<group>";
 		};
+		88631A24D96EB2082907882D /* Agent */ = {
+			isa = PBXGroup;
+			children = (
+				60DB720AEF63D3E12CB96859 /* AgentChatView.swift */,
+			);
+			path = Agent;
+			sourceTree = "<group>";
+		};
 		A46C949D28D79F20C98A1E41 /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,8 +239,11 @@
 		AC452514B8EB65FBC4C3B44B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2AD3BC44BA89F7A36955884E /* AIAgentService.swift */,
 				5BA06D396A83D8C9440BBCF4 /* AuthService.swift */,
+				CF0CFFEC4D894E40227A8AAC /* DemoDataService.swift */,
 				FEF0E477711D399C6A3787C9 /* KeychainService.swift */,
+				1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */,
 				5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */,
 				AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */,
 			);
@@ -239,6 +301,8 @@
 			dependencies = (
 			);
 			name = CentralMobileApp;
+			packageProductDependencies = (
+			);
 			productName = CentralMobileApp;
 			productReference = BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */;
 			productType = "com.apple.product-type.application";
@@ -259,7 +323,6 @@
 				};
 			};
 			buildConfigurationList = 2FD48A756FE81184AFB194CA /* Build configuration list for PBXProject "CentralMobileApp" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -267,6 +330,9 @@
 				en,
 			);
 			mainGroup = 23092C26D6A1A6F77EDCF030;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FA834A376463607827FE10A3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -291,8 +357,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2B0AB6F8941720239AC3A2D /* AIAgentService.swift in Sources */,
+				6127B87849E9AB2905E4684E /* AISettingsView.swift in Sources */,
 				16DF6F73E2DC9F9995E6E3D8 /* APIModels.swift in Sources */,
 				7B6B274FDD876F4798D2DB45 /* AccountHealthCard.swift in Sources */,
+				FFE0DA9A5C06CB4EB61BF43B /* AgentChatView.swift in Sources */,
 				814D62333694B7F3588A4A3F /* AlertDetailView.swift in Sources */,
 				31E96D1A705C29CCC682A2BF /* AlertsCard.swift in Sources */,
 				4DB4C7507EDFB3FC62CFAE13 /* AlertsListView.swift in Sources */,
@@ -306,14 +375,21 @@
 				6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */,
 				59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */,
 				07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */,
+				9032C93DBA2D7BA3AE633845 /* DemoDataService.swift in Sources */,
 				050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */,
 				29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */,
 				43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */,
 				E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */,
+				3669E7D7EACCEF48CEB8324B /* ExclusionsListView.swift in Sources */,
+				B085B8D3861B4824A38884D2 /* FirewallListView.swift in Sources */,
 				4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */,
 				951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */,
 				B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */,
+				ED2752A0B5D16E8FD8378ADC /* PlaywrightService.swift in Sources */,
+				454E2576D9508D256B860B02 /* PlaywrightStatusView.swift in Sources */,
+				61F1724B5940E2557F31F1E6 /* PoliciesView.swift in Sources */,
 				4257C337E4347AB8648AE898 /* PushNotificationService.swift in Sources */,
+				6F0907EE2E19859694B5E3E7 /* ScreenshotView.swift in Sources */,
 				1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */,
 				93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */,
 				3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */,
@@ -357,7 +433,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -435,7 +511,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;

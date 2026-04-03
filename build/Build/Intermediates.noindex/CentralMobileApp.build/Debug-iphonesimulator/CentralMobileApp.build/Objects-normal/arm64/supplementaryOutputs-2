@@ -1,0 +1,44 @@
+{
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/App/AppDelegate.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AppDelegate.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AppDelegate.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AppDelegate.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AppDelegate.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AppDelegate.swiftdeps"
+  },
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Models/CacheModels.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CacheModels.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CacheModels.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CacheModels.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CacheModels.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CacheModels.swiftdeps"
+  },
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Services/AuthService.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthService.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthService.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthService.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthService.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthService.swiftdeps"
+  },
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/ViewModels/AuthViewModel.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthViewModel.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthViewModel.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthViewModel.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthViewModel.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AuthViewModel.swiftdeps"
+  },
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Alerts/AlertsListView.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AlertsListView.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AlertsListView.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AlertsListView.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AlertsListView.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/AlertsListView.swiftdeps"
+  },
+  "/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Cases/CaseDetailView.swift" : {
+    "const-values" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CaseDetailView.swiftconstvalues",
+    "dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CaseDetailView.d",
+    "diagnostics" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CaseDetailView.dia",
+    "object" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CaseDetailView.o",
+    "swift-dependencies" : "/Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/Objects-normal/arm64/CaseDetailView.swiftdeps"
+  }
+}

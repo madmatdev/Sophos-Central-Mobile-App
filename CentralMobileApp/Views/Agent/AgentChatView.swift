@@ -238,9 +238,13 @@ struct AgentChatView: View {
         // Account health
         if let health = dashboardVM.accountHealth {
             context += "ACCOUNT HEALTH:\n"
-            context += "• Protection: \(health.endpoint?.protection?.status ?? "?") (score: \(health.endpoint?.protection?.score ?? 0))\n"
-            context += "• Policy: \(health.endpoint?.policy?.status ?? "?") (score: \(health.endpoint?.policy?.score ?? 0))\n"
-            context += "• Tamper Protection: \(health.endpoint?.tamperProtection?.status ?? "?") (score: \(health.endpoint?.tamperProtection?.score ?? 0))\n"
+            if let prot = health.endpoint?.protection {
+                context += "• Protection — Computer score: \(prot.computer?.score ?? 0), not fully protected: \(prot.computer?.notFullyProtected ?? 0)\n"
+                context += "• Protection — Server score: \(prot.server?.score ?? 0)\n"
+            }
+            if let tamper = health.endpoint?.tamperProtection {
+                context += "• Tamper Protection — Computer score: \(tamper.computer?.score ?? 0), disabled: \(tamper.computer?.disabled ?? 0)\n"
+            }
             context += "\n"
         }
 

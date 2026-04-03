@@ -15,7 +15,7 @@ final class AuthViewModel {
     private let keychain = KeychainService.shared
 
     init() {
-        isAuthenticated = keychain.hasCredentials
+        isAuthenticated = keychain.hasCredentials || DemoDataService.isDemoMode
     }
 
     func signIn() async {

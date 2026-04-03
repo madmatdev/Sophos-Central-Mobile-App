@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>12</integer>
+	<key>logs</key>
+	<dict>
+		<key>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>CentralMobileApp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>CentralMobileApp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project CentralMobileApp with scheme CentralMobileApp</string>
+			<key>timeStartedRecording</key>
+			<real>796873366.363415</real>
+			<key>timeStoppedRecording</key>
+			<real>796873370.40060699</real>
+			<key>title</key>
+			<string>Building project CentralMobileApp with scheme CentralMobileApp</string>
+			<key>uniqueIdentifier</key>
+			<string>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

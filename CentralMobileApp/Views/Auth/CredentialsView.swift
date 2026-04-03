@@ -142,6 +142,22 @@ struct CredentialsView: View {
                     }
                     .padding(.horizontal, SophosTheme.Spacing.lg)
 
+                    // Demo Mode button
+                    Button {
+                        DemoDataService.isDemoMode = true
+                        viewModel.isAuthenticated = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "play.rectangle")
+                            Text("Enter Demo Mode")
+                                .font(SophosTheme.Typography.subheadline(.semibold))
+                        }
+                        .foregroundStyle(SophosTheme.Colors.sophosBlue)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                    }
+                    .padding(.horizontal, SophosTheme.Spacing.lg)
+
                     Spacer().frame(height: SophosTheme.Spacing.xxl)
                 }
             }
