@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sophos Central Mobile — Product Brief</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --sophos-blue: #005BC8;
+    --sophos-navy: #0A1628;
+    --sophos-light-blue: #E8F0FE;
+    --sophos-gray: #5A6A7A;
+    --sophos-light-gray: #F4F6F8;
+    --sophos-white: #FFFFFF;
+    --sophos-accent: #00B4D8;
+    --sophos-green: #2E7D32;
+    --sophos-orange: #E65100;
+  }
+
+  @page { size: A4; margin: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--sophos-navy);
+    background: var(--sophos-white);
+    line-height: 1.5;
+    font-size: 12.5px;
+  }
+
+  /* ─── Page container — strict A4 one-pager ─── */
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ─── Header bar ─── */
+  .header {
+    background: var(--sophos-navy);
+    padding: 14px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header .logo {
+    display: flex;
+    align-items: center;
+  }
+  .header .logo svg { height: 20px; width: auto; }
+  .header .logo svg .cls-1 { fill: #FFFFFF; }
+  .header .logo svg .cls-2 { fill: #2006f7; }
+  .header .back-text {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+  }
+
+  /* ─── Tool page layout ─── */
+  .tool-page-content {
+    padding: 24px 36px 40px;
+  }
+
+  .tool-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--sophos-navy);
+    margin-bottom: 2px;
+    line-height: 1.2;
+  }
+  .tool-subtitle {
+    font-size: 12.5px;
+    color: var(--sophos-gray);
+    margin-bottom: 16px;
+    line-height: 1.45;
+    max-width: 650px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--sophos-blue);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+
+  .body-text {
+    font-size: 12px;
+    color: var(--sophos-navy);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .section-heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--sophos-navy);
+    margin: 16px 0 8px;
+  }
+
+  /* ─── Steps / How it works ─── */
+  .steps {
+    margin: 8px 0 12px;
+    padding: 0;
+    list-style: none;
+  }
+  .steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: var(--sophos-blue);
+    color: var(--sophos-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .step-text {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .step-text strong {
+    color: var(--sophos-blue);
+  }
+
+  /* ─── Bullet lists ─── */
+  .bullet-list {
+    margin: 6px 0 12px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .bullet-list li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .bullet-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--sophos-blue);
+    font-weight: 700;
+  }
+
+  /* ─── Categories grid ─── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    margin: 6px 0 12px;
+  }
+  .cat-item {
+    font-size: 11.5px;
+    padding: 4px 0;
+    border-bottom: 1px solid #E8ECF0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cat-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sophos-blue);
+    flex-shrink: 0;
+  }
+
+  /* ─── Info box ─── */
+  .info-box {
+    background: var(--sophos-light-blue);
+    border-left: 3px solid var(--sophos-blue);
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+
+  /* ─── CTA box ─── */
+  .cta-box {
+    background: var(--sophos-navy);
+    color: var(--sophos-white);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 14px 0 0;
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .cta-box a {
+    color: var(--sophos-accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* ─── Footer ─── */
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 36px;
+    border-top: 1px solid #E8ECF0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    color: var(--sophos-gray);
+  }
+  .footer svg { height: 12px; width: auto; opacity: 0.4; }
+
+  /* ─── Divider ─── */
+  .divider {
+    height: 1px;
+    background: #E8ECF0;
+    margin: 24px 0;
+  }
+
+  /* ─── Overview page special ─── */
+  .overview-hero {
+    background: linear-gradient(135deg, var(--sophos-navy) 0%, #1a2d4a 100%);
+    padding: 28px 36px;
+    color: var(--sophos-white);
+  }
+  .overview-hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .overview-hero p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.8);
+    max-width: 600px;
+    line-height: 1.45;
+  }
+
+  .tool-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .tool-card {
+    border: 1px solid #E0E4EA;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .tool-card h3 {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--sophos-blue);
+    margin-bottom: 3px;
+  }
+  .tool-card p {
+    font-size: 10.5px;
+    color: var(--sophos-gray);
+    line-height: 1.4;
+  }
+  .tool-card .badge {
+    display: inline-block;
+    font-size: 8.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .badge-ir { background: #FFF3E0; color: #E65100; }
+  .badge-assess { background: #E8F5E9; color: #2E7D32; }
+
+  /* ─── Screen preview: show page boundaries ─── */
+  @media screen {
+    body { background: #E8ECF0; }
+    .page { 
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12); 
+      margin: 20px auto;
+      background: #fff;
+    }
+  }
+
+  /* ─── Print styles ─── */
+  @media print {
+    body { background: #fff; }
+    .page { 
+      width: 100%;
+      height: 100vh;
+      margin: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+  }
+
+  /* ─── Screenshot grid ─── */
+  .screenshot-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .screenshot-row img {
+    height: 180px;
+    width: auto;
+    border-radius: 8px;
+    border: 1px solid #E0E4EA;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .screenshot-wide {
+    text-align: center;
+    margin: 10px 0;
+  }
+  .screenshot-wide img {
+    max-width: 100%;
+    height: auto;
+    max-height: 140px;
+    border-radius: 6px;
+    border: 1px solid #E0E4EA;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .stat-box {
+    text-align: center;
+    padding: 10px 6px;
+    background: var(--sophos-light-blue);
+    border-radius: 6px;
+  }
+  .stat-box .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--sophos-blue);
+    display: block;
+    line-height: 1.2;
+  }
+  .stat-box .lbl {
+    font-size: 9px;
+    color: var(--sophos-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin: 8px 0;
+  }
+  .compare-table th {
+    background: var(--sophos-navy);
+    color: white;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #E8ECF0;
+  }
+  .compare-table tr:nth-child(even) td { background: #F8F9FA; }
+  .check { color: #2E7D32; font-weight: 600; }
+  .cross { color: #CCC; }
+  .new { 
+    display: inline-block;
+    background: var(--sophos-blue);
+    color: white;
+    font-size: 8px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+</style>
+
+</head>
+<body>
+
+<!-- PAGE 1: OVERVIEW -->
+<div class="page">
+  <div class="overview-hero">
+    <div style="margin-bottom: 10px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 65" style="height: 22px; width: auto;"><defs><style>.h-cls-1{fill:#FFFFFF}.h-cls-2{fill:#2006f7}</style></defs><path class="h-cls-2" d="M4.48,4.35v28.3c0,4.8,2.6,9.21,6.79,11.54l29.46,16.35.19.11,29.6-16.45c4.19-2.33,6.79-6.74,6.79-11.53V4.35H4.48ZM51.89,37.88c-2.2,1.22-4.67,1.86-7.18,1.86l-27.32-.08,15.32-8.54c1.48-.83,3.14-1.26,4.84-1.27l28.92-.09-14.57,8.13ZM51.47,23.9c-1.48.83-3.14,1.26-4.84,1.27l-28.92.09,14.57-8.13c2.2-1.22,4.67-1.86,7.18-1.86l27.32.08-15.32,8.54Z"/><g><path class="h-cls-1" d="M578.8,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4s0-12.88,0-12.88h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86,0,2.12-1.72,3.77-3.84,3.77h-60.53v12.88h60.53c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M228.84,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM228.84,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><path class="h-cls-1" d="M483.22,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM483.22,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><polygon class="h-cls-1" points="410.52 4.53 410.52 24.96 360.14 24.96 360.14 4.53 347.24 4.53 347.24 58.42 360.14 58.42 360.14 37.86 410.52 37.86 410.52 58.42 423.42 58.42 423.42 4.53 410.52 4.53"/><path class="h-cls-1" d="M155.11,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4V4.44h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86s-1.72,3.77-3.84,3.77h-60.53v12.88s60.53,0,60.53,0c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M319.66,4.53h-43.49s-5.2,0-5.2,0h-7.7s0,53.89,0,53.89h12.9s0-14.44,0-14.44h43.49c10.88,0,19.73-8.85,19.73-19.73,0-10.88-8.85-19.73-19.73-19.73ZM319.66,31.08h-43.49s0-13.66,0-13.66h43.49c3.77,0,6.83,3.06,6.83,6.83,0,3.77-3.06,6.83-6.83,6.83Z"/></g></svg></div>
+    <h1>Sophos Central Mobile</h1>
+    <p>A native iOS command center for Sophos Central — powered by AI, browser automation, and the Sophos Central API. Manage, investigate, and respond from your phone.</p>
+  </div>
+
+  <div class="tool-page-content">
+    <div class="stat-row">
+      <div class="stat-box"><span class="num">16</span><span class="lbl">Features</span></div>
+      <div class="stat-box"><span class="num">60%</span><span class="lbl">More Coverage</span></div>
+      <div class="stat-box"><span class="num">3</span><span class="lbl">Siri Shortcuts</span></div>
+      <div class="stat-box"><span class="num">0</span><span class="lbl">API Cost</span></div>
+    </div>
+
+    <div class="screenshot-row">
+      <img src="screenshots/dashboard.png" alt="Dashboard">
+      <img src="screenshots/alerts-devices.png" alt="Alerts & Devices">
+      <img src="screenshots/cases.png" alt="Cases">
+      <img src="screenshots/ai-assistant.png" alt="AI Assistant">
+    </div>
+
+    <div class="section-label">What's Included</div>
+    <div class="tool-card-grid">
+      <div class="tool-card">
+        <div class="badge badge-ir">AI-Powered</div>
+        <h3>AI Security Assistant</h3>
+        <p>Groq-powered chat that knows your environment. Triage alerts, investigate incidents, get remediation guidance.</p>
+      </div>
+      <div class="tool-card">
+        <div class="badge badge-ir">Automation</div>
+        <h3>Playwright Backend</h3>
+        <p>Headless browser automation for Live Discover, threat graphs, and policies — features the API can't reach.</p>
+      </div>
+      <div class="tool-card">
+        <div class="badge badge-assess">Investigation</div>
+        <h3>Threat Intel Enrichment</h3>
+        <p>Look up hashes, IPs, and domains against VirusTotal and AbuseIPDB with auto-detection.</p>
+      </div>
+      <div class="tool-card">
+        <div class="badge badge-assess">Management</div>
+        <h3>Multi-Tenant Support</h3>
+        <p>Manage multiple Sophos Central orgs. Switch tenants with one tap. Built for SEs and MSPs.</p>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      Clone the repo and run in Xcode: <strong>github.com/madmatdev/Sophos-Central-Mobile-App</strong> (branch: acosta-branch). Tap <strong>Demo Mode</strong> on the login screen to explore with realistic fake data — no tenant needed.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© Copyright 2026. Sophos Ltd. All rights reserved.</span>
+    <span>2026-04-02 EN</span>
+  </div>
+</div>
+
+
+<!-- PAGE 2: AI ASSISTANT & CAPABILITIES -->
+<div class="page">
+  <div class="header">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 65" style="height:24px; width: auto;"><defs><style>.h-cls-1{fill:#FFFFFF}.h-cls-2{fill:#2006f7}</style></defs><path class="h-cls-2" d="M4.48,4.35v28.3c0,4.8,2.6,9.21,6.79,11.54l29.46,16.35.19.11,29.6-16.45c4.19-2.33,6.79-6.74,6.79-11.53V4.35H4.48ZM51.89,37.88c-2.2,1.22-4.67,1.86-7.18,1.86l-27.32-.08,15.32-8.54c1.48-.83,3.14-1.26,4.84-1.27l28.92-.09-14.57,8.13ZM51.47,23.9c-1.48.83-3.14,1.26-4.84,1.27l-28.92.09,14.57-8.13c2.2-1.22,4.67-1.86,7.18-1.86l27.32.08-15.32,8.54Z"/><g><path class="h-cls-1" d="M578.8,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4s0-12.88,0-12.88h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86,0,2.12-1.72,3.77-3.84,3.77h-60.53v12.88h60.53c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M228.84,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM228.84,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><path class="h-cls-1" d="M483.22,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM483.22,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><polygon class="h-cls-1" points="410.52 4.53 410.52 24.96 360.14 24.96 360.14 4.53 347.24 4.53 347.24 58.42 360.14 58.42 360.14 37.86 410.52 37.86 410.52 58.42 423.42 58.42 423.42 4.53 410.52 4.53"/><path class="h-cls-1" d="M155.11,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4V4.44h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86s-1.72,3.77-3.84,3.77h-60.53v12.88s60.53,0,60.53,0c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M319.66,4.53h-43.49s-5.2,0-5.2,0h-7.7s0,53.89,0,53.89h12.9s0-14.44,0-14.44h43.49c10.88,0,19.73-8.85,19.73-19.73,0-10.88-8.85-19.73-19.73-19.73ZM319.66,31.08h-43.49s0-13.66,0-13.66h43.49c3.77,0,6.83,3.06,6.83,6.83,0,3.77-3.06,6.83-6.83,6.83Z"/></g></svg></div>
+    <div class="back-text">Sophos Central Mobile — Product Brief</div>
+  </div>
+
+  <div class="tool-page-content">
+    <div class="section-label">AI-Powered</div>
+    <div class="tool-title">AI Security Assistant</div>
+    <div class="tool-subtitle">A conversational security analyst powered by Groq's llama-3.3-70b model — automatically loaded with your current environment data for context-aware analysis and recommendations.</div>
+
+    <div class="screenshot-row" style="justify-content: flex-start;">
+      <img src="screenshots/ai-assistant.png" alt="AI Assistant" style="height: 220px;">
+    </div>
+
+    <div class="section-heading">What the AI Assistant can do</div>
+    <ul class="bullet-list">
+      <li><strong>Alert Triage</strong> — "What needs attention?" analyzes all current alerts with severity ratings and prioritized recommendations.</li>
+      <li><strong>Investigation</strong> — "Why is PACS-IMAGING-1 compromised?" correlates alerts, device health, and MITRE ATT&CK patterns.</li>
+      <li><strong>Remediation</strong> — "How do I respond to CryptoGuard?" provides step-by-step incident response with specific endpoint actions.</li>
+      <li><strong>Executive Summaries</strong> — "Summarize this week for my manager" generates non-technical security status reports.</li>
+      <li><strong>Live Discover Queries</strong> — "Find running PowerShell processes" generates SQL queries you can execute directly.</li>
+      <li><strong>Trend Analysis</strong> — "Compare this week vs last" identifies patterns and emerging threats across your environment.</li>
+      <li><strong>Threat Intel Context</strong> — "What is Troj/Ransom-GKL?" explains threat behavior, impact, and recommended actions.</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Setup:</strong> Get a free API key at <strong>console.groq.com</strong>, paste it in Settings → AI Configuration. The assistant automatically loads your current alerts, devices, health scores, and cases as context.
+    </div>
+
+    <div class="section-heading">Additional capabilities</div>
+    <div class="cat-grid">
+      <div class="cat-item"><div class="cat-icon"></div> Smart Notifications with AI triage</div>
+      <div class="cat-item"><div class="cat-icon"></div> iOS Widgets (small & medium)</div>
+      <div class="cat-item"><div class="cat-icon"></div> Siri Shortcuts (3 voice intents)</div>
+      <div class="cat-item"><div class="cat-icon"></div> Watchlist for tracking items</div>
+      <div class="cat-item"><div class="cat-icon"></div> Exclusion management (CRUD)</div>
+      <div class="cat-item"><div class="cat-icon"></div> Firewall monitoring</div>
+      <div class="cat-item"><div class="cat-icon"></div> Demo mode for customer demos</div>
+      <div class="cat-item"><div class="cat-icon"></div> Offline caching (SwiftData)</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© Copyright 2026. Sophos Ltd. All rights reserved.</span>
+    <span>2026-04-02 EN</span>
+  </div>
+</div>
+
+
+<!-- PAGE 3: API + PLAYWRIGHT COVERAGE -->
+<div class="page">
+  <div class="header">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 65" style="height:24px; width: auto;"><defs><style>.h-cls-1{fill:#FFFFFF}.h-cls-2{fill:#2006f7}</style></defs><path class="h-cls-2" d="M4.48,4.35v28.3c0,4.8,2.6,9.21,6.79,11.54l29.46,16.35.19.11,29.6-16.45c4.19-2.33,6.79-6.74,6.79-11.53V4.35H4.48ZM51.89,37.88c-2.2,1.22-4.67,1.86-7.18,1.86l-27.32-.08,15.32-8.54c1.48-.83,3.14-1.26,4.84-1.27l28.92-.09-14.57,8.13ZM51.47,23.9c-1.48.83-3.14,1.26-4.84,1.27l-28.92.09,14.57-8.13c2.2-1.22,4.67-1.86,7.18-1.86l27.32.08-15.32,8.54Z"/><g><path class="h-cls-1" d="M578.8,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4s0-12.88,0-12.88h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86,0,2.12-1.72,3.77-3.84,3.77h-60.53v12.88h60.53c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M228.84,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM228.84,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><path class="h-cls-1" d="M483.22,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM483.22,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><polygon class="h-cls-1" points="410.52 4.53 410.52 24.96 360.14 24.96 360.14 4.53 347.24 4.53 347.24 58.42 360.14 58.42 360.14 37.86 410.52 37.86 410.52 58.42 423.42 58.42 423.42 4.53 410.52 4.53"/><path class="h-cls-1" d="M155.11,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4V4.44h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86s-1.72,3.77-3.84,3.77h-60.53v12.88s60.53,0,60.53,0c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M319.66,4.53h-43.49s-5.2,0-5.2,0h-7.7s0,53.89,0,53.89h12.9s0-14.44,0-14.44h43.49c10.88,0,19.73-8.85,19.73-19.73,0-10.88-8.85-19.73-19.73-19.73ZM319.66,31.08h-43.49s0-13.66,0-13.66h43.49c3.77,0,6.83,3.06,6.83,6.83,0,3.77-3.06,6.83-6.83,6.83Z"/></g></svg></div>
+    <div class="back-text">Sophos Central Mobile — Product Brief</div>
+  </div>
+
+  <div class="tool-page-content">
+    <div class="section-label">Coverage</div>
+    <div class="tool-title">API + Playwright: Beyond the Console</div>
+    <div class="tool-subtitle">The Sophos Central API covers ~40% of the web console. Browser automation fills the other 60% — giving you mobile access to Live Discover, threat graphs, and policy management.</div>
+
+    <div class="screenshot-wide">
+      <img src="screenshots/central-web.png" alt="Sophos Central Web Console" style="max-height: 130px;">
+      <div style="font-size: 9px; color: var(--sophos-gray); margin-top: 4px;">Live capture of Sophos Central dashboard via Playwright backend</div>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr><th>Capability</th><th>API Only</th><th>Mobile App</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dashboard & Health Score</td><td class="check">✅</td><td class="check">✅</td></tr>
+        <tr><td>Alert Management</td><td class="check">✅</td><td class="check">✅</td></tr>
+        <tr><td>Device Isolation & Scans</td><td class="check">✅</td><td class="check">✅</td></tr>
+        <tr><td>Case Management</td><td class="check">✅</td><td class="check">✅</td></tr>
+        <tr><td>Exclusion Management</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Tamper Protection Control</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Firewall Monitoring</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Live Discover Queries</td><td class="cross">—</td><td class="check">✅ Playwright <span class="new">NEW</span></td></tr>
+        <tr><td>Threat Graphs</td><td class="cross">—</td><td class="check">✅ Playwright <span class="new">NEW</span></td></tr>
+        <tr><td>AI-Powered Triage</td><td class="cross">—</td><td class="check">✅ Groq AI <span class="new">NEW</span></td></tr>
+        <tr><td>Threat Intel (VT / AbuseIPDB)</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Smart Notifications</td><td class="cross">—</td><td class="check">✅ AI triage <span class="new">NEW</span></td></tr>
+        <tr><td>iOS Widgets & Siri</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Multi-Tenant</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+        <tr><td>Demo Mode</td><td class="cross">—</td><td class="check">✅ <span class="new">NEW</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-heading">Playwright Backend — Dockerized deployment</div>
+    <p class="body-text">The Playwright backend runs as a Docker container on Mac, Windows, or Linux. It authenticates to Sophos Central's web console using a headless Chrome instance with built-in noVNC for the initial 2FA login.</p>
+
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-text"><strong>docker compose up</strong> — builds and starts the container with Chrome, Node, and VNC pre-installed.</div></li>
+      <li><div class="step-num">2</div><div class="step-text"><strong>Open localhost:6080</strong> — noVNC web viewer shows the Chrome window. Complete your 2FA login.</div></li>
+      <li><div class="step-num">3</div><div class="step-text"><strong>Press Enter</strong> — session saves to disk. The backend switches to headless mode and serves the REST API.</div></li>
+      <li><div class="step-num">4</div><div class="step-text"><strong>API ready</strong> — screenshots, Live Discover, threat graphs, and policies available at port 18870.</div></li>
+    </ol>
+
+    <div class="info-box">
+      <strong>Session persistence:</strong> The browser session is saved to a Docker volume and survives container restarts. Re-login is only needed when the Sophos Central session expires (typically days).
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© Copyright 2026. Sophos Ltd. All rights reserved.</span>
+    <span>2026-04-02 EN</span>
+  </div>
+</div>
+
+
+<!-- PAGE 4: ARCHITECTURE & GETTING STARTED -->
+<div class="page">
+  <div class="header">
+    <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 65" style="height:24px; width: auto;"><defs><style>.h-cls-1{fill:#FFFFFF}.h-cls-2{fill:#2006f7}</style></defs><path class="h-cls-2" d="M4.48,4.35v28.3c0,4.8,2.6,9.21,6.79,11.54l29.46,16.35.19.11,29.6-16.45c4.19-2.33,6.79-6.74,6.79-11.53V4.35H4.48ZM51.89,37.88c-2.2,1.22-4.67,1.86-7.18,1.86l-27.32-.08,15.32-8.54c1.48-.83,3.14-1.26,4.84-1.27l28.92-.09-14.57,8.13ZM51.47,23.9c-1.48.83-3.14,1.26-4.84,1.27l-28.92.09,14.57-8.13c2.2-1.22,4.67-1.86,7.18-1.86l27.32.08-15.32,8.54Z"/><g><path class="h-cls-1" d="M578.8,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4s0-12.88,0-12.88h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86,0,2.12-1.72,3.77-3.84,3.77h-60.53v12.88h60.53c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M228.84,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM228.84,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><path class="h-cls-1" d="M483.22,4.47h-25.15c-14.89,0-27.01,12.12-27.01,27.01,0,14.89,12.12,27.01,27.01,27.01h25.15c14.89,0,27.01-12.12,27.01-27.01,0-14.89-12.12-27.01-27.01-27.01ZM483.22,45.6h-25.15c-7.78,0-14.11-6.33-14.11-14.11,0-7.78,6.33-14.11,14.11-14.11h25.15c7.78,0,14.11,6.33,14.11,14.11,0,7.78-6.33,14.11-14.11,14.11Z"/><polygon class="h-cls-1" points="410.52 4.53 410.52 24.96 360.14 24.96 360.14 4.53 347.24 4.53 347.24 58.42 360.14 58.42 360.14 37.86 410.52 37.86 410.52 58.42 423.42 58.42 423.42 4.53 410.52 4.53"/><path class="h-cls-1" d="M155.11,25h-46.42c-2.12,0-3.84-1.72-3.84-3.84,0-2.12,1.72-3.84,3.84-3.84h60.4V4.44h-60.4c-9.22,0-16.72,7.5-16.72,16.72,0,9.22,7.5,16.72,16.72,16.72h46.42c2.12,0,3.84,1.75,3.84,3.86s-1.72,3.77-3.84,3.77h-60.53v12.88s60.53,0,60.53,0c9.22,0,16.72-7.42,16.72-16.64,0-9.22-7.5-16.74-16.72-16.74Z"/><path class="h-cls-1" d="M319.66,4.53h-43.49s-5.2,0-5.2,0h-7.7s0,53.89,0,53.89h12.9s0-14.44,0-14.44h43.49c10.88,0,19.73-8.85,19.73-19.73,0-10.88-8.85-19.73-19.73-19.73ZM319.66,31.08h-43.49s0-13.66,0-13.66h43.49c3.77,0,6.83,3.06,6.83,6.83,0,3.77-3.06,6.83-6.83,6.83Z"/></g></svg></div>
+    <div class="back-text">Sophos Central Mobile — Product Brief</div>
+  </div>
+
+  <div class="tool-page-content">
+    <div class="section-label">Architecture</div>
+    <div class="tool-title">How It Works</div>
+    <div class="tool-subtitle">Three layers working together — the Sophos API for data, Playwright for browser automation, and Groq AI for intelligence.</div>
+
+    <div style="background: var(--sophos-light-blue); border-radius: 8px; padding: 16px; margin: 12px 0;">
+      <div style="text-align: center; font-size: 13px; font-weight: 600; color: var(--sophos-navy); margin-bottom: 8px;">📱 iOS App (SwiftUI)</div>
+      <div style="text-align: center; font-size: 10px; color: var(--sophos-gray); margin-bottom: 12px;">Dashboard · Alerts · Devices · Cases · AI Chat · Watchlist · Widgets · Siri</div>
+      <div style="text-align: center; color: var(--sophos-blue); margin: 6px 0;">↕</div>
+      <div style="display: flex; gap: 8px;">
+        <div style="flex:1; background: white; border-radius: 6px; padding: 10px; text-align: center; border: 1px solid #E0E4EA;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--sophos-blue);">Sophos Central API</div>
+          <div style="font-size: 9px; color: var(--sophos-gray);">Alerts, Endpoints, Cases, Health, Isolation, Exclusions</div>
+        </div>
+        <div style="flex:1; background: white; border-radius: 6px; padding: 10px; text-align: center; border: 1px solid #E0E4EA;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--sophos-blue);">Playwright Backend</div>
+          <div style="font-size: 9px; color: var(--sophos-gray);">Live Discover, Threat Graphs, Policies, Screenshots</div>
+        </div>
+        <div style="flex:1; background: white; border-radius: 6px; padding: 10px; text-align: center; border: 1px solid #E0E4EA;">
+          <div style="font-size: 11px; font-weight: 600; color: var(--sophos-blue);">Groq AI (LLM)</div>
+          <div style="font-size: 9px; color: var(--sophos-gray);">Triage, Investigation, Remediation, Reports</div>
+        </div>
+      </div>
+      <div style="text-align: center; color: var(--sophos-blue); margin: 6px 0;">↕</div>
+      <div style="text-align: center; font-size: 12px; font-weight: 600; color: var(--sophos-navy);">☁️ Sophos Central</div>
+      <div style="text-align: center; font-size: 10px; color: var(--sophos-gray);">Your security environment — endpoints, firewalls, email, XDR</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Getting Started</div>
+    <div class="section-heading">Deploy in minutes</div>
+
+    <ol class="steps">
+      <li><div class="step-num">1</div><div class="step-text"><strong>Clone & Build</strong> — <code style="background: var(--sophos-light-blue); padding: 1px 4px; border-radius: 3px; font-size: 10px;">git clone</code> the repo, run <code style="background: var(--sophos-light-blue); padding: 1px 4px; border-radius: 3px; font-size: 10px;">xcodegen generate</code>, open in Xcode, build for simulator or device.</div></li>
+      <li><div class="step-num">2</div><div class="step-text"><strong>Start Playwright</strong> — Run <code style="background: var(--sophos-light-blue); padding: 1px 4px; border-radius: 3px; font-size: 10px;">docker compose up</code> in the playwright-backend folder. Open localhost:6080 for 2FA login.</div></li>
+      <li><div class="step-num">3</div><div class="step-text"><strong>Configure AI</strong> — Get a free Groq API key at console.groq.com. Paste in Settings → AI Configuration.</div></li>
+      <li><div class="step-num">4</div><div class="step-text"><strong>Connect or Demo</strong> — Enter Sophos Central API credentials, or tap <strong>Demo Mode</strong> for instant exploration with fake data.</div></li>
+    </ol>
+
+    <div class="section-heading">Who it's for</div>
+    <div class="cat-grid">
+      <div class="cat-item"><div class="cat-icon"></div> <strong>SEs</strong> — Demo to customers, multi-tenant management</div>
+      <div class="cat-item"><div class="cat-icon"></div> <strong>Admins</strong> — Respond to incidents on the go</div>
+      <div class="cat-item"><div class="cat-icon"></div> <strong>SOC Teams</strong> — Mobile triage and investigation</div>
+      <div class="cat-item"><div class="cat-icon"></div> <strong>MSPs</strong> — Multi-org visibility from one app</div>
+    </div>
+
+    <div class="section-heading">Technical requirements</div>
+    <ul class="bullet-list">
+      <li><strong>iOS 18+</strong> — SwiftUI, SwiftData, App Intents</li>
+      <li><strong>Xcode 16+</strong> with iOS 26 SDK for building</li>
+      <li><strong>Docker</strong> for the Playwright backend (Mac, Windows, or Linux)</li>
+      <li><strong>Sophos Central</strong> account with API credentials (Client ID + Client Secret)</li>
+      <li><strong>Groq API key</strong> (free) for the AI assistant — optional but recommended</li>
+    </ul>
+
+    <div class="cta-box">
+      <strong>Repository:</strong> github.com/madmatdev/Sophos-Central-Mobile-App (branch: acosta-branch)<br>
+      <strong>Playwright Backend:</strong> See playwright-backend/README.md for Docker deployment instructions.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>© Copyright 2026. Sophos Ltd. All rights reserved.</span>
+    <span>2026-04-02 EN</span>
+  </div>
+</div>
+
+</body>
+</html>
