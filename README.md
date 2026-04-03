@@ -241,6 +241,47 @@ SophosWidget/                         # iOS widget extension
 
 The dashboard shows account health score (88/100), protection and tamper protection issues, alert severity breakdown (3 critical, 2 warning, 1 other), and recent high-severity alerts including ransomware and PowerShell detections. The tab bar provides quick access to Alerts, Devices, Cases, and the AI Assistant (under More).
 
+### Alerts & Devices (Demo Mode)
+
+<p align="center">
+  <img src="docs/screenshots/alerts-devices.png" width="300" alt="Alerts and Devices">
+</p>
+
+Scrolling down reveals the full alert list with severity badges (High in red), timestamps, and product source. The Devices & Users card shows a color-coded health bar (green/orange/red), total counts, and lists at-risk endpoints — SALES-WS-02 (Suspicious), FINANCE-WS-03 (At Risk), and PACS-IMAGING-1 (At Risk) — with hold-to-act quick actions.
+
+### High Priority Cases (Demo Mode)
+
+<p align="center">
+  <img src="docs/screenshots/cases.png" width="300" alt="Cases">
+</p>
+
+The High Priority Cases card shows 3 open cases with 2 high-severity. The LockBit 3.0 ransomware case targeting PACS-IMAGING-1 is in progress with 4 detections. The Suspicious PowerShell Activity case on FINANCE-WS-03 is open with 2 detections. Each case shows severity badges, investigation status, and detection count.
+
+### AI Security Assistant
+
+<p align="center">
+  <img src="docs/screenshots/ai-assistant.png" width="300" alt="AI Assistant">
+</p>
+
+The AI Assistant provides a conversational security analyst powered by Groq's llama-3.3-70b model. Quick action buttons offer one-tap access to common analyses: environment triage, alert summaries, device health checks, and risk assessments. The free-form chat input accepts any natural language question about your Sophos Central environment.
+
+**What the AI Assistant can do:**
+
+- **Triage & Prioritize** — "What needs immediate attention?" analyzes all current alerts, devices, and cases to tell you exactly where to focus
+- **Alert Analysis** — "Summarize the ransomware alerts" provides context, MITRE ATT&CK mapping, and explains the attack chain in plain language
+- **Device Investigation** — "Why is PACS-IMAGING-1 in bad health?" correlates device status with recent alerts and protection gaps
+- **Risk Assessment** — "What's my risk exposure?" evaluates your overall security posture with specific recommendations
+- **Remediation Guidance** — "How do I respond to this CryptoGuard alert?" provides step-by-step incident response actions
+- **Executive Summaries** — "Summarize this week's security status for my manager" generates non-technical reports
+- **Live Discover Queries** — "Write a query to find all running PowerShell processes" generates SQL queries you can run directly
+- **Threat Intel Context** — "What is Troj/Ransom-GKL?" explains threats, their behavior, and impact
+- **Policy Recommendations** — "Are my endpoint policies configured correctly?" identifies gaps against best practices
+- **Comparison & Trends** — "Compare this week's alerts vs last week" identifies patterns and emerging threats
+
+The assistant automatically loads your current environment data (alerts, devices, health scores, cases) as context for every conversation, so it always knows the state of your environment.
+
+**Setup:** Go to Settings → Advanced → AI Configuration, enter your Groq API key from [console.groq.com](https://console.groq.com), and tap Save. The AI tab is immediately available.
+
 ### Sophos Central Web Console (via Playwright)
 
 <p align="center">
