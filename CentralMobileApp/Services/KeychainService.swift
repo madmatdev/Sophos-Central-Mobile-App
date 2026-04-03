@@ -15,6 +15,8 @@ final class KeychainService {
         case tokenExpiry    = "sophos_token_expiry"
         case tenantId       = "sophos_tenant_id"
         case dataRegionURL  = "sophos_data_region_url"
+        case playwrightURL  = "playwright_backend_url"
+        case playwrightSecret = "playwright_secret"
     }
 
     // MARK: - Save

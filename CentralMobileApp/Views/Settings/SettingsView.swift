@@ -56,6 +56,28 @@ struct SettingsView: View {
                 }
                 .listRowBackground(SophosTheme.Colors.backgroundCard)
 
+                // MARK: - Playwright Backend
+                Section {
+                    NavigationLink {
+                        PlaywrightStatusView()
+                    } label: {
+                        SettingsRow(icon: "server.rack", label: "Backend Status", color: SophosTheme.Colors.sophosBlue)
+                    }
+                    NavigationLink {
+                        PoliciesView()
+                    } label: {
+                        SettingsRow(icon: "shield.checkered", label: "Health Check", color: .green)
+                    }
+                    NavigationLink {
+                        ScreenshotView()
+                    } label: {
+                        SettingsRow(icon: "camera", label: "Live View", color: .purple)
+                    }
+                } header: {
+                    Text("Advanced").sophosSectionHeader()
+                }
+                .listRowBackground(SophosTheme.Colors.backgroundCard)
+
                 // MARK: - Cache
                 Section {
                     Button {
