@@ -1,0 +1,15 @@
+services:
+  sophos-playwright:
+    build: .
+    container_name: sophos-playwright
+    restart: unless-stopped
+    ports:
+      - "18870:18870"   # API
+      - "6080:6080"     # noVNC (for login / re-login)
+    volumes:
+      - ./state:/app/state    # Persist session across restarts
+    environment:
+      - PLAYWRIGHT_SECRET=${PLAYWRIGHT_SECRET:-sophos-pw-2026}
+      - NODE_ENV=production
+    stdin_open: true          # Needed for login prompt
+    tty: true
