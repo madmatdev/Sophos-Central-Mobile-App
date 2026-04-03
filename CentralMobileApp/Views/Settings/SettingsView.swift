@@ -56,8 +56,13 @@ struct SettingsView: View {
                 }
                 .listRowBackground(SophosTheme.Colors.backgroundCard)
 
-                // MARK: - Playwright Backend
+                // MARK: - AI & Backend
                 Section {
+                    NavigationLink {
+                        AISettingsView()
+                    } label: {
+                        SettingsRow(icon: "sparkles", label: "AI Configuration", color: SophosTheme.Colors.sophosBlue)
+                    }
                     NavigationLink {
                         PlaywrightStatusView()
                     } label: {

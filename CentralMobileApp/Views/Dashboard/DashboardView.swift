@@ -92,6 +92,27 @@ struct DashboardView: View {
             }
             .tag(DashboardTab.cases)
 
+            // MARK: - AI Agent Tab
+            NavigationStack {
+                AgentChatView()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "sparkles")
+                                    .foregroundColor(SophosTheme.Colors.sophosBlue)
+                                Text("AI Assistant")
+                                    .font(SophosTheme.Typography.headline())
+                                    .foregroundColor(SophosTheme.Colors.textPrimary)
+                            }
+                        }
+                    }
+            }
+            .tabItem {
+                Label("AI", systemImage: "sparkles")
+            }
+            .tag(DashboardTab.agent)
+
             // MARK: - Settings Tab
             NavigationStack {
                 SettingsView()
@@ -197,7 +218,7 @@ struct DashboardView: View {
 }
 
 enum DashboardTab: Int {
-    case dashboard, alerts, devices, cases, settings
+    case dashboard, alerts, devices, cases, agent, settings
 }
 
 // MARK: - Shared skeleton/empty state components

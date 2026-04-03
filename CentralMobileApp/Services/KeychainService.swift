@@ -17,6 +17,7 @@ final class KeychainService {
         case dataRegionURL  = "sophos_data_region_url"
         case playwrightURL  = "playwright_backend_url"
         case playwrightSecret = "playwright_secret"
+        case groqAPIKey     = "groq_api_key"
     }
 
     // MARK: - Save
