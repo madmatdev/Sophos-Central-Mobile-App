@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC</key>
+		<key>38B020B4-F279-43DC-ABD8-FE7103AEAE32</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,17 +15,17 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC.xcactivitylog</string>
+			<string>38B020B4-F279-43DC-ABD8-FE7103AEAE32.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>S</string>
+				<string>E</string>
 				<key>totalNumberOfAnalyzerIssues</key>
 				<integer>0</integer>
 				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>totalNumberOfTestFailures</key>
 				<integer>0</integer>
 				<key>totalNumberOfWarnings</key>
@@ -40,13 +40,13 @@
 			<key>signature</key>
 			<string>Building project CentralMobileApp with scheme CentralMobileApp</string>
 			<key>timeStartedRecording</key>
-			<real>796873366.363415</real>
+			<real>796874284.32114398</real>
 			<key>timeStoppedRecording</key>
-			<real>796873370.40060699</real>
+			<real>796874288.50518203</real>
 			<key>title</key>
 			<string>Building project CentralMobileApp with scheme CentralMobileApp</string>
 			<key>uniqueIdentifier</key>
-			<string>20F4AF90-1BC2-45F6-8E66-FA4223DF66EC</string>
+			<string>38B020B4-F279-43DC-ABD8-FE7103AEAE32</string>
 		</dict>
 	</dict>
 </dict>

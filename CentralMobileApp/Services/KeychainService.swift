@@ -18,6 +18,8 @@ final class KeychainService {
         case playwrightURL  = "playwright_backend_url"
         case playwrightSecret = "playwright_secret"
         case groqAPIKey     = "groq_api_key"
+        case virusTotalAPIKey = "virustotal_api_key"
+        case abuseIPDBAPIKey  = "abuseipdb_api_key"
     }
 
     // MARK: - Save

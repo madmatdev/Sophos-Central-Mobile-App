@@ -25,7 +25,8 @@ struct CentralMobileAppApp: App {
             CachedAlert.self,
             CachedEndpoint.self,
             CachedCase.self,
-            NotificationPreference.self
+            NotificationPreference.self,
+            WatchlistItem.self
         ])
     }
 }

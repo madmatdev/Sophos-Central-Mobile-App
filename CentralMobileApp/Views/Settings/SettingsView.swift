@@ -88,6 +88,21 @@ struct SettingsView: View {
                     } label: {
                         SettingsRow(icon: "flame", label: "Firewalls", color: .orange)
                     }
+                    NavigationLink {
+                        LiveDiscoverView()
+                    } label: {
+                        SettingsRow(icon: "magnifyingglass", label: "Live Discover", color: .cyan)
+                    }
+                    NavigationLink {
+                        WatchlistView()
+                    } label: {
+                        SettingsRow(icon: "eye", label: "Watchlist", color: .indigo)
+                    }
+                    NavigationLink {
+                        ThreatIntelView()
+                    } label: {
+                        SettingsRow(icon: "shield.checkered", label: "Threat Intel", color: .red)
+                    }
                 } header: {
                     Text("Advanced").sophosSectionHeader()
                 }

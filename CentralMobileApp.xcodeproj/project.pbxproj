@@ -23,6 +23,8 @@
 		454E2576D9508D256B860B02 /* PlaywrightStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */; };
 		4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */; };
 		4DB4C7507EDFB3FC62CFAE13 /* AlertsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE621700155C067571F32803 /* AlertsListView.swift */; };
+		4FE6A52A5ED946592BBFB37A /* ThreatIntelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC99751905E3EEF3838CE671 /* ThreatIntelView.swift */; };
+		5314CEE08C3E5219D43D86EC /* ThreatIntelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FF55F0292528F2F8BB2A2 /* ThreatIntelService.swift */; };
 		59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A299AC3225E11F52205B34D /* DashboardView.swift */; };
 		6127B87849E9AB2905E4684E /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */; };
 		61F1724B5940E2557F31F1E6 /* PoliciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B829FEB139FB6490023D77 /* PoliciesView.swift */; };
@@ -35,11 +37,14 @@
 		9032C93DBA2D7BA3AE633845 /* DemoDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0CFFEC4D894E40227A8AAC /* DemoDataService.swift */; };
 		93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */; };
 		951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0E477711D399C6A3787C9 /* KeychainService.swift */; };
+		9E7BE10CD58D00AEAAC04F83 /* LiveDiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAAFEE7EDF260AF9EE04BE /* LiveDiscoverView.swift */; };
 		B085B8D3861B4824A38884D2 /* FirewallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74406CC9552E445E2E21351E /* FirewallListView.swift */; };
 		B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A12503453517D47E1301D1 /* NotificationSettingsView.swift */; };
 		B516A94FCDDB4CFB92F22914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C40ED3C422F970B140B113FA /* Assets.xcassets */; };
+		B80B28AAF357D0DAABF0FAC5 /* WatchlistModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7A78F78FFEB414357675DD /* WatchlistModels.swift */; };
 		E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */; };
 		E2B0AB6F8941720239AC3A2D /* AIAgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3BC44BA89F7A36955884E /* AIAgentService.swift */; };
+		E8F50BAE04B66170810E0363 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB8DD5D5A0C46D66671B140 /* WatchlistView.swift */; };
 		ED2752A0B5D16E8FD8378ADC /* PlaywrightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */; };
 		F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236156C5BB9150176F8C6480 /* AuthViewModel.swift */; };
 		FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */; };
@@ -53,6 +58,7 @@
 		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
 		1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaywrightService.swift; sourceTree = "<group>"; };
 		236156C5BB9150176F8C6480 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		2A7A78F78FFEB414357675DD /* WatchlistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModels.swift; sourceTree = "<group>"; };
 		2AD3BC44BA89F7A36955884E /* AIAgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgentService.swift; sourceTree = "<group>"; };
 		2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -64,6 +70,7 @@
 		6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsCard.swift; sourceTree = "<group>"; };
 		72BC16BB1211425D814975CC /* CacheModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModels.swift; sourceTree = "<group>"; };
 		74406CC9552E445E2E21351E /* FirewallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
+		7C8FF55F0292528F2F8BB2A2 /* ThreatIntelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatIntelService.swift; sourceTree = "<group>"; };
 		7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailView.swift; sourceTree = "<group>"; };
 		84324FE951D4C8C153D7FA79 /* AlertDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailView.swift; sourceTree = "<group>"; };
 		8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotView.swift; sourceTree = "<group>"; };
@@ -72,6 +79,7 @@
 		A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasesListView.swift; sourceTree = "<group>"; };
 		AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosAPIService.swift; sourceTree = "<group>"; };
 		AE621700155C067571F32803 /* AlertsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListView.swift; sourceTree = "<group>"; };
+		AFCAAFEE7EDF260AF9EE04BE /* LiveDiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveDiscoverView.swift; sourceTree = "<group>"; };
 		B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaywrightStatusView.swift; sourceTree = "<group>"; };
 		B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSummaryCard.swift; sourceTree = "<group>"; };
 		BAD813FF3117892BD34BF352 /* SophosTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosTheme.swift; sourceTree = "<group>"; };
@@ -84,6 +92,8 @@
 		D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralMobileAppApp.swift; sourceTree = "<group>"; };
 		DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionsListView.swift; sourceTree = "<group>"; };
 		EB6BE63B376556071E843BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EC99751905E3EEF3838CE671 /* ThreatIntelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatIntelView.swift; sourceTree = "<group>"; };
+		EFB8DD5D5A0C46D66671B140 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
 		F068894226D8A09F3C92078D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FEF0E477711D399C6A3787C9 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +126,8 @@
 				2660DCF8285ECB202D9D2B9B /* Firewall */,
 				5019252673AAD0E625B20F5F /* Playwright */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
+				4C423F454CE236ED7BFD396A /* ThreatIntel */,
+				412983D3A7998E02C726E1A1 /* Watchlist */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,9 +148,26 @@
 			path = Firewall;
 			sourceTree = "<group>";
 		};
+		412983D3A7998E02C726E1A1 /* Watchlist */ = {
+			isa = PBXGroup;
+			children = (
+				EFB8DD5D5A0C46D66671B140 /* WatchlistView.swift */,
+			);
+			path = Watchlist;
+			sourceTree = "<group>";
+		};
+		4C423F454CE236ED7BFD396A /* ThreatIntel */ = {
+			isa = PBXGroup;
+			children = (
+				EC99751905E3EEF3838CE671 /* ThreatIntelView.swift */,
+			);
+			path = ThreatIntel;
+			sourceTree = "<group>";
+		};
 		5019252673AAD0E625B20F5F /* Playwright */ = {
 			isa = PBXGroup;
 			children = (
+				AFCAAFEE7EDF260AF9EE04BE /* LiveDiscoverView.swift */,
 				B24A11CEFC11D28659B4E4AB /* PlaywrightStatusView.swift */,
 				13B829FEB139FB6490023D77 /* PoliciesView.swift */,
 				8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */,
@@ -160,6 +189,7 @@
 			children = (
 				C4D550ECF1253A6851AFB923 /* APIModels.swift */,
 				72BC16BB1211425D814975CC /* CacheModels.swift */,
+				2A7A78F78FFEB414357675DD /* WatchlistModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -246,6 +276,7 @@
 				1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */,
 				5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */,
 				AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */,
+				7C8FF55F0292528F2F8BB2A2 /* ThreatIntelService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -384,6 +415,7 @@
 				B085B8D3861B4824A38884D2 /* FirewallListView.swift in Sources */,
 				4868E3CC33F68E42F3194F26 /* HighPriorityCasesCard.swift in Sources */,
 				951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */,
+				9E7BE10CD58D00AEAAC04F83 /* LiveDiscoverView.swift in Sources */,
 				B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */,
 				ED2752A0B5D16E8FD8378ADC /* PlaywrightService.swift in Sources */,
 				454E2576D9508D256B860B02 /* PlaywrightStatusView.swift in Sources */,
@@ -393,6 +425,10 @@
 				1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */,
 				93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */,
 				3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */,
+				5314CEE08C3E5219D43D86EC /* ThreatIntelService.swift in Sources */,
+				4FE6A52A5ED946592BBFB37A /* ThreatIntelView.swift in Sources */,
+				B80B28AAF357D0DAABF0FAC5 /* WatchlistModels.swift in Sources */,
+				E8F50BAE04B66170810E0363 /* WatchlistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

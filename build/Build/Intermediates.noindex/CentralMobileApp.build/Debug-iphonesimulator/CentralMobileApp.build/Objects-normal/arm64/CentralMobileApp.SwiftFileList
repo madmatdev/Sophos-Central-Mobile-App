@@ -25,6 +25,7 @@
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Firewall/FirewallListView.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Dashboard/HighPriorityCasesCard.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Services/KeychainService.swift
+/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Playwright/LiveDiscoverView.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Settings/NotificationSettingsView.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Services/PlaywrightService.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Playwright/PlaywrightStatusView.swift
@@ -34,4 +35,8 @@
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Settings/SettingsView.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Services/SophosAPIService.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Theme/SophosTheme.swift
+/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Services/ThreatIntelService.swift
+/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/ThreatIntel/ThreatIntelView.swift
+/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Models/WatchlistModels.swift
+/Users/jasoaco/Sophos-Central-Mobile-App/CentralMobileApp/Views/Watchlist/WatchlistView.swift
 /Users/jasoaco/Sophos-Central-Mobile-App/build/Build/Intermediates.noindex/CentralMobileApp.build/Debug-iphonesimulator/CentralMobileApp.build/DerivedSources/GeneratedAssetSymbols.swift
