@@ -75,6 +75,22 @@ final class DashboardViewModel {
             group.addTask { await self.refreshCases(modelContext: modelContext) }
         }
         lastRefreshed = Date()
+        updateWidgetData()
+    }
+
+    /// Push latest stats to shared UserDefaults for the widget.
+    private func updateWidgetData() {
+        let defaults = UserDefaults(suiteName: "group.com.sophos.central.mobile") ?? .standard
+        defaults.set(alerts.count, forKey: "widget_alert_count")
+        defaults.set(alerts.filter { $0.severity.lowercased() == "high" }.count, forKey: "widget_high_alerts")
+        defaults.set(endpoints.count, forKey: "widget_device_count")
+        defaults.set(endpoints.filter { $0.health?.overall != "good" }.count, forKey: "widget_unhealthy_devices")
+
+        // Health score from protection
+        let score = accountHealth?.endpoint?.protection?.computer?.score ?? 0
+        let status = score >= 80 ? "Healthy" : score >= 50 ? "Issues" : "Critical"
+        defaults.set(score, forKey: "widget_health_score")
+        defaults.set(status, forKey: "widget_health_status")
     }
 
     // MARK: - Individual refreshes

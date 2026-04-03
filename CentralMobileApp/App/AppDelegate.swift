@@ -8,6 +8,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = PushNotificationService.shared
+        // Start smart alert polling
+        SmartNotificationService.shared.startPolling()
         return true
     }
 

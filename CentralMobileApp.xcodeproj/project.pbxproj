@@ -14,6 +14,7 @@
 		16DF6F73E2DC9F9995E6E3D8 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D550ECF1253A6851AFB923 /* APIModels.swift */; };
 		28AF65E9AED5B63AE82242AE /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA06D396A83D8C9440BBCF4 /* AuthService.swift */; };
 		29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */; };
+		2F8A616BB6A44B9A30D92B27 /* TenantManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FA4C6828AEBD415BEC41BB /* TenantManagerView.swift */; };
 		31E96D1A705C29CCC682A2BF /* AlertsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */; };
 		32C449B036B62758BE6E7463 /* CacheModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BC16BB1211425D814975CC /* CacheModels.swift */; };
 		3669E7D7EACCEF48CEB8324B /* ExclusionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */; };
@@ -26,8 +27,10 @@
 		4FE6A52A5ED946592BBFB37A /* ThreatIntelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC99751905E3EEF3838CE671 /* ThreatIntelView.swift */; };
 		5314CEE08C3E5219D43D86EC /* ThreatIntelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8FF55F0292528F2F8BB2A2 /* ThreatIntelService.swift */; };
 		59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A299AC3225E11F52205B34D /* DashboardView.swift */; };
+		5E7902A451B3D0D3C446DC57 /* SophosWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896CDF30D4413F3526EAD48 /* SophosWidget.swift */; };
 		6127B87849E9AB2905E4684E /* AISettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */; };
 		61F1724B5940E2557F31F1E6 /* PoliciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B829FEB139FB6490023D77 /* PoliciesView.swift */; };
+		635C48AAEAAC10E69F09BB80 /* SophosWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FDDFDB5591E1DE2C763741D7 /* SophosWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		645851B21C82DCAFCF9AF6BC /* CaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1684F100099693D4E1B38B8A /* CaseDetailView.swift */; };
 		6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B35BE34839143A913F1B48 /* CredentialsView.swift */; };
 		6F0907EE2E19859694B5E3E7 /* ScreenshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2A0C94C899760A3B35EF94 /* ScreenshotView.swift */; };
@@ -38,23 +41,51 @@
 		93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */; };
 		951EAF090C7AFA07E28C5790 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF0E477711D399C6A3787C9 /* KeychainService.swift */; };
 		9E7BE10CD58D00AEAAC04F83 /* LiveDiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAAFEE7EDF260AF9EE04BE /* LiveDiscoverView.swift */; };
+		A15C637D5E747A2E0639975A /* SophosIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B00AB0B054E0D0900882D1C /* SophosIntents.swift */; };
 		B085B8D3861B4824A38884D2 /* FirewallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74406CC9552E445E2E21351E /* FirewallListView.swift */; };
 		B2D786B1963D2C6EF8F1A6AE /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A12503453517D47E1301D1 /* NotificationSettingsView.swift */; };
 		B516A94FCDDB4CFB92F22914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C40ED3C422F970B140B113FA /* Assets.xcassets */; };
 		B80B28AAF357D0DAABF0FAC5 /* WatchlistModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7A78F78FFEB414357675DD /* WatchlistModels.swift */; };
+		C20688AF3F4ED6421588C472 /* SmartNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6616E4C44003DFD40795B5D3 /* SmartNotificationService.swift */; };
 		E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */; };
 		E2B0AB6F8941720239AC3A2D /* AIAgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD3BC44BA89F7A36955884E /* AIAgentService.swift */; };
 		E8F50BAE04B66170810E0363 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB8DD5D5A0C46D66671B140 /* WatchlistView.swift */; };
 		ED2752A0B5D16E8FD8378ADC /* PlaywrightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */; };
+		F6C09F674940CD592C4AA310 /* TenantModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FD1451DA647D55DFA4F685 /* TenantModels.swift */; };
 		F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236156C5BB9150176F8C6480 /* AuthViewModel.swift */; };
 		FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */; };
 		FFE0DA9A5C06CB4EB61BF43B /* AgentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DB720AEF63D3E12CB96859 /* AgentChatView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		79438FD695D1EE419E28EB17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6B26C260C4D0CC251A44BB8D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EABBB63B0A7FD468FF8FCC0D;
+			remoteInfo = SophosWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7BC306FB6FFBCC85FEA42232 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				635C48AAEAAC10E69F09BB80 /* SophosWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0A299AC3225E11F52205B34D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		13B829FEB139FB6490023D77 /* PoliciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliciesView.swift; sourceTree = "<group>"; };
 		1684F100099693D4E1B38B8A /* CaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseDetailView.swift; sourceTree = "<group>"; };
+		1B00AB0B054E0D0900882D1C /* SophosIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosIntents.swift; sourceTree = "<group>"; };
 		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
 		1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaywrightService.swift; sourceTree = "<group>"; };
 		236156C5BB9150176F8C6480 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -62,11 +93,13 @@
 		2AD3BC44BA89F7A36955884E /* AIAgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgentService.swift; sourceTree = "<group>"; };
 		2DEFA2E66E4BF1267BB3CEF3 /* AISettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISettingsView.swift; sourceTree = "<group>"; };
 		2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3896CDF30D4413F3526EAD48 /* SophosWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosWidget.swift; sourceTree = "<group>"; };
 		468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationService.swift; sourceTree = "<group>"; };
 		5BA06D396A83D8C9440BBCF4 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		60DB720AEF63D3E12CB96859 /* AgentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentChatView.swift; sourceTree = "<group>"; };
 		63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPriorityCasesCard.swift; sourceTree = "<group>"; };
+		6616E4C44003DFD40795B5D3 /* SmartNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartNotificationService.swift; sourceTree = "<group>"; };
 		6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsCard.swift; sourceTree = "<group>"; };
 		72BC16BB1211425D814975CC /* CacheModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheModels.swift; sourceTree = "<group>"; };
 		74406CC9552E445E2E21351E /* FirewallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
@@ -77,6 +110,7 @@
 		95B35BE34839143A913F1B48 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		99A12503453517D47E1301D1 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		A08FFE9ADAE9B911316B2F7A /* CasesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasesListView.swift; sourceTree = "<group>"; };
+		A63E552321A3108AEEF4C8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosAPIService.swift; sourceTree = "<group>"; };
 		AE621700155C067571F32803 /* AlertsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListView.swift; sourceTree = "<group>"; };
 		AFCAAFEE7EDF260AF9EE04BE /* LiveDiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveDiscoverView.swift; sourceTree = "<group>"; };
@@ -89,12 +123,15 @@
 		C4D550ECF1253A6851AFB923 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CB8B4847CBDBB5A7170ED7E6 /* DevicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListView.swift; sourceTree = "<group>"; };
 		CF0CFFEC4D894E40227A8AAC /* DemoDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDataService.swift; sourceTree = "<group>"; };
+		D5FD1451DA647D55DFA4F685 /* TenantModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantModels.swift; sourceTree = "<group>"; };
 		D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentralMobileAppApp.swift; sourceTree = "<group>"; };
 		DDB265F0C73FAA984CEB574F /* ExclusionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclusionsListView.swift; sourceTree = "<group>"; };
 		EB6BE63B376556071E843BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EC99751905E3EEF3838CE671 /* ThreatIntelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreatIntelView.swift; sourceTree = "<group>"; };
 		EFB8DD5D5A0C46D66671B140 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
 		F068894226D8A09F3C92078D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F7FA4C6828AEBD415BEC41BB /* TenantManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantManagerView.swift; sourceTree = "<group>"; };
+		FDDFDB5591E1DE2C763741D7 /* SophosWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SophosWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEF0E477711D399C6A3787C9 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				E2A970100D0617B9E68F7FF8 /* App */,
+				EBA4C95C121DC7248F2F0AFA /* Intents */,
 				54CDC3DC1676B12428B57F0F /* Models */,
 				5249E78CA2E73149ED2DBD90 /* Resources */,
 				AC452514B8EB65FBC4C3B44B /* Services */,
@@ -111,6 +149,14 @@
 				167948F0EE2535C4D59C7669 /* Views */,
 			);
 			path = CentralMobileApp;
+			sourceTree = "<group>";
+		};
+		135832441B5210D4AC0DF4DB /* Tenants */ = {
+			isa = PBXGroup;
+			children = (
+				F7FA4C6828AEBD415BEC41BB /* TenantManagerView.swift */,
+			);
+			path = Tenants;
 			sourceTree = "<group>";
 		};
 		167948F0EE2535C4D59C7669 /* Views */ = {
@@ -126,6 +172,7 @@
 				2660DCF8285ECB202D9D2B9B /* Firewall */,
 				5019252673AAD0E625B20F5F /* Playwright */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
+				135832441B5210D4AC0DF4DB /* Tenants */,
 				4C423F454CE236ED7BFD396A /* ThreatIntel */,
 				412983D3A7998E02C726E1A1 /* Watchlist */,
 			);
@@ -136,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				10802DF0D2C81F416715805E /* CentralMobileApp */,
+				A81D7587A93E74C99552C406 /* SophosWidget */,
 				FA834A376463607827FE10A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -189,6 +237,7 @@
 			children = (
 				C4D550ECF1253A6851AFB923 /* APIModels.swift */,
 				72BC16BB1211425D814975CC /* CacheModels.swift */,
+				D5FD1451DA647D55DFA4F685 /* TenantModels.swift */,
 				2A7A78F78FFEB414357675DD /* WatchlistModels.swift */,
 			);
 			path = Models;
@@ -254,6 +303,15 @@
 			path = Alerts;
 			sourceTree = "<group>";
 		};
+		A81D7587A93E74C99552C406 /* SophosWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A63E552321A3108AEEF4C8A4 /* Info.plist */,
+				3896CDF30D4413F3526EAD48 /* SophosWidget.swift */,
+			);
+			path = SophosWidget;
+			sourceTree = "<group>";
+		};
 		AA1186747485D1FE17F2AE4A /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +333,7 @@
 				FEF0E477711D399C6A3787C9 /* KeychainService.swift */,
 				1E674C5514CB8BA1437F7A7F /* PlaywrightService.swift */,
 				5B31CB204A4D7F0D2C32EE04 /* PushNotificationService.swift */,
+				6616E4C44003DFD40795B5D3 /* SmartNotificationService.swift */,
 				AC1C1DA87940E025D2A34362 /* SophosAPIService.swift */,
 				7C8FF55F0292528F2F8BB2A2 /* ThreatIntelService.swift */,
 			);
@@ -300,6 +359,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		EBA4C95C121DC7248F2F0AFA /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				1B00AB0B054E0D0900882D1C /* SophosIntents.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		F2EB6207B1CAAB0E318B2696 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */,
+				FDDFDB5591E1DE2C763741D7 /* SophosWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -326,10 +394,12 @@
 			buildPhases = (
 				1ECE6FBBB7207BED22432DF5 /* Sources */,
 				27091A2FCDE53250CE2B4ED4 /* Resources */,
+				7BC306FB6FFBCC85FEA42232 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0656F4BD73F76C0C63D4BCB3 /* PBXTargetDependency */,
 			);
 			name = CentralMobileApp;
 			packageProductDependencies = (
@@ -337,6 +407,23 @@
 			productName = CentralMobileApp;
 			productReference = BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		EABBB63B0A7FD468FF8FCC0D /* SophosWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C1683A42949D47D195099A5 /* Build configuration list for PBXNativeTarget "SophosWidgetExtension" */;
+			buildPhases = (
+				A3D4A3C35FDDC4776CB55820 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SophosWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = SophosWidgetExtension;
+			productReference = FDDFDB5591E1DE2C763741D7 /* SophosWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -348,6 +435,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					5134EEAF144007727D8393C1 = {
+						DevelopmentTeam = MU4W3R6KHY;
+						ProvisioningStyle = Manual;
+					};
+					EABBB63B0A7FD468FF8FCC0D = {
 						DevelopmentTeam = MU4W3R6KHY;
 						ProvisioningStyle = Manual;
 					};
@@ -368,6 +459,7 @@
 			projectRoot = "";
 			targets = (
 				5134EEAF144007727D8393C1 /* CentralMobileApp */,
+				EABBB63B0A7FD468FF8FCC0D /* SophosWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -423,8 +515,12 @@
 				4257C337E4347AB8648AE898 /* PushNotificationService.swift in Sources */,
 				6F0907EE2E19859694B5E3E7 /* ScreenshotView.swift in Sources */,
 				1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */,
+				C20688AF3F4ED6421588C472 /* SmartNotificationService.swift in Sources */,
 				93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */,
+				A15C637D5E747A2E0639975A /* SophosIntents.swift in Sources */,
 				3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */,
+				2F8A616BB6A44B9A30D92B27 /* TenantManagerView.swift in Sources */,
+				F6C09F674940CD592C4AA310 /* TenantModels.swift in Sources */,
 				5314CEE08C3E5219D43D86EC /* ThreatIntelService.swift in Sources */,
 				4FE6A52A5ED946592BBFB37A /* ThreatIntelView.swift in Sources */,
 				B80B28AAF357D0DAABF0FAC5 /* WatchlistModels.swift in Sources */,
@@ -432,7 +528,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A3D4A3C35FDDC4776CB55820 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E7902A451B3D0D3C446DC57 /* SophosWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0656F4BD73F76C0C63D4BCB3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EABBB63B0A7FD468FF8FCC0D /* SophosWidgetExtension */;
+			targetProxy = 79438FD695D1EE419E28EB17 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		02A75D62B2B0719F9C329B2E /* Release */ = {
@@ -598,6 +710,48 @@
 			};
 			name = Release;
 		};
+		87B808217BEA5287AEEE9378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
+				INFOPLIST_FILE = SophosWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sophos.central.mobile.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E5CC0D017F74157606FD5CBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
+				INFOPLIST_FILE = SophosWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sophos.central.mobile.widget;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -606,6 +760,15 @@
 			buildConfigurations = (
 				0CFA478581823B9370614CB0 /* Debug */,
 				02A75D62B2B0719F9C329B2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7C1683A42949D47D195099A5 /* Build configuration list for PBXNativeTarget "SophosWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87B808217BEA5287AEEE9378 /* Debug */,
+				E5CC0D017F74157606FD5CBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

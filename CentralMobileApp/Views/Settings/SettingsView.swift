@@ -48,6 +48,11 @@ struct SettingsView: View {
 
                 // MARK: - Connection
                 Section {
+                    NavigationLink {
+                        TenantManagerView()
+                    } label: {
+                        SettingsRow(icon: "building.2", label: "Manage Tenants", color: SophosTheme.Colors.sophosBlue)
+                    }
                     SettingsInfoRow(label: "Tenant ID",    value: String(tenantId.prefix(12)) + "...")
                     SettingsInfoRow(label: "Data Region",  value: dataRegionShort)
                     SettingsInfoRow(label: "Token Status", value: keychain.isTokenValid ? "Valid" : "Expired")
