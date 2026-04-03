@@ -78,6 +78,16 @@ struct SettingsView: View {
                     } label: {
                         SettingsRow(icon: "camera", label: "Live View", color: .purple)
                     }
+                    NavigationLink {
+                        ExclusionsListView()
+                    } label: {
+                        SettingsRow(icon: "shield.slash", label: "Exclusions", color: SophosTheme.Colors.statusWarning)
+                    }
+                    NavigationLink {
+                        FirewallListView()
+                    } label: {
+                        SettingsRow(icon: "flame", label: "Firewalls", color: .orange)
+                    }
                 } header: {
                     Text("Advanced").sophosSectionHeader()
                 }

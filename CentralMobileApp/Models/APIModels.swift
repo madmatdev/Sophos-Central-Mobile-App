@@ -488,3 +488,68 @@ struct SophosAPIError: Codable, Error {
 }
 
 struct EmptyResponse: Decodable {}
+
+// MARK: - Tamper Protection
+
+struct TamperProtectionResponse: Codable {
+    let enabled: Bool?
+    let password: String?
+}
+
+// MARK: - Exclusions
+
+struct ExclusionsResponse: Codable {
+    let items: [SophosExclusion]
+    let pages: PaginationPages?
+}
+
+struct SophosExclusion: Codable, Identifiable {
+    let id: String
+    let type: String?           // "path", "process", "web", "pua", "amsi", "behavioral"
+    let value: String?
+    let description: String?
+    let scanMode: String?       // "onDemandAndOnAccess", "onAccess", "onDemand"
+    let comment: String?
+    let origin: String?         // "user", "system"
+}
+
+// MARK: - Firewall
+
+struct FirewallsResponse: Codable {
+    let items: [SophosFirewall]
+    let pages: PaginationPages?
+}
+
+struct SophosFirewall: Codable, Identifiable {
+    let id: String
+    let name: String?
+    let hostname: String?
+    let serialNumber: String?
+    let firmwareVersion: String?
+    let status: FirewallStatus?
+    let lastSeen: String?
+}
+
+struct FirewallStatus: Codable {
+    let connected: Bool?
+    let haEnabled: Bool?
+    let vpnStatus: String?
+}
+
+struct FirewallGroupsResponse: Codable {
+    let items: [FirewallGroup]
+    let pages: PaginationPages?
+}
+
+struct FirewallGroup: Codable, Identifiable {
+    let id: String
+    let name: String?
+    let firewallCount: Int?
+}
+
+struct PaginationPages: Codable {
+    let current: Int?
+    let total: Int?
+    let size: Int?
+    let maxSize: Int?
+}

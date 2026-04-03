@@ -89,6 +89,56 @@ actor SophosAPIService {
         try await postEmpty(url: url)
     }
 
+    // MARK: - Tamper Protection
+
+    func fetchTamperProtection(endpointId: String) async throws -> TamperProtectionResponse {
+        let url = "\(baseURL)/endpoint/v1/endpoints/\(endpointId)/tamper-protection"
+        return try await get(url: url)
+    }
+
+    func setTamperProtection(endpointId: String, enabled: Bool) async throws {
+        let url = "\(baseURL)/endpoint/v1/endpoints/\(endpointId)/tamper-protection"
+        let body: [String: Any] = ["enabled": enabled]
+        let _: TamperProtectionResponse = try await post(url: url, body: body)
+    }
+
+    // MARK: - Exclusions
+
+    func fetchExclusions(type: String = "scanning", pageSize: Int = 100) async throws -> ExclusionsResponse {
+        let params = ["pageSize": "\(pageSize)", "type": type]
+        let url = buildURL("\(baseURL)/endpoint/v1/settings/exclusions", params: params)
+        return try await get(url: url)
+    }
+
+    func createExclusion(type: String, value: String, description: String? = nil, scanMode: String = "onDemandAndOnAccess") async throws -> SophosExclusion {
+        let url = "\(baseURL)/endpoint/v1/settings/exclusions"
+        var body: [String: Any] = [
+            "type": type,
+            "value": value,
+            "scanMode": scanMode,
+        ]
+        if let description { body["description"] = description }
+        return try await post(url: url, body: body)
+    }
+
+    func deleteExclusion(id: String) async throws {
+        let url = "\(baseURL)/endpoint/v1/settings/exclusions/\(id)"
+        try await deleteRequest(url: url)
+    }
+
+    // MARK: - Firewall Groups & Firewalls
+
+    func fetchFirewalls(pageSize: Int = 50) async throws -> FirewallsResponse {
+        let params = ["pageSize": "\(pageSize)"]
+        let url = buildURL("\(baseURL)/firewall/v1/firewalls", params: params)
+        return try await get(url: url)
+    }
+
+    func fetchFirewallGroups() async throws -> FirewallGroupsResponse {
+        let url = "\(baseURL)/firewall/v1/firewall-groups"
+        return try await get(url: url)
+    }
+
     // MARK: - Cases
 
     func fetchCases(severity: String? = "high", pageSize: Int = 50) async throws -> CasesResponse {
@@ -129,6 +179,15 @@ actor SophosAPIService {
         var request = try await authorizedRequest(url: url, method: "POST")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         return try await perform(request)
+    }
+
+    private func deleteRequest(url: String) async throws {
+        var request = try await authorizedRequest(url: url, method: "DELETE")
+        request.setValue(nil, forHTTPHeaderField: "Content-Type")
+        let (_, response) = try await URLSession.shared.data(for: request)
+        guard let http = response as? HTTPURLResponse,
+              (200...299).contains(http.statusCode)
+        else { throw APIError.requestFailed }
     }
 
     private func postEmpty(url: String) async throws {
