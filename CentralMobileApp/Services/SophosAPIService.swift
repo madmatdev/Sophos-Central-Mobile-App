@@ -111,6 +111,49 @@ actor SophosAPIService {
         return try await post(url: url, body: body)
     }
 
+    // MARK: - Detections
+
+    func fetchDetectionCounts() async throws -> DetectionCountsResponse {
+        let url = buildURL("\(baseURL)/detections/v1/queries/detections/counts", params: ["resolution": "hour"])
+        return try await get(url: url)
+    }
+
+    func startDetectionQuery(pageSize: Int = 50) async throws -> DetectionQueryRun {
+        let url = "\(baseURL)/detections/v1/queries/detections"
+        let body: [String: Any] = [
+            "sort": [["field": "sensorGeneratedAt", "direction": "desc"]]
+        ]
+        return try await post(url: url, body: body)
+    }
+
+    func pollDetectionQuery(runId: String) async throws -> DetectionQueryRun {
+        let url = "\(baseURL)/detections/v1/queries/detections/\(runId)"
+        return try await get(url: url)
+    }
+
+    func fetchDetectionResults(runId: String, pageSize: Int = 50) async throws -> DetectionResultsPage {
+        let url = buildURL(
+            "\(baseURL)/detections/v1/queries/detections/\(runId)/results",
+            params: ["page": "1", "pageSize": "\(pageSize)"]
+        )
+        return try await get(url: url)
+    }
+
+    /// Convenience: start query, poll until finished, return results. Max 15 polls × 2s = 30s.
+    func fetchDetections(pageSize: Int = 50) async throws -> [SophosDetection] {
+        let run = try await startDetectionQuery()
+        var polled = run
+        var attempts = 0
+        while !polled.isFinished && attempts < 15 {
+            try await Task.sleep(nanoseconds: 2_000_000_000)
+            polled = try await pollDetectionQuery(runId: run.id)
+            attempts += 1
+        }
+        guard polled.succeeded else { throw APIError.requestFailed }
+        let page = try await fetchDetectionResults(runId: run.id, pageSize: pageSize)
+        return page.items
+    }
+
     // MARK: - Adaptive Attack Protection
 
     func fetchAdaptiveAttackProtection(id: String) async throws -> AdaptiveAttackProtectionResponse {

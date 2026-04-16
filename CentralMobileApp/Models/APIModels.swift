@@ -406,6 +406,101 @@ struct TamperProtectionResponse: Codable {
     let previousPasswords: [String]?
 }
 
+// MARK: - Detections
+
+struct DetectionCountsResponse: Codable {
+    let resolutionDetectionCounts: [ResolutionDetectionCount]?
+
+    struct ResolutionDetectionCount: Codable {
+        let totalCount: Int?
+        let countBySeverity: CountBySeverity?
+    }
+
+    struct CountBySeverity: Codable {
+        let critical: Int?
+        let high: Int?
+        let medium: Int?
+        let low: Int?
+        let info: Int?
+    }
+
+    /// Totals summed across all hourly buckets
+    var totalCount: Int    { resolutionDetectionCounts?.compactMap { $0.totalCount }.reduce(0, +) ?? 0 }
+    var critical:   Int    { resolutionDetectionCounts?.compactMap { $0.countBySeverity?.critical }.reduce(0, +) ?? 0 }
+    var high:       Int    { resolutionDetectionCounts?.compactMap { $0.countBySeverity?.high }.reduce(0, +) ?? 0 }
+    var medium:     Int    { resolutionDetectionCounts?.compactMap { $0.countBySeverity?.medium }.reduce(0, +) ?? 0 }
+    var low:        Int    { resolutionDetectionCounts?.compactMap { $0.countBySeverity?.low }.reduce(0, +) ?? 0 }
+    var info:       Int    { resolutionDetectionCounts?.compactMap { $0.countBySeverity?.info }.reduce(0, +) ?? 0 }
+}
+
+struct DetectionQueryRun: Codable {
+    let id: String
+    let createdAt: String?
+    let result: String?   // "notAvailable" | "succeeded" | "failed"
+    let status: String?   // "pending" | "finished"
+
+    var isFinished: Bool { status?.lowercased() == "finished" }
+    var succeeded:  Bool { result?.lowercased() == "succeeded" }
+}
+
+struct DetectionResultsPage: Codable {
+    let items: [SophosDetection]
+}
+
+struct SophosDetection: Codable, Identifiable {
+    let id: String
+    let type: String?
+    let attackType: String?
+    let severity: Int?
+    let count: Int?
+    let detectionRule: String?
+    let detectionRuleDescription: String?
+    let detectionAttack: String?
+    let sensorGeneratedAt: String?
+    let sensor: Sensor?
+    let device: DetectionDevice?
+    let mitreAttacks: [MitreAttack]?
+
+    struct Sensor: Codable {
+        let id: String?
+        let type: String?
+        let version: String?
+    }
+
+    struct DetectionDevice: Codable {
+        let id: String?
+        let type: String?
+        let entity: String?  // hostname
+    }
+
+    struct MitreAttack: Codable {
+        let tactic: Tactic?
+        struct Tactic: Codable {
+            let id: String?
+            let name: String?
+        }
+    }
+
+    var generatedDate: Date? {
+        guard let str = sensorGeneratedAt else { return nil }
+        return ISO8601DateFormatter().date(from: str)
+    }
+
+    var severityLabel: String {
+        switch severity ?? 0 {
+        case 9...10: return "Critical"
+        case 7...8:  return "High"
+        case 4...6:  return "Medium"
+        case 1...3:  return "Low"
+        default:     return "Info"
+        }
+    }
+
+    var mitreTactics: [String] {
+        mitreAttacks?.compactMap { $0.tactic?.name } ?? []
+    }
+}
+
 // MARK: - Adaptive Attack Protection
 
 struct AdaptiveAttackProtectionResponse: Codable {

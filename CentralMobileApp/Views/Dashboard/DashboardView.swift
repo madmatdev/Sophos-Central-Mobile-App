@@ -9,9 +9,10 @@ struct DashboardView: View {
     @State private var selectedTab: DashboardTab = .dashboard
 
     // Navigation state
-    @State private var showAlerts   = false
-    @State private var showDevices  = false
-    @State private var showCases    = false
+    @State private var showAlerts      = false
+    @State private var showDevices     = false
+    @State private var showCases       = false
+    @State private var showDetections  = false
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -74,6 +75,23 @@ struct DashboardView: View {
                 Label("Devices", systemImage: "laptopcomputer")
             }
             .tag(DashboardTab.devices)
+
+            // MARK: - Detections Tab
+            NavigationStack {
+                DetectionsListView()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Text("Detections")
+                                .font(SophosTheme.Typography.headline())
+                                .foregroundColor(SophosTheme.Colors.textPrimary)
+                        }
+                    }
+            }
+            .tabItem {
+                Label("Detections", systemImage: "shield.lefthalf.filled.trianglebadge.exclamationmark")
+            }
+            .tag(DashboardTab.detections)
 
             // MARK: - Cases Tab
             NavigationStack {
@@ -160,6 +178,14 @@ struct DashboardView: View {
                     )
                     .padding(.horizontal, SophosTheme.Spacing.md)
 
+                    // Detections
+                    DetectionsCard(
+                        counts: viewModel.detectionCounts,
+                        isLoading: viewModel.isLoadingDetections,
+                        onViewAll: { selectedTab = .detections }
+                    )
+                    .padding(.horizontal, SophosTheme.Spacing.md)
+
                     // Cases
                     HighPriorityCasesCard(
                         cases: viewModel.cases,
@@ -197,7 +223,7 @@ struct DashboardView: View {
 }
 
 enum DashboardTab: Int {
-    case dashboard, alerts, devices, cases, settings
+    case dashboard, alerts, devices, detections, cases, settings
 }
 
 // MARK: - Shared skeleton/empty state components

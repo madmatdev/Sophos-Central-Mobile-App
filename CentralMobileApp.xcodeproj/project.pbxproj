@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA11BB22CC33DD44EE55FF66 /* DetectionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */; };
+		CC33DD44EE55FF6600AABB22 /* DetectionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */; };
 		050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */; };
 		07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */; };
 		1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsCard.swift; sourceTree = "<group>"; };
+		DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsListView.swift; sourceTree = "<group>"; };
 		0A299AC3225E11F52205B34D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1684F100099693D4E1B38B8A /* CaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseDetailView.swift; sourceTree = "<group>"; };
 		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 				7451878D4F5C073DDCF84A72 /* Auth */,
 				85B1F1DB742CEE160789B958 /* Cases */,
 				AA1186747485D1FE17F2AE4A /* Dashboard */,
+				EE55FF6600AABB22CC33DD44 /* Detections */,
 				F2EB6207B1CAAB0E318B2696 /* Devices */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
 			);
@@ -171,10 +176,19 @@
 				C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */,
 				6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */,
 				0A299AC3225E11F52205B34D /* DashboardView.swift */,
+				BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */,
 				B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */,
 				63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		EE55FF6600AABB22CC33DD44 /* Detections */ = {
+			isa = PBXGroup;
+			children = (
+				DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */,
+			);
+			path = Detections;
 			sourceTree = "<group>";
 		};
 		AC452514B8EB65FBC4C3B44B /* Services */ = {
@@ -306,6 +320,8 @@
 				6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */,
 				59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */,
 				07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* DetectionsCard.swift in Sources */,
+				CC33DD44EE55FF6600AABB22 /* DetectionsListView.swift in Sources */,
 				050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */,
 				29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */,
 				43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */,
