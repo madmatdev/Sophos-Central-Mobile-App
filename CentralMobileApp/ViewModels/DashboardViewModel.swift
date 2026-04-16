@@ -76,10 +76,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchAccountHealth()
             accountHealth = response
-            await persistHealth(response, context: modelContext)
+            persistHealth(response, context: modelContext)
         } catch {
             healthError = error.localizedDescription
-            await loadCachedHealth(context: modelContext)
+            loadCachedHealth(context: modelContext)
         }
     }
 
@@ -90,10 +90,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchAlerts()
             alerts = response.items
-            await persistAlerts(response.items, context: modelContext)
+            persistAlerts(response.items, context: modelContext)
         } catch {
             alertsError = error.localizedDescription
-            await loadCachedAlerts(context: modelContext)
+            loadCachedAlerts(context: modelContext)
         }
     }
 
@@ -104,10 +104,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchEndpoints()
             endpoints = response.items
-            await persistEndpoints(response.items, context: modelContext)
+            persistEndpoints(response.items, context: modelContext)
         } catch {
             endpointsError = error.localizedDescription
-            await loadCachedEndpoints(context: modelContext)
+            loadCachedEndpoints(context: modelContext)
         }
     }
 
@@ -118,10 +118,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchCases(severity: nil)
             cases = response.items
-            await persistCases(response.items, context: modelContext)
+            persistCases(response.items, context: modelContext)
         } catch {
             casesError = error.localizedDescription
-            await loadCachedCases(context: modelContext)
+            loadCachedCases(context: modelContext)
         }
     }
 
