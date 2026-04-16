@@ -111,6 +111,34 @@ final class DevicesViewModel {
         }
     }
 
+    // MARK: - Tamper Protection (requires biometric)
+
+    func setTamperProtection(_ endpoint: SophosEndpoint, enabled: Bool) async -> Bool {
+        let action = enabled ? "enable Tamper Protection on" : "disable Tamper Protection on"
+        guard await authenticateBiometric(reason: "Confirm \(action) \(endpoint.hostname ?? "this device")") else {
+            actionError = "Biometric authentication failed."
+            return false
+        }
+
+        actionInProgress = endpoint.id
+        actionError = nil
+        actionSuccess = nil
+        defer { actionInProgress = nil }
+
+        do {
+            _ = try await api.setTamperProtection(id: endpoint.id, enabled: enabled)
+            actionSuccess = "Tamper Protection \(enabled ? "enabled" : "disabled") on \(endpoint.hostname ?? "device")."
+            if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }),
+               let updated = try? await api.fetchEndpoint(id: endpoint.id) {
+                endpoints[idx] = updated
+            }
+            return true
+        } catch {
+            actionError = error.localizedDescription
+            return false
+        }
+    }
+
     // MARK: - Scan (requires biometric)
 
     func scanEndpoint(_ endpoint: SophosEndpoint) async -> Bool {

@@ -6,11 +6,14 @@ struct DeviceDetailView: View {
     @Bindable var viewModel: DevicesViewModel
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showIsolateConfirm    = false
-    @State private var showDeIsolateConfirm  = false
-    @State private var showScanConfirm       = false
-    @State private var isIsolated            = false
-    @State private var checkingIsolation     = false
+    @State private var showIsolateConfirm        = false
+    @State private var showDeIsolateConfirm      = false
+    @State private var showScanConfirm           = false
+    @State private var showEnableTamperConfirm   = false
+    @State private var showDisableTamperConfirm  = false
+    @State private var isIsolated                = false
+    @State private var tamperEnabled             = false
+    @State private var checkingIsolation         = false
 
     private let api = SophosAPIService.shared
 
@@ -64,6 +67,41 @@ struct DeviceDetailView: View {
                     Button("Done") { dismiss() }
                         .foregroundColor(SophosTheme.Colors.sophosBlue)
                 }
+            }
+            .onAppear {
+                tamperEnabled = endpoint.tamperProtectionEnabled ?? false
+            }
+            // Enable Tamper Protection confirmation
+            .confirmationDialog(
+                "Enable Tamper Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showEnableTamperConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Enable Tamper Protection") {
+                    Task {
+                        let success = await viewModel.setTamperProtection(endpoint, enabled: true)
+                        if success { tamperEnabled = true }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Tamper Protection will prevent unauthorized changes to Sophos security software. Use Face ID or Touch ID to confirm.")
+            }
+            // Disable Tamper Protection confirmation
+            .confirmationDialog(
+                "Disable Tamper Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showDisableTamperConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Disable Tamper Protection", role: .destructive) {
+                    Task {
+                        let success = await viewModel.setTamperProtection(endpoint, enabled: false)
+                        if success { tamperEnabled = false }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Disabling Tamper Protection allows security software to be modified or removed. Use Face ID or Touch ID to confirm.")
             }
             // Isolate confirmation
             .confirmationDialog(
@@ -202,7 +240,8 @@ struct DeviceDetailView: View {
             Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
             DetailRow(
                 label: "Tamper Prot.",
-                value: endpoint.tamperProtectionEnabled == true ? "Enabled" : "Disabled"
+                value: tamperEnabled ? "Enabled" : "Disabled",
+                valueColor: tamperEnabled ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.statusCritical
             )
             DetailRow(label: "Device ID", value: String(endpoint.id.prefix(8)) + "...")
         }
@@ -269,6 +308,23 @@ struct DeviceDetailView: View {
                     color: SophosTheme.Colors.statusCritical,
                     isLoading: isActing
                 ) { showIsolateConfirm = true }
+            }
+
+            // Tamper Protection toggle
+            if tamperEnabled {
+                ActionButton(
+                    label: "Disable Tamper Protection",
+                    icon: "lock.shield",
+                    color: SophosTheme.Colors.statusWarning,
+                    isLoading: isActing
+                ) { showDisableTamperConfirm = true }
+            } else {
+                ActionButton(
+                    label: "Enable Tamper Protection",
+                    icon: "lock.shield.fill",
+                    color: SophosTheme.Colors.statusHealthy,
+                    isLoading: isActing
+                ) { showEnableTamperConfirm = true }
             }
 
             // Scan

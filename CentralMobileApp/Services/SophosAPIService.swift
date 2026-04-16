@@ -82,6 +82,14 @@ actor SophosAPIService {
         return try await get(url: url)
     }
 
+    // MARK: - Tamper Protection
+
+    func setTamperProtection(id: String, enabled: Bool) async throws -> TamperProtectionResponse {
+        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)/tamper-protection"
+        let body: [String: Any] = ["enabled": enabled]
+        return try await post(url: url, body: body)
+    }
+
     // MARK: - Scan
 
     func scanEndpoint(id: String) async throws {

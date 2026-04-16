@@ -398,6 +398,14 @@ struct IsolationResponse: Codable {
     }
 }
 
+// MARK: - Tamper Protection
+
+struct TamperProtectionResponse: Codable {
+    let enabled: Bool
+    let password: String?
+    let previousPasswords: [String]?
+}
+
 // MARK: - Scan
 
 struct ScanRequest: Codable {
