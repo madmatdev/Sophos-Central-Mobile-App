@@ -9,9 +9,18 @@ struct AlertsListView: View {
     @State private var searchText = ""
     @State private var selectedAlert: SophosAlert?
 
-    private let api = SophosAPIService.shared
+    // Acknowledge-all state
+    @State private var showAcknowledgeAllConfirm = false
+    @State private var isAcknowledgingAll = false
+    @State private var acknowledgeAllResult: AcknowledgeAllResult?
 
+    private let api = SophosAPIService.shared
     private let severities = ["All", "High", "Medium", "Low", "Info"]
+
+    // Alerts that can be acknowledged
+    private var acknowledgeable: [SophosAlert] {
+        alerts.filter { $0.allowedActions?.contains("acknowledge") == true }
+    }
 
     private var filtered: [SophosAlert] {
         var list = alerts
@@ -33,6 +42,13 @@ struct AlertsListView: View {
             SophosTheme.Colors.backgroundPrimary.ignoresSafeArea()
 
             VStack(spacing: 0) {
+
+                // Acknowledge-all result banner
+                if let result = acknowledgeAllResult {
+                    AcknowledgeAllBanner(result: result) {
+                        acknowledgeAllResult = nil
+                    }
+                }
 
                 // Severity filter pills
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -98,11 +114,40 @@ struct AlertsListView: View {
             placement: .navigationBarDrawer(displayMode: .automatic),
             prompt: "Search alerts..."
         )
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if isAcknowledgingAll {
+                    ProgressView().tint(SophosTheme.Colors.sophosBlue)
+                } else if !acknowledgeable.isEmpty {
+                    Button {
+                        showAcknowledgeAllConfirm = true
+                    } label: {
+                        Label("Acknowledge All", systemImage: "checkmark.circle")
+                            .font(SophosTheme.Typography.subheadline(.semibold))
+                    }
+                    .foregroundColor(SophosTheme.Colors.sophosBlue)
+                }
+            }
+        }
+        .confirmationDialog(
+            "Acknowledge \(acknowledgeable.count) alert\(acknowledgeable.count == 1 ? "" : "s")?",
+            isPresented: $showAcknowledgeAllConfirm,
+            titleVisibility: .visible
+        ) {
+            Button("Acknowledge All") {
+                Task { await acknowledgeAll() }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will acknowledge all \(acknowledgeable.count) alert\(acknowledgeable.count == 1 ? "" : "s") that allow acknowledgment. This action cannot be undone.")
+        }
         .sheet(item: $selectedAlert) { alert in
             AlertDetailView(alert: alert)
         }
         .task { await load() }
     }
+
+    // MARK: - Actions
 
     private func load() async {
         isLoading = true
@@ -114,6 +159,75 @@ struct AlertsListView: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    private func acknowledgeAll() async {
+        let ids = acknowledgeable.map { $0.id }
+        guard !ids.isEmpty else { return }
+
+        isAcknowledgingAll = true
+        acknowledgeAllResult = nil
+        defer { isAcknowledgingAll = false }
+
+        let succeeded = await api.acknowledgeAlerts(alertIds: ids)
+
+        // Remove successfully acknowledged alerts from local list
+        alerts.removeAll { succeeded.contains($0.id) }
+
+        acknowledgeAllResult = AcknowledgeAllResult(
+            succeeded: succeeded.count,
+            failed: ids.count - succeeded.count
+        )
+    }
+}
+
+// MARK: - Acknowledge-all result model
+
+struct AcknowledgeAllResult {
+    let succeeded: Int
+    let failed: Int
+    var isFullSuccess: Bool { failed == 0 }
+}
+
+// MARK: - Acknowledge-all banner
+
+private struct AcknowledgeAllBanner: View {
+    let result: AcknowledgeAllResult
+    let onDismiss: () -> Void
+
+    var body: some View {
+        HStack(spacing: SophosTheme.Spacing.sm) {
+            Image(systemName: result.isFullSuccess ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                .foregroundColor(result.isFullSuccess ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.statusWarning)
+
+            VStack(alignment: .leading, spacing: 2) {
+                if result.isFullSuccess {
+                    Text("\(result.succeeded) alert\(result.succeeded == 1 ? "" : "s") acknowledged")
+                        .font(SophosTheme.Typography.subheadline(.semibold))
+                        .foregroundColor(SophosTheme.Colors.statusHealthy)
+                } else {
+                    Text("\(result.succeeded) acknowledged, \(result.failed) failed")
+                        .font(SophosTheme.Typography.subheadline(.semibold))
+                        .foregroundColor(SophosTheme.Colors.statusWarning)
+                }
+            }
+
+            Spacer()
+
+            Button {
+                onDismiss()
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(SophosTheme.Colors.textTertiary)
+            }
+        }
+        .padding(.horizontal, SophosTheme.Spacing.md)
+        .padding(.vertical, SophosTheme.Spacing.sm)
+        .background(
+            (result.isFullSuccess ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.statusWarning)
+                .opacity(0.12)
+        )
     }
 }
 

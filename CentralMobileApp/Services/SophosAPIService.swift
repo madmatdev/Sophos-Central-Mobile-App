@@ -43,6 +43,27 @@ actor SophosAPIService {
         let _: EmptyResponse = try await post(url: url, body: body)
     }
 
+    /// Bulk-acknowledge multiple alerts concurrently. Returns the IDs that succeeded.
+    func acknowledgeAlerts(alertIds: [String]) async -> [String] {
+        await withTaskGroup(of: String?.self) { group in
+            for id in alertIds {
+                group.addTask {
+                    do {
+                        try await self.acknowledgeAlert(alertId: id)
+                        return id
+                    } catch {
+                        return nil
+                    }
+                }
+            }
+            var succeeded: [String] = []
+            for await result in group {
+                if let id = result { succeeded.append(id) }
+            }
+            return succeeded
+        }
+    }
+
     // MARK: - Endpoints
 
     func fetchEndpoints(pageSize: Int = 500) async throws -> EndpointsResponse {
