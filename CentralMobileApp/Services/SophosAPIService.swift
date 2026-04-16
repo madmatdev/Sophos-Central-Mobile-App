@@ -90,6 +90,20 @@ actor SophosAPIService {
         return try await post(url: url, body: body)
     }
 
+    // MARK: - Adaptive Attack Protection
+
+    func fetchAdaptiveAttackProtection(id: String) async throws -> AdaptiveAttackProtectionResponse {
+        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)/adaptive-attack-protection"
+        return try await get(url: url)
+    }
+
+    func setAdaptiveAttackProtection(id: String, enabled: Bool, expiresAfter: String? = "P7D") async throws -> AdaptiveAttackProtectionResponse {
+        let url = "\(baseURL)/endpoint/v1/endpoints/\(id)/adaptive-attack-protection"
+        var body: [String: Any] = ["enabled": enabled]
+        if enabled, let expiry = expiresAfter { body["expiresAfter"] = expiry }
+        return try await post(url: url, body: body)
+    }
+
     // MARK: - Scan
 
     func scanEndpoint(id: String) async throws {

@@ -406,6 +406,30 @@ struct TamperProtectionResponse: Codable {
     let previousPasswords: [String]?
 }
 
+// MARK: - Adaptive Attack Protection
+
+struct AdaptiveAttackProtectionResponse: Codable {
+    let desiredState: DesiredState?
+    let actualState: ActualState?
+
+    struct DesiredState: Codable {
+        let enabled: Bool?
+        let source: String?       // "user" | "automatic"
+        let expiresAfter: String? // ISO 8601 duration e.g. "P7D"
+    }
+
+    struct ActualState: Codable {
+        let enabled: Bool?
+        let lastUpdatedAt: String?
+        let expiresAt: String?    // ISO 8601 datetime
+
+        var expiryDate: Date? {
+            guard let str = expiresAt else { return nil }
+            return ISO8601DateFormatter().date(from: str)
+        }
+    }
+}
+
 // MARK: - Scan
 
 struct ScanRequest: Codable {
