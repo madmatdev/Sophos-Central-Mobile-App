@@ -1,11 +1,33 @@
 import SwiftUI
 
+// MARK: - Time range
+
+private enum DetectionTimeRange: String, CaseIterable {
+    case thirtyDays = "30 Days"
+    case lastWeek   = "Last Week"
+    case last24h    = "24 Hours"
+
+    var label: String { rawValue }
+
+    /// Start date for each window relative to now
+    var from: Date {
+        switch self {
+        case .thirtyDays: return Date().addingTimeInterval(-30 * 24 * 3600)
+        case .lastWeek:   return Date().addingTimeInterval(-7  * 24 * 3600)
+        case .last24h:    return Date().addingTimeInterval(-24 * 3600)
+        }
+    }
+}
+
+// MARK: - View
+
 struct DetectionsListView: View {
 
     @State private var detections: [SophosDetection] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var selectedSeverity: String? = nil
+    @State private var selectedRange: DetectionTimeRange = .thirtyDays
     @State private var searchText = ""
     @State private var selectedDetection: SophosDetection?
 
@@ -34,9 +56,28 @@ struct DetectionsListView: View {
 
             VStack(spacing: 0) {
 
-                // Severity filter pills
+                // Filter bar — time range + severity in one scrollable row
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
+
+                        // Time range
+                        ForEach(DetectionTimeRange.allCases, id: \.self) { range in
+                            FilterPill(
+                                label: range.label,
+                                isSelected: selectedRange == range,
+                                icon: "clock",
+                                iconColor: SophosTheme.Colors.textTertiary
+                            ) {
+                                if selectedRange != range {
+                                    selectedRange = range
+                                    Task { await load() }
+                                }
+                            }
+                        }
+
+                        Divider().frame(height: 18).foregroundColor(SophosTheme.Colors.divider)
+
+                        // Severity
                         ForEach(severities, id: \.self) { sev in
                             FilterPill(
                                 label: sev,
@@ -51,6 +92,22 @@ struct DetectionsListView: View {
                     .padding(.vertical, SophosTheme.Spacing.sm)
                 }
                 .background(SophosTheme.Colors.navigationBar)
+
+                // Results summary
+                if !detections.isEmpty && !isLoading {
+                    HStack {
+                        Text("\(filtered.count) detection\(filtered.count == 1 ? "" : "s")")
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Spacer()
+                        Text(selectedRange.label)
+                            .font(SophosTheme.Typography.caption2(.semibold))
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                    }
+                    .padding(.horizontal, SophosTheme.Spacing.md)
+                    .padding(.vertical, 4)
+                    .background(SophosTheme.Colors.backgroundPrimary)
+                }
 
                 if isLoading {
                     Spacer()
@@ -72,7 +129,7 @@ struct DetectionsListView: View {
                         Text("No detections found")
                             .font(SophosTheme.Typography.headline())
                             .foregroundColor(SophosTheme.Colors.textPrimary)
-                        Text("No detections match the selected filter.")
+                        Text("No detections in the \(selectedRange.label.lowercased()) window.")
                             .font(SophosTheme.Typography.subheadline())
                             .foregroundColor(SophosTheme.Colors.textSecondary)
                             .multilineTextAlignment(.center)
@@ -107,12 +164,18 @@ struct DetectionsListView: View {
         .task { await load() }
     }
 
+    // MARK: - Load
+
     private func load() async {
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
         do {
-            detections = try await api.fetchDetections(pageSize: 100)
+            detections = try await api.fetchDetections(
+                from: selectedRange.from,
+                to: Date(),
+                pageSize: 100
+            )
         } catch {
             errorMessage = error.localizedDescription
         }

@@ -118,11 +118,14 @@ actor SophosAPIService {
         return try await get(url: url)
     }
 
-    func startDetectionQuery(pageSize: Int = 50) async throws -> DetectionQueryRun {
+    func startDetectionQuery(from: Date? = nil, to: Date? = nil) async throws -> DetectionQueryRun {
         let url = "\(baseURL)/detections/v1/queries/detections"
-        let body: [String: Any] = [
+        let iso = ISO8601DateFormatter()
+        var body: [String: Any] = [
             "sort": [["field": "sensorGeneratedAt", "direction": "desc"]]
         ]
+        if let from { body["from"] = iso.string(from: from) }
+        if let to   { body["to"]   = iso.string(from: to) }
         return try await post(url: url, body: body)
     }
 
@@ -140,8 +143,8 @@ actor SophosAPIService {
     }
 
     /// Convenience: start query, poll until finished, return results. Max 15 polls × 2s = 30s.
-    func fetchDetections(pageSize: Int = 50) async throws -> [SophosDetection] {
-        let run = try await startDetectionQuery()
+    func fetchDetections(from: Date? = nil, to: Date? = nil, pageSize: Int = 50) async throws -> [SophosDetection] {
+        let run = try await startDetectionQuery(from: from, to: to)
         var polled = run
         var attempts = 0
         while !polled.isFinished && attempts < 15 {
