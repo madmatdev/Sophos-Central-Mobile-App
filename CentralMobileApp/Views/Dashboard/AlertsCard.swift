@@ -56,7 +56,7 @@ struct AlertsCard: View {
 
                 Divider().background(SophosTheme.Colors.divider)
 
-                // Recent alerts preview
+                // Recent alerts preview (up to 3)
                 ForEach(recentAlerts) { alert in
                     AlertRowMini(alert: alert)
                     if alert.id != recentAlerts.last?.id {
@@ -64,15 +64,26 @@ struct AlertsCard: View {
                     }
                 }
 
-                if alerts.count > 3 {
-                    Button {
-                        onViewAll?()
-                    } label: {
-                        Text("+\(alerts.count - 3) more alerts")
-                            .font(SophosTheme.Typography.footnote())
-                            .foregroundColor(SophosTheme.Colors.sophosBlue)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                // View All footer — always shown so navigation is always accessible
+                Divider().background(SophosTheme.Colors.divider)
+
+                Button {
+                    onViewAll?()
+                } label: {
+                    HStack {
+                        if alerts.count > 3 {
+                            Text("View all \(alerts.count) alerts")
+                                .font(SophosTheme.Typography.footnote(.semibold))
+                        } else {
+                            Text("View all alerts")
+                                .font(SophosTheme.Typography.footnote(.semibold))
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
                     }
+                    .foregroundColor(SophosTheme.Colors.sophosBlue)
+                    .padding(.vertical, SophosTheme.Spacing.xs)
                 }
             }
         }
@@ -113,23 +124,40 @@ struct AlertRowMini: View {
         HStack(spacing: SophosTheme.Spacing.sm) {
             RoundedRectangle(cornerRadius: 2)
                 .fill(SophosTheme.Colors.severityColor(alert.severity))
-                .frame(width: 4, height: 36)
+                .frame(width: 4)
+                .frame(minHeight: 48)
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 3) {
+                // Title
                 Text(alert.description ?? alert.type ?? "Security Alert")
                     .font(SophosTheme.Typography.footnote(.semibold))
                     .foregroundColor(SophosTheme.Colors.textPrimary)
                     .lineLimit(1)
 
+                // Severity + product
                 HStack(spacing: SophosTheme.Spacing.xs) {
                     SeverityBadge(severity: alert.severity)
                     if let product = alert.product {
                         Text(product)
                             .font(SophosTheme.Typography.caption2())
                             .foregroundColor(SophosTheme.Colors.textSecondary)
+                            .lineLimit(1)
                     }
                     Spacer()
-                    if let date = alert.raisedDate {
+                }
+
+                // Date + time (absolute + relative)
+                if let date = alert.raisedDate {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock")
+                            .font(.system(size: 9))
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Text(date.formatted(date: .abbreviated, time: .shortened))
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Text("·")
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                            .font(SophosTheme.Typography.caption2())
                         Text(date, style: .relative)
                             .font(SophosTheme.Typography.caption2())
                             .foregroundColor(SophosTheme.Colors.textTertiary)
