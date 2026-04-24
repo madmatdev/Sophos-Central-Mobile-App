@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA11BB22CC33DD44EE55FF66 /* DetectionsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */; };
+		CC33DD44EE55FF6600AABB22 /* DetectionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */; };
 		050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF395B0BAE6DA6904C2BF95 /* DeviceDetailView.swift */; };
 		07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468444C16CB5F66CEC7F96D5 /* DashboardViewModel.swift */; };
 		1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBFE65B26B567F07EDC0A68 /* SettingsView.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsCard.swift; sourceTree = "<group>"; };
+		DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionsListView.swift; sourceTree = "<group>"; };
 		0A299AC3225E11F52205B34D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1684F100099693D4E1B38B8A /* CaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseDetailView.swift; sourceTree = "<group>"; };
 		1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
@@ -57,7 +61,7 @@
 		AE621700155C067571F32803 /* AlertsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsListView.swift; sourceTree = "<group>"; };
 		B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSummaryCard.swift; sourceTree = "<group>"; };
 		BAD813FF3117892BD34BF352 /* SophosTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SophosTheme.swift; sourceTree = "<group>"; };
-		BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CentralMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF9DDFC2C0940079B1BB380A /* CentralMobileApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CentralMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHealthCard.swift; sourceTree = "<group>"; };
 		C40ED3C422F970B140B113FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4D550ECF1253A6851AFB923 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 				7451878D4F5C073DDCF84A72 /* Auth */,
 				85B1F1DB742CEE160789B958 /* Cases */,
 				AA1186747485D1FE17F2AE4A /* Dashboard */,
+				EE55FF6600AABB22CC33DD44 /* Detections */,
 				F2EB6207B1CAAB0E318B2696 /* Devices */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
 			);
@@ -171,10 +176,19 @@
 				C0DCDEAC17B385DA1A8C50DB /* AccountHealthCard.swift */,
 				6F51E52EC005D2A29DAD9248 /* AlertsCard.swift */,
 				0A299AC3225E11F52205B34D /* DashboardView.swift */,
+				BB22CC33DD44EE55FF6600AA /* DetectionsCard.swift */,
 				B48A96C176B34189C8DF0F3A /* DeviceSummaryCard.swift */,
 				63D4C4B00DCF760B72D4E770 /* HighPriorityCasesCard.swift */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		EE55FF6600AABB22CC33DD44 /* Detections */ = {
+			isa = PBXGroup;
+			children = (
+				DD44EE55FF6600AABB22CC33 /* DetectionsListView.swift */,
+			);
+			path = Detections;
 			sourceTree = "<group>";
 		};
 		AC452514B8EB65FBC4C3B44B /* Services */ = {
@@ -250,7 +264,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					5134EEAF144007727D8393C1 = {
 						DevelopmentTeam = MU4W3R6KHY;
@@ -306,6 +320,8 @@
 				6DC316B01FE6240466FBA3EB /* CredentialsView.swift in Sources */,
 				59EA760BF3B7F80719E4D5EC /* DashboardView.swift in Sources */,
 				07BE60DFC8B7425CE3D12755 /* DashboardViewModel.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* DetectionsCard.swift in Sources */,
+				CC33DD44EE55FF6600AABB22 /* DetectionsListView.swift in Sources */,
 				050D45A8F5ACA3BA4993F2A6 /* DeviceDetailView.swift in Sources */,
 				29683E86F4E0BFC29341F151 /* DeviceSummaryCard.swift in Sources */,
 				43F57C90C59FC9D1936B93FC /* DevicesListView.swift in Sources */,
@@ -357,10 +373,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -375,6 +393,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.10;
@@ -387,7 +406,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = MU4W3R6KHY;
 				INFOPLIST_FILE = CentralMobileApp/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -435,10 +453,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MU4W3R6KHY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -460,6 +480,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.10;
@@ -472,7 +493,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = MU4W3R6KHY;
 				INFOPLIST_FILE = CentralMobileApp/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (

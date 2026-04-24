@@ -6,11 +6,19 @@ struct DeviceDetailView: View {
     @Bindable var viewModel: DevicesViewModel
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showIsolateConfirm    = false
-    @State private var showDeIsolateConfirm  = false
-    @State private var showScanConfirm       = false
-    @State private var isIsolated            = false
-    @State private var checkingIsolation     = false
+    @State private var showIsolateConfirm        = false
+    @State private var showDeIsolateConfirm      = false
+    @State private var showScanConfirm           = false
+    @State private var showEnableTamperConfirm   = false
+    @State private var showDisableTamperConfirm  = false
+    @State private var showEnableAAPConfirm      = false
+    @State private var showDisableAAPConfirm     = false
+    @State private var isIsolated                = false
+    @State private var tamperEnabled             = false
+    @State private var aapEnabled                = false
+    @State private var aapExpiresAt: Date?       = nil
+    @State private var aapLoading                = false
+    @State private var checkingIsolation         = false
 
     private let api = SophosAPIService.shared
 
@@ -65,6 +73,42 @@ struct DeviceDetailView: View {
                         .foregroundColor(SophosTheme.Colors.sophosBlue)
                 }
             }
+            .onAppear {
+                tamperEnabled = endpoint.tamperProtectionEnabled ?? false
+                Task { await fetchAAPStatus() }
+            }
+            // Enable Tamper Protection confirmation
+            .confirmationDialog(
+                "Enable Tamper Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showEnableTamperConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Enable Tamper Protection") {
+                    Task {
+                        let success = await viewModel.setTamperProtection(endpoint, enabled: true)
+                        if success { tamperEnabled = true }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Tamper Protection will prevent unauthorized changes to Sophos security software. Use Face ID or Touch ID to confirm.")
+            }
+            // Disable Tamper Protection confirmation
+            .confirmationDialog(
+                "Disable Tamper Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showDisableTamperConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Disable Tamper Protection", role: .destructive) {
+                    Task {
+                        let success = await viewModel.setTamperProtection(endpoint, enabled: false)
+                        if success { tamperEnabled = false }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Disabling Tamper Protection allows security software to be modified or removed. Use Face ID or Touch ID to confirm.")
+            }
             // Isolate confirmation
             .confirmationDialog(
                 "Isolate \(endpoint.hostname ?? "this device")?",
@@ -109,6 +153,44 @@ struct DeviceDetailView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("A full security scan will be initiated on this device. Use Face ID or Touch ID to confirm.")
+            }
+            // Enable Adaptive Attack Protection confirmation
+            .confirmationDialog(
+                "Enable Adaptive Attack Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showEnableAAPConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Enable for 7 Days") {
+                    Task {
+                        let success = await viewModel.setAdaptiveAttackProtection(endpoint, enabled: true)
+                        if success {
+                            aapEnabled = true
+                            await fetchAAPStatus()
+                        }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Adaptive Attack Protection temporarily boosts security defences. It will automatically expire after 7 days. Use Face ID or Touch ID to confirm.")
+            }
+            // Disable Adaptive Attack Protection confirmation
+            .confirmationDialog(
+                "Disable Adaptive Attack Protection on \(endpoint.hostname ?? "this device")?",
+                isPresented: $showDisableAAPConfirm,
+                titleVisibility: .visible
+            ) {
+                Button("Disable Adaptive Attack Protection", role: .destructive) {
+                    Task {
+                        let success = await viewModel.setAdaptiveAttackProtection(endpoint, enabled: false)
+                        if success {
+                            aapEnabled = false
+                            aapExpiresAt = nil
+                        }
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Disabling Adaptive Attack Protection will reduce the enhanced security posture on this device. Use Face ID or Touch ID to confirm.")
             }
         }
     }
@@ -202,8 +284,30 @@ struct DeviceDetailView: View {
             Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
             DetailRow(
                 label: "Tamper Prot.",
-                value: endpoint.tamperProtectionEnabled == true ? "Enabled" : "Disabled"
+                value: tamperEnabled ? "Enabled" : "Disabled",
+                valueColor: tamperEnabled ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.statusCritical
             )
+            Divider().background(SophosTheme.Colors.divider).padding(.leading, SophosTheme.Spacing.md)
+            if aapLoading {
+                HStack {
+                    Text("Adaptive ATP")
+                        .font(SophosTheme.Typography.subheadline())
+                        .foregroundColor(SophosTheme.Colors.textSecondary)
+                        .frame(width: 100, alignment: .leading)
+                    ProgressView().scaleEffect(0.7)
+                    Spacer()
+                }
+                .padding(.horizontal, SophosTheme.Spacing.md)
+                .padding(.vertical, SophosTheme.Spacing.sm)
+            } else {
+                DetailRow(
+                    label: "Adaptive ATP",
+                    value: aapEnabled
+                        ? (aapExpiresAt.map { "Active until \($0.formatted(date: .abbreviated, time: .omitted))" } ?? "Active")
+                        : "Inactive",
+                    valueColor: aapEnabled ? SophosTheme.Colors.statusHealthy : SophosTheme.Colors.textSecondary
+                )
+            }
             DetailRow(label: "Device ID", value: String(endpoint.id.prefix(8)) + "...")
         }
         .padding(SophosTheme.Spacing.md)
@@ -271,6 +375,40 @@ struct DeviceDetailView: View {
                 ) { showIsolateConfirm = true }
             }
 
+            // Tamper Protection toggle
+            if tamperEnabled {
+                ActionButton(
+                    label: "Disable Tamper Protection",
+                    icon: "lock.shield",
+                    color: SophosTheme.Colors.statusWarning,
+                    isLoading: isActing
+                ) { showDisableTamperConfirm = true }
+            } else {
+                ActionButton(
+                    label: "Enable Tamper Protection",
+                    icon: "lock.shield.fill",
+                    color: SophosTheme.Colors.statusHealthy,
+                    isLoading: isActing
+                ) { showEnableTamperConfirm = true }
+            }
+
+            // Adaptive Attack Protection toggle
+            if aapEnabled {
+                ActionButton(
+                    label: "Disable Adaptive Attack Protection",
+                    icon: "shield.slash",
+                    color: SophosTheme.Colors.statusWarning,
+                    isLoading: isActing
+                ) { showDisableAAPConfirm = true }
+            } else {
+                ActionButton(
+                    label: "Enable Adaptive Attack Protection",
+                    icon: "shield.fill",
+                    color: SophosTheme.Colors.sophosBlue,
+                    isLoading: isActing
+                ) { showEnableAAPConfirm = true }
+            }
+
             // Scan
             ActionButton(
                 label: "Run Security Scan",
@@ -281,6 +419,15 @@ struct DeviceDetailView: View {
         }
         .padding(SophosTheme.Spacing.md)
         .sophosCard()
+    }
+
+    private func fetchAAPStatus() async {
+        aapLoading = true
+        defer { aapLoading = false }
+        if let response = try? await api.fetchAdaptiveAttackProtection(id: endpoint.id) {
+            aapEnabled    = response.actualState?.enabled ?? false
+            aapExpiresAt  = response.actualState?.expiryDate
+        }
     }
 
     private func feedbackBanner(message: String, isError: Bool) -> some View {

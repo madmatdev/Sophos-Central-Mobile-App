@@ -13,15 +13,19 @@ final class DashboardViewModel {
     var endpoints: [SophosEndpoint] = []
     var cases: [SophosCase] = []
 
-    var isLoadingHealth    = false
-    var isLoadingAlerts    = false
-    var isLoadingEndpoints = false
-    var isLoadingCases     = false
+    var isLoadingHealth      = false
+    var isLoadingAlerts      = false
+    var isLoadingEndpoints   = false
+    var isLoadingCases       = false
+    var isLoadingDetections  = false
 
-    var healthError:    String?
-    var alertsError:    String?
-    var endpointsError: String?
-    var casesError:     String?
+    var healthError:      String?
+    var alertsError:      String?
+    var endpointsError:   String?
+    var casesError:       String?
+    var detectionsError:  String?
+
+    var detectionCounts: DetectionCountsResponse?
 
     var lastRefreshed: Date?
 
@@ -30,7 +34,7 @@ final class DashboardViewModel {
     // MARK: - Computed
 
     var isLoading: Bool {
-        isLoadingHealth || isLoadingAlerts || isLoadingEndpoints || isLoadingCases
+        isLoadingHealth || isLoadingAlerts || isLoadingEndpoints || isLoadingCases || isLoadingDetections
     }
 
     var criticalAlertCount: Int {
@@ -63,6 +67,7 @@ final class DashboardViewModel {
             group.addTask { await self.refreshAlerts(modelContext: modelContext) }
             group.addTask { await self.refreshEndpoints(modelContext: modelContext) }
             group.addTask { await self.refreshCases(modelContext: modelContext) }
+            group.addTask { await self.refreshDetections() }
         }
         lastRefreshed = Date()
     }
@@ -76,10 +81,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchAccountHealth()
             accountHealth = response
-            await persistHealth(response, context: modelContext)
+            persistHealth(response, context: modelContext)
         } catch {
             healthError = error.localizedDescription
-            await loadCachedHealth(context: modelContext)
+            loadCachedHealth(context: modelContext)
         }
     }
 
@@ -90,10 +95,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchAlerts()
             alerts = response.items
-            await persistAlerts(response.items, context: modelContext)
+            persistAlerts(response.items, context: modelContext)
         } catch {
             alertsError = error.localizedDescription
-            await loadCachedAlerts(context: modelContext)
+            loadCachedAlerts(context: modelContext)
         }
     }
 
@@ -104,10 +109,10 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchEndpoints()
             endpoints = response.items
-            await persistEndpoints(response.items, context: modelContext)
+            persistEndpoints(response.items, context: modelContext)
         } catch {
             endpointsError = error.localizedDescription
-            await loadCachedEndpoints(context: modelContext)
+            loadCachedEndpoints(context: modelContext)
         }
     }
 
@@ -118,10 +123,21 @@ final class DashboardViewModel {
         do {
             let response = try await api.fetchCases(severity: nil)
             cases = response.items
-            await persistCases(response.items, context: modelContext)
+            persistCases(response.items, context: modelContext)
         } catch {
             casesError = error.localizedDescription
-            await loadCachedCases(context: modelContext)
+            loadCachedCases(context: modelContext)
+        }
+    }
+
+    func refreshDetections() async {
+        isLoadingDetections = true
+        detectionsError = nil
+        defer { isLoadingDetections = false }
+        do {
+            detectionCounts = try await api.fetchDetectionCounts()
+        } catch {
+            detectionsError = error.localizedDescription
         }
     }
 

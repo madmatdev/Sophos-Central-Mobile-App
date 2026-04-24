@@ -78,6 +78,7 @@ struct AlertDetailView: View {
 struct DetailRow: View {
     let label: String
     let value: String
+    var valueColor: Color = SophosTheme.Colors.textPrimary
 
     var body: some View {
         HStack {
@@ -87,7 +88,7 @@ struct DetailRow: View {
                 .frame(width: 100, alignment: .leading)
             Text(value)
                 .font(SophosTheme.Typography.subheadline(.semibold))
-                .foregroundColor(SophosTheme.Colors.textPrimary)
+                .foregroundColor(valueColor)
                 .multilineTextAlignment(.trailing)
             Spacer()
         }

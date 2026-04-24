@@ -111,6 +111,73 @@ final class DevicesViewModel {
         }
     }
 
+    // MARK: - Tamper Protection (requires biometric)
+
+    func setTamperProtection(_ endpoint: SophosEndpoint, enabled: Bool) async -> Bool {
+        let action = enabled ? "enable Tamper Protection on" : "disable Tamper Protection on"
+        guard await authenticateBiometric(reason: "Confirm \(action) \(endpoint.hostname ?? "this device")") else {
+            actionError = "Biometric authentication failed."
+            return false
+        }
+
+        actionInProgress = endpoint.id
+        actionError = nil
+        actionSuccess = nil
+        defer { actionInProgress = nil }
+
+        do {
+            _ = try await api.setTamperProtection(id: endpoint.id, enabled: enabled)
+            actionSuccess = "Tamper Protection \(enabled ? "enabled" : "disabled") on \(endpoint.hostname ?? "device")."
+            if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }),
+               let updated = try? await api.fetchEndpoint(id: endpoint.id) {
+                endpoints[idx] = updated
+            }
+            return true
+        } catch {
+            actionError = error.localizedDescription
+            return false
+        }
+    }
+
+    // MARK: - Adaptive Attack Protection (requires biometric)
+
+    func setAdaptiveAttackProtection(_ endpoint: SophosEndpoint, enabled: Bool) async -> Bool {
+        let action = enabled ? "enable Adaptive Attack Protection on" : "disable Adaptive Attack Protection on"
+        guard await authenticateBiometric(reason: "Confirm \(action) \(endpoint.hostname ?? "this device")") else {
+            actionError = "Biometric authentication failed."
+            return false
+        }
+
+        actionInProgress = endpoint.id
+        actionError = nil
+        actionSuccess = nil
+        defer { actionInProgress = nil }
+
+        do {
+            let response = try await api.setAdaptiveAttackProtection(id: endpoint.id, enabled: enabled)
+            if enabled {
+                if let expiry = response.actualState?.expiryDate {
+                    let fmt = DateFormatter()
+                    fmt.dateStyle = .medium
+                    fmt.timeStyle = .short
+                    actionSuccess = "Adaptive Attack Protection enabled on \(endpoint.hostname ?? "device") until \(fmt.string(from: expiry))."
+                } else {
+                    actionSuccess = "Adaptive Attack Protection enabled on \(endpoint.hostname ?? "device")."
+                }
+            } else {
+                actionSuccess = "Adaptive Attack Protection disabled on \(endpoint.hostname ?? "device")."
+            }
+            if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }),
+               let updated = try? await api.fetchEndpoint(id: endpoint.id) {
+                endpoints[idx] = updated
+            }
+            return true
+        } catch {
+            actionError = error.localizedDescription
+            return false
+        }
+    }
+
     // MARK: - Scan (requires biometric)
 
     func scanEndpoint(_ endpoint: SophosEndpoint) async -> Bool {
