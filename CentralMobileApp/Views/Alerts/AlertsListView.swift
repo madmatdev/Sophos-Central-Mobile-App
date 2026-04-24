@@ -287,17 +287,26 @@ struct AlertListRow: View {
 struct FilterPill: View {
     let label: String
     let isSelected: Bool
+    var icon: String? = nil
+    var iconColor: Color = .clear
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Text(label)
-                .font(SophosTheme.Typography.footnote(isSelected ? .semibold : .regular))
-                .foregroundColor(isSelected ? .white : SophosTheme.Colors.textSecondary)
-                .padding(.horizontal, SophosTheme.Spacing.sm)
-                .padding(.vertical, SophosTheme.Spacing.xxs)
-                .background(isSelected ? SophosTheme.Colors.sophosBlue : SophosTheme.Colors.backgroundCard2)
-                .clipShape(Capsule())
+            HStack(spacing: 4) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(.system(size: 7))
+                        .foregroundColor(isSelected ? .white : iconColor)
+                }
+                Text(label)
+                    .font(SophosTheme.Typography.footnote(isSelected ? .semibold : .regular))
+                    .foregroundColor(isSelected ? .white : SophosTheme.Colors.textSecondary)
+            }
+            .padding(.horizontal, SophosTheme.Spacing.sm)
+            .padding(.vertical, SophosTheme.Spacing.xxs)
+            .background(isSelected ? SophosTheme.Colors.sophosBlue : SophosTheme.Colors.backgroundCard2)
+            .clipShape(Capsule())
         }
     }
 }

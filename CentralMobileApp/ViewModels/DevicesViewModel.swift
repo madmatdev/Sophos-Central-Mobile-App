@@ -10,6 +10,7 @@ final class DevicesViewModel {
     var errorMessage: String?
     var searchText: String = ""
     var filterHealth: String? = nil   // nil = all, "good", "bad", "suspicious"
+    var filterOnline: Bool = false    // true = show only online devices
 
     var actionInProgress: String?     // endpointId currently being acted on
     var actionSuccess: String?
@@ -23,6 +24,9 @@ final class DevicesViewModel {
         var list = endpoints
         if let health = filterHealth {
             list = list.filter { $0.health?.overall.lowercased() == health }
+        }
+        if filterOnline {
+            list = list.filter { $0.online == true }
         }
         if !searchText.isEmpty {
             list = list.filter {
@@ -40,6 +44,10 @@ final class DevicesViewModel {
 
     var unhealthyEndpointCount: Int {
         endpoints.filter { $0.health?.overall.lowercased() != "good" }.count
+    }
+
+    var onlineEndpointCount: Int {
+        endpoints.filter { $0.online == true }.count
     }
 
     // MARK: - Load

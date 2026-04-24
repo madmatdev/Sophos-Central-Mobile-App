@@ -18,6 +18,18 @@ struct DevicesListView: View {
                         FilterPill(label: "Healthy",     isSelected: viewModel.filterHealth == "good")       { viewModel.filterHealth = "good" }
                         FilterPill(label: "Suspicious",  isSelected: viewModel.filterHealth == "suspicious") { viewModel.filterHealth = "suspicious" }
                         FilterPill(label: "At Risk",     isSelected: viewModel.filterHealth == "bad")        { viewModel.filterHealth = "bad" }
+
+                        Divider().frame(height: 18).foregroundColor(SophosTheme.Colors.divider)
+
+                        // Online toggle pill — combinable with health filter
+                        FilterPill(
+                            label: "Online",
+                            isSelected: viewModel.filterOnline,
+                            icon: "circle.fill",
+                            iconColor: SophosTheme.Colors.statusHealthy
+                        ) {
+                            viewModel.filterOnline.toggle()
+                        }
                     }
                     .padding(.horizontal, SophosTheme.Spacing.md)
                     .padding(.vertical, SophosTheme.Spacing.sm)
@@ -33,7 +45,7 @@ struct DevicesListView: View {
                         Spacer()
                         HStack(spacing: SophosTheme.Spacing.xs) {
                             Circle().fill(SophosTheme.Colors.statusHealthy).frame(width: 6, height: 6)
-                            Text("\(viewModel.healthyEndpointCount) healthy")
+                            Text("\(viewModel.onlineEndpointCount) online")
                                 .font(SophosTheme.Typography.caption())
                                 .foregroundColor(SophosTheme.Colors.textSecondary)
                             if viewModel.unhealthyEndpointCount > 0 {
