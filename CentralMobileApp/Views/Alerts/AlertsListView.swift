@@ -1,10 +1,47 @@
 import SwiftUI
 
+// MARK: - Alert status filter
+
+private enum AlertStatusFilter: String, CaseIterable {
+    case all        = ""
+    case open       = "new"
+    case closed     = "acknowledged"
+
+    var label: String {
+        switch self {
+        case .all:    return "All"
+        case .open:   return "Open"
+        case .closed: return "Closed"
+        }
+    }
+
+    var icon: String? {
+        switch self {
+        case .open:   return "circle.fill"
+        case .closed: return "checkmark.circle.fill"
+        case .all:    return nil
+        }
+    }
+
+    var iconColor: Color {
+        switch self {
+        case .open:   return SophosTheme.Colors.statusCritical
+        case .closed: return SophosTheme.Colors.statusHealthy
+        case .all:    return .clear
+        }
+    }
+
+    var apiValue: String? { rawValue.isEmpty ? nil : rawValue }
+}
+
+// MARK: - View
+
 struct AlertsListView: View {
 
     @State private var alerts: [SophosAlert] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
+    @State private var selectedStatus: AlertStatusFilter = .all
     @State private var selectedSeverity: String? = nil
     @State private var searchText = ""
     @State private var selectedAlert: SophosAlert?
@@ -50,9 +87,28 @@ struct AlertsListView: View {
                     }
                 }
 
-                // Severity filter pills
+                // Filter bar — Status | Severity
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
+
+                        // Status pills
+                        ForEach(AlertStatusFilter.allCases, id: \.self) { status in
+                            FilterPill(
+                                label: status.label,
+                                isSelected: selectedStatus == status,
+                                icon: status.icon,
+                                iconColor: status.iconColor
+                            ) {
+                                if selectedStatus != status {
+                                    selectedStatus = status
+                                    Task { await load() }
+                                }
+                            }
+                        }
+
+                        Divider().frame(height: 18).foregroundColor(SophosTheme.Colors.divider)
+
+                        // Severity pills
                         ForEach(severities, id: \.self) { sev in
                             FilterPill(
                                 label: sev,
@@ -67,6 +123,22 @@ struct AlertsListView: View {
                     .padding(.vertical, SophosTheme.Spacing.sm)
                 }
                 .background(SophosTheme.Colors.navigationBar)
+
+                // Results summary
+                if !alerts.isEmpty && !isLoading {
+                    HStack {
+                        Text("\(filtered.count) alert\(filtered.count == 1 ? "" : "s")")
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Spacer()
+                        Text(selectedStatus.label)
+                            .font(SophosTheme.Typography.caption2(.semibold))
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                    }
+                    .padding(.horizontal, SophosTheme.Spacing.md)
+                    .padding(.vertical, 4)
+                    .background(SophosTheme.Colors.backgroundPrimary)
+                }
 
                 if isLoading {
                     Spacer()
@@ -154,7 +226,7 @@ struct AlertsListView: View {
         errorMessage = nil
         defer { isLoading = false }
         do {
-            let response = try await api.fetchAlerts()
+            let response = try await api.fetchAlerts(status: selectedStatus.apiValue)
             alerts = response.items
         } catch {
             errorMessage = error.localizedDescription
@@ -267,9 +339,20 @@ struct AlertListRow: View {
                 }
 
                 if let date = alert.raisedDate {
-                    Text(date, style: .relative)
-                        .font(SophosTheme.Typography.caption2())
-                        .foregroundColor(SophosTheme.Colors.textTertiary)
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock")
+                            .font(.system(size: 9))
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Text(date.formatted(date: .abbreviated, time: .shortened))
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                        Text("·")
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                            .font(SophosTheme.Typography.caption2())
+                        Text(date, style: .relative)
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                    }
                 }
             }
 
