@@ -185,6 +185,9 @@ actor SophosAPIService {
         for s in severities { items.append(URLQueryItem(name: "severity", value: s)) }
         components.queryItems = items
         let url = components.url?.absoluteString ?? "\(baseURL)/cases/v1/cases"
+        #if DEBUG
+        print("📋 fetchCases URL: \(url)")
+        #endif
         return try await get(url: url)
     }
 
@@ -251,6 +254,15 @@ actor SophosAPIService {
             throw APIError.networkError
         }
 
+        #if DEBUG
+        let urlStr = request.url?.absoluteString ?? "unknown"
+        print("▶️ \(request.httpMethod ?? "?") \(urlStr) → HTTP \(http.statusCode)")
+        if !(200...299).contains(http.statusCode),
+           let body = String(data: data, encoding: .utf8) {
+            print("❌ Error body: \(body)")
+        }
+        #endif
+
         if http.statusCode == 401 {
             // Token expired mid-session — force refresh and try once more
             _ = try await auth.refreshToken()
@@ -265,8 +277,11 @@ actor SophosAPIService {
         }
 
         guard (200...299).contains(http.statusCode) else {
-            if let apiErr = try? JSONDecoder().decode(SophosAPIError.self, from: data),
-               let msg = apiErr.message {
+            // Use the same snake_case decoder so fields like "correlation_id" map correctly
+            let errDecoder = JSONDecoder()
+            errDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            if let apiErr = try? errDecoder.decode(SophosAPIError.self, from: data) {
+                let msg = apiErr.message ?? apiErr.error ?? "HTTP \(http.statusCode)"
                 throw APIError.apiError(msg)
             }
             throw APIError.httpError(http.statusCode)
