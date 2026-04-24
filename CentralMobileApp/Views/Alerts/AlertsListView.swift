@@ -31,7 +31,6 @@ private enum AlertStatusFilter: String, CaseIterable {
         }
     }
 
-    var apiValue: String? { rawValue.isEmpty ? nil : rawValue }
 }
 
 // MARK: - View
@@ -61,6 +60,17 @@ struct AlertsListView: View {
 
     private var filtered: [SophosAlert] {
         var list = alerts
+
+        // Status filter — client-side using allowedActions
+        switch selectedStatus {
+        case .open:
+            list = list.filter { $0.allowedActions?.contains("acknowledge") == true }
+        case .closed:
+            list = list.filter { $0.allowedActions?.contains("acknowledge") != true }
+        case .all:
+            break
+        }
+
         if let sev = selectedSeverity {
             list = list.filter { $0.severity.lowercased() == sev.lowercased() }
         }
@@ -91,7 +101,7 @@ struct AlertsListView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
 
-                        // Status pills
+                        // Status pills (client-side filter on allowedActions)
                         ForEach(AlertStatusFilter.allCases, id: \.self) { status in
                             FilterPill(
                                 label: status.label,
@@ -99,10 +109,7 @@ struct AlertsListView: View {
                                 icon: status.icon,
                                 iconColor: status.iconColor
                             ) {
-                                if selectedStatus != status {
-                                    selectedStatus = status
-                                    Task { await load() }
-                                }
+                                selectedStatus = status
                             }
                         }
 
@@ -226,7 +233,7 @@ struct AlertsListView: View {
         errorMessage = nil
         defer { isLoading = false }
         do {
-            let response = try await api.fetchAlerts(status: selectedStatus.apiValue)
+            let response = try await api.fetchAlerts()
             alerts = response.items
         } catch {
             errorMessage = error.localizedDescription

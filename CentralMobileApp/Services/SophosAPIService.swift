@@ -27,10 +27,9 @@ actor SophosAPIService {
 
     // MARK: - Alerts
 
-    func fetchAlerts(pageSize: Int = 100, severity: String? = nil, status: String? = nil) async throws -> AlertsResponse {
+    func fetchAlerts(pageSize: Int = 100, severity: String? = nil) async throws -> AlertsResponse {
         var params = ["pageSize": "\(pageSize)", "orderBy": "raisedAt:desc"]
         if let severity { params["severities"] = severity }
-        if let status   { params["status"]     = status }
         let url = buildURL("\(baseURL)/common/v1/alerts", params: params)
         return try await get(url: url)
     }
