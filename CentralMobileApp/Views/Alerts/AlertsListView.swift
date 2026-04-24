@@ -1,46 +1,10 @@
 import SwiftUI
 
-// MARK: - Alert status filter
-
-private enum AlertStatusFilter: String, CaseIterable {
-    case all        = ""
-    case open       = "new"
-    case closed     = "acknowledged"
-
-    var label: String {
-        switch self {
-        case .all:    return "All"
-        case .open:   return "Open"
-        case .closed: return "Closed"
-        }
-    }
-
-    var icon: String? {
-        switch self {
-        case .open:   return "circle.fill"
-        case .closed: return "checkmark.circle.fill"
-        case .all:    return nil
-        }
-    }
-
-    var iconColor: Color {
-        switch self {
-        case .open:   return SophosTheme.Colors.statusCritical
-        case .closed: return SophosTheme.Colors.statusHealthy
-        case .all:    return .clear
-        }
-    }
-
-}
-
-// MARK: - View
-
 struct AlertsListView: View {
 
     @State private var alerts: [SophosAlert] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
-    @State private var selectedStatus: AlertStatusFilter = .all
     @State private var selectedSeverity: String? = nil
     @State private var searchText = ""
     @State private var selectedAlert: SophosAlert?
@@ -60,17 +24,6 @@ struct AlertsListView: View {
 
     private var filtered: [SophosAlert] {
         var list = alerts
-
-        // Status filter — client-side using allowedActions
-        switch selectedStatus {
-        case .open:
-            list = list.filter { $0.allowedActions?.contains("acknowledge") == true }
-        case .closed:
-            list = list.filter { $0.allowedActions?.contains("acknowledge") != true }
-        case .all:
-            break
-        }
-
         if let sev = selectedSeverity {
             list = list.filter { $0.severity.lowercased() == sev.lowercased() }
         }
@@ -97,25 +50,9 @@ struct AlertsListView: View {
                     }
                 }
 
-                // Filter bar — Status | Severity
+                // Severity filter pills
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
-
-                        // Status pills (client-side filter on allowedActions)
-                        ForEach(AlertStatusFilter.allCases, id: \.self) { status in
-                            FilterPill(
-                                label: status.label,
-                                isSelected: selectedStatus == status,
-                                icon: status.icon,
-                                iconColor: status.iconColor
-                            ) {
-                                selectedStatus = status
-                            }
-                        }
-
-                        Divider().frame(height: 18).foregroundColor(SophosTheme.Colors.divider)
-
-                        // Severity pills
                         ForEach(severities, id: \.self) { sev in
                             FilterPill(
                                 label: sev,
@@ -130,22 +67,6 @@ struct AlertsListView: View {
                     .padding(.vertical, SophosTheme.Spacing.sm)
                 }
                 .background(SophosTheme.Colors.navigationBar)
-
-                // Results summary
-                if !alerts.isEmpty && !isLoading {
-                    HStack {
-                        Text("\(filtered.count) alert\(filtered.count == 1 ? "" : "s")")
-                            .font(SophosTheme.Typography.caption2())
-                            .foregroundColor(SophosTheme.Colors.textTertiary)
-                        Spacer()
-                        Text(selectedStatus.label)
-                            .font(SophosTheme.Typography.caption2(.semibold))
-                            .foregroundColor(SophosTheme.Colors.textTertiary)
-                    }
-                    .padding(.horizontal, SophosTheme.Spacing.md)
-                    .padding(.vertical, 4)
-                    .background(SophosTheme.Colors.backgroundPrimary)
-                }
 
                 if isLoading {
                     Spacer()
