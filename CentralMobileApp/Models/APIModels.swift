@@ -548,11 +548,14 @@ struct SophosCase: Codable, Identifiable {
     let id: String
     let tenant: TenantRef?
     let assignee: Assignee?
-    let type: String?              // "investigation"
+    let type: String?
     let name: String?
-    let severity: String           // "high" | "medium" | "low" | "info"
-    let status: String             // "open" | "inProgress" | "closed"
-    let managedBy: String?         // "self" | "sophos"
+    /// API values: "notSet" | "critical" | "high" | "medium" | "low" | "informational"
+    let severity: String
+    /// API values: "new" | "investigating" | "onHold" | "resolved" | "actionRequired"
+    let status: String
+    /// "self" | "sophos"
+    let managedBy: String?
     let overview: String?
     let detectionCount: Int?
     let createdAt: String?
@@ -578,14 +581,30 @@ struct SophosCase: Codable, Identifiable {
         return ISO8601DateFormatter().date(from: str)
     }
 
+    /// Human-readable status label
     var statusDisplay: String {
-        switch status.lowercased() {
-        case "inprogress", "in_progress": return "In Progress"
-        case "open":                      return "Open"
-        case "closed":                    return "Closed"
-        default:                          return status.capitalized
+        switch status {
+        case "new":            return "New"
+        case "investigating":  return "Investigating"
+        case "onHold":         return "On Hold"
+        case "resolved":       return "Resolved"
+        case "actionRequired": return "Action Required"
+        default:               return status.capitalized
         }
     }
+
+    /// True only for self-managed cases that can be updated via API
+    var isSelfManaged: Bool { managedBy?.lowercased() == "self" }
+    var isResolved: Bool    { status == "resolved" }
+}
+
+// MARK: - Case update request
+
+struct UpdateCaseRequest: Encodable {
+    var status: String?
+    var severity: String?
+    var name: String?
+    var overview: String?
 }
 
 // MARK: - Shared

@@ -121,7 +121,7 @@ final class DashboardViewModel {
         casesError = nil
         defer { isLoadingCases = false }
         do {
-            let response = try await api.fetchCases(severity: nil)
+            let response = try await api.fetchCases()
             cases = response.items
             persistCases(response.items, context: modelContext)
         } catch {

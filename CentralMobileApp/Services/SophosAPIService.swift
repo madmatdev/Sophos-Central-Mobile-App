@@ -177,16 +177,27 @@ actor SophosAPIService {
 
     // MARK: - Cases
 
-    func fetchCases(severity: String? = "high", pageSize: Int = 50) async throws -> CasesResponse {
-        var params = ["pageSize": "\(pageSize)"]
-        if let severity { params["severities"] = severity }
-        let url = buildURL("\(baseURL)/cases/v1/cases", params: params)
+    func fetchCases(statuses: [String] = [], severities: [String] = [], pageSize: Int = 100) async throws -> CasesResponse {
+        // Build URL manually to support repeated query params (status=new&status=investigating…)
+        var components = URLComponents(string: "\(baseURL)/cases/v1/cases")!
+        var items: [URLQueryItem] = [URLQueryItem(name: "pageSize", value: "\(pageSize)")]
+        for s in statuses   { items.append(URLQueryItem(name: "status",   value: s)) }
+        for s in severities { items.append(URLQueryItem(name: "severity", value: s)) }
+        components.queryItems = items
+        let url = components.url?.absoluteString ?? "\(baseURL)/cases/v1/cases"
         return try await get(url: url)
     }
 
     func fetchCase(id: String) async throws -> SophosCase {
         let url = "\(baseURL)/cases/v1/cases/\(id)"
         return try await get(url: url)
+    }
+
+    func updateCase(id: String, request: UpdateCaseRequest) async throws -> SophosCase {
+        let url = "\(baseURL)/cases/v1/cases/\(id)"
+        let data = try JSONEncoder().encode(request)
+        let body = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+        return try await patch(url: url, body: body)
     }
 
     // MARK: - HTTP helpers
