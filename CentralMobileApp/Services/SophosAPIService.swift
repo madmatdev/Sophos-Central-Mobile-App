@@ -177,7 +177,7 @@ actor SophosAPIService {
 
     // MARK: - Cases
 
-    func fetchCases(statuses: [String] = [], severities: [String] = [], pageSize: Int = 100) async throws -> CasesResponse {
+    func fetchCases(statuses: [String] = [], severities: [String] = [], pageSize: Int = 50) async throws -> CasesResponse {
         // Build URL manually to support repeated query params (status=new&status=investigating…)
         var components = URLComponents(string: "\(baseURL)/cases/v1/cases")!
         var items: [URLQueryItem] = [URLQueryItem(name: "pageSize", value: "\(pageSize)")]
