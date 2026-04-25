@@ -80,16 +80,16 @@ final class DevicesViewModel {
         do {
             try await api.isolateEndpoint(id: endpoint.id)
             actionSuccess = "\(endpoint.hostname ?? "Device") has been isolated."
-            // Update local state
-            if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }) {
-                // Refresh the single endpoint to get updated status
-                if let updated = try? await api.fetchEndpoint(id: endpoint.id) {
-                    endpoints[idx] = updated
-                }
+            if let idx = endpoints.firstIndex(where: { $0.id == endpoint.id }),
+               let updated = try? await api.fetchEndpoint(id: endpoint.id) {
+                endpoints[idx] = updated
             }
             return true
         } catch {
-            actionError = error.localizedDescription
+            let msg = error.localizedDescription
+            actionError = msg.localizedCaseInsensitiveContains("in progress")
+                ? "An isolation change is already in progress. The button will refresh automatically."
+                : msg
             return false
         }
     }
@@ -114,7 +114,10 @@ final class DevicesViewModel {
             }
             return true
         } catch {
-            actionError = error.localizedDescription
+            let msg = error.localizedDescription
+            actionError = msg.localizedCaseInsensitiveContains("in progress")
+                ? "An isolation change is already in progress. The button will refresh automatically."
+                : msg
             return false
         }
     }

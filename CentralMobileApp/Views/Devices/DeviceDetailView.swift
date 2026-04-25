@@ -14,6 +14,8 @@ struct DeviceDetailView: View {
     @State private var showEnableAAPConfirm      = false
     @State private var showDisableAAPConfirm     = false
     @State private var isIsolated                = false
+    @State private var isolationLoading         = false   // true while fetching/changing isolation
+    @State private var isolationPending         = false   // true when 409 in-progress received
     @State private var tamperEnabled             = false
     @State private var aapEnabled                = false
     @State private var aapExpiresAt: Date?       = nil
@@ -75,7 +77,10 @@ struct DeviceDetailView: View {
             }
             .onAppear {
                 tamperEnabled = endpoint.tamperProtectionEnabled ?? false
-                Task { await fetchAAPStatus() }
+                Task {
+                    await fetchIsolationStatus()
+                    await fetchAAPStatus()
+                }
             }
             // Enable Tamper Protection confirmation
             .confirmationDialog(
@@ -118,7 +123,17 @@ struct DeviceDetailView: View {
                 Button("Isolate Device", role: .destructive) {
                     Task {
                         let success = await viewModel.isolateEndpoint(endpoint)
-                        if success { isIsolated = true }
+                        if success {
+                            isIsolated = true
+                            isolationPending = false
+                        } else if viewModel.actionError?.localizedCaseInsensitiveContains("in progress") == true {
+                            // 409 — operation already running; show pending state and re-check after 5s
+                            isolationPending = true
+                            viewModel.actionError = nil
+                            try? await Task.sleep(nanoseconds: 5_000_000_000)
+                            isolationPending = false
+                            await fetchIsolationStatus()
+                        }
                     }
                 }
                 Button("Cancel", role: .cancel) {}
@@ -134,7 +149,17 @@ struct DeviceDetailView: View {
                 Button("Remove Isolation") {
                     Task {
                         let success = await viewModel.deIsolateEndpoint(endpoint)
-                        if success { isIsolated = false }
+                        if success {
+                            isIsolated = false
+                            isolationPending = false
+                        } else if viewModel.actionError?.localizedCaseInsensitiveContains("in progress") == true {
+                            // 409 — operation already running; show pending state and re-check after 5s
+                            isolationPending = true
+                            viewModel.actionError = nil
+                            try? await Task.sleep(nanoseconds: 5_000_000_000)
+                            isolationPending = false
+                            await fetchIsolationStatus()
+                        }
                     }
                 }
                 Button("Cancel", role: .cancel) {}
@@ -359,7 +384,21 @@ struct DeviceDetailView: View {
             let isActing = viewModel.actionInProgress == endpoint.id
 
             // Isolate / De-isolate
-            if isIsolated {
+            if isolationLoading {
+                ActionButton(
+                    label: "Checking isolation status…",
+                    icon: "network",
+                    color: SophosTheme.Colors.textSecondary,
+                    isLoading: true
+                ) {}
+            } else if isolationPending {
+                ActionButton(
+                    label: "Isolation change in progress…",
+                    icon: "clock.arrow.circlepath",
+                    color: SophosTheme.Colors.statusWarning,
+                    isLoading: true
+                ) {}
+            } else if isIsolated {
                 ActionButton(
                     label: "Remove Isolation",
                     icon: "network",
@@ -419,6 +458,15 @@ struct DeviceDetailView: View {
         }
         .padding(SophosTheme.Spacing.md)
         .sophosCard()
+    }
+
+    /// Fetches the real isolation state from the API and updates isIsolated.
+    private func fetchIsolationStatus() async {
+        isolationLoading = true
+        defer { isolationLoading = false }
+        if let response = try? await api.fetchIsolationStatus(id: endpoint.id) {
+            isIsolated = response.enabled ?? false
+        }
     }
 
     private func fetchAAPStatus() async {
