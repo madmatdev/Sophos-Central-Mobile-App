@@ -7,6 +7,7 @@ struct AlertsCard: View {
     var onViewAll: (() -> Void)?
 
     @State private var datePreset: AlertsDatePreset = .all
+    @State private var selectedAlert: SophosAlert?
 
     private var filteredAlerts: [SophosAlert] {
         guard let cutoff = datePreset.startDate else { return alerts }
@@ -83,9 +84,17 @@ struct AlertsCard: View {
                 if recentAlerts.isEmpty {
                     EmptyStateRow(icon: "checkmark.shield", message: "No alerts in this period")
                 } else {
-                    // Recent alerts preview (up to 3)
+                    // Recent alerts preview (up to 3) — tap to open detail
                     ForEach(recentAlerts) { alert in
-                        AlertRowMini(alert: alert)
+                        Button { selectedAlert = alert } label: {
+                            HStack {
+                                AlertRowMini(alert: alert)
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(SophosTheme.Colors.textTertiary)
+                            }
+                        }
+                        .buttonStyle(.plain)
                         if alert.id != recentAlerts.last?.id {
                             Divider().background(SophosTheme.Colors.divider).padding(.leading, 32)
                         }
@@ -117,6 +126,9 @@ struct AlertsCard: View {
         }
         .padding(SophosTheme.Spacing.md)
         .sophosCard()
+        .sheet(item: $selectedAlert) { alert in
+            AlertDetailView(alert: alert)
+        }
     }
 }
 
