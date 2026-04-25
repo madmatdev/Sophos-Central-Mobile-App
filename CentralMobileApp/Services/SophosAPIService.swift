@@ -237,10 +237,29 @@ actor SophosAPIService {
     private func postEmpty(url: String) async throws {
         var request = try await authorizedRequest(url: url, method: "POST")
         request.httpBody = "{}".data(using: .utf8)
-        let (_, response) = try await URLSession.shared.data(for: request)
-        guard let http = response as? HTTPURLResponse,
-              (200...299).contains(http.statusCode)
-        else { throw APIError.requestFailed }
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        guard let http = response as? HTTPURLResponse else {
+            throw APIError.networkError
+        }
+
+        #if DEBUG
+        print("▶️ \(request.httpMethod ?? "?") \(request.url?.absoluteString ?? "unknown") → HTTP \(http.statusCode)")
+        if !(200...299).contains(http.statusCode),
+           let body = String(data: data, encoding: .utf8) {
+            print("❌ Error body: \(body)")
+        }
+        #endif
+
+        guard (200...299).contains(http.statusCode) else {
+            let errDecoder = JSONDecoder()
+            errDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            if let apiErr = try? errDecoder.decode(SophosAPIError.self, from: data) {
+                let msg = apiErr.message ?? apiErr.error ?? "HTTP \(http.statusCode)"
+                throw APIError.apiError(msg)
+            }
+            throw APIError.httpError(http.statusCode)
+        }
     }
 
     @discardableResult
