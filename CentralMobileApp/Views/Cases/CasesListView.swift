@@ -220,12 +220,19 @@ struct CasesListView: View {
             Text("This will mark the case as Resolved. This action applies only to self-managed cases.")
         }
         .sheet(item: $selectedCase) { c in
-            CaseDetailView(sophosCase: c, onResolved: { resolvedCase in
-                // Update the case in the list when resolved from detail view
-                if let idx = cases.firstIndex(where: { $0.id == resolvedCase.id }) {
-                    cases[idx] = resolvedCase
+            CaseDetailView(
+                sophosCase: c,
+                onResolved: { resolvedCase in
+                    if let idx = cases.firstIndex(where: { $0.id == resolvedCase.id }) {
+                        cases[idx] = resolvedCase
+                    }
+                },
+                onUpdated: { updatedCase in
+                    if let idx = cases.firstIndex(where: { $0.id == updatedCase.id }) {
+                        cases[idx] = updatedCase
+                    }
                 }
-            })
+            )
         }
         .task { await load() }
     }

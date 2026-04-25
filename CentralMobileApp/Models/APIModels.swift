@@ -619,6 +619,105 @@ struct UpdateCaseRequest: Encodable {
     var overview: String?
 }
 
+// MARK: - Case Detections
+
+struct CaseDetectionsResponse: Codable {
+    let items: [CaseDetection]
+    let pages: Pages?
+}
+
+struct CaseDetection: Codable, Identifiable {
+    let id: String
+    let detectionType: String?
+    let name: String?
+    let severity: String?          // "critical"|"high"|"medium"|"low"|"informational"
+    let detectedAt: String?
+    let device: CaseDetectionDevice?
+    let mitreAttacks: [CaseDetectionMitreAttack]?
+
+    struct CaseDetectionDevice: Codable {
+        let id: String?
+        let hostname: String?
+        let entity: String?        // fallback hostname field
+    }
+
+    struct CaseDetectionMitreAttack: Codable {
+        let tactic: Tactic?
+        let technique: Technique?
+
+        struct Tactic: Codable {
+            let id: String?
+            let name: String?
+        }
+
+        struct Technique: Codable {
+            let id: String?
+            let name: String?
+        }
+    }
+
+    var detectedDate: Date? {
+        guard let str = detectedAt else { return nil }
+        return parseISO8601(str)
+    }
+
+    var deviceName: String? {
+        device?.hostname ?? device?.entity
+    }
+
+    var mitreTacticNames: [String] {
+        mitreAttacks?.compactMap { $0.tactic?.name } ?? []
+    }
+}
+
+// MARK: - Case MITRE ATT&CK Summary
+
+struct CaseMitreAttackSummary: Codable {
+    let tactics: [Tactic]?
+
+    struct Tactic: Codable, Identifiable {
+        var id: String { tacticId ?? name ?? UUID().uuidString }
+        let tacticId: String?
+        let name: String?
+        let techniques: [Technique]?
+
+        // API may use "id" key — support both
+        enum CodingKeys: String, CodingKey {
+            case tacticId = "id"
+            case name
+            case techniques
+        }
+    }
+
+    struct Technique: Codable, Identifiable {
+        var id: String { techniqueId ?? name ?? UUID().uuidString }
+        let techniqueId: String?
+        let name: String?
+        let count: Int?
+        let subTechniques: [SubTechnique]?
+
+        enum CodingKeys: String, CodingKey {
+            case techniqueId = "id"
+            case name
+            case count
+            case subTechniques
+        }
+    }
+
+    struct SubTechnique: Codable, Identifiable {
+        var id: String { subTechniqueId ?? name ?? UUID().uuidString }
+        let subTechniqueId: String?
+        let name: String?
+        let count: Int?
+
+        enum CodingKeys: String, CodingKey {
+            case subTechniqueId = "id"
+            case name
+            case count
+        }
+    }
+}
+
 // MARK: - Shared
 
 struct Pages: Codable {

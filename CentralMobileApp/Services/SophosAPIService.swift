@@ -216,9 +216,24 @@ actor SophosAPIService {
 
     func updateCase(id: String, request: UpdateCaseRequest) async throws -> SophosCase {
         let url = "\(baseURL)/cases/v1/cases/\(id)"
-        let data = try JSONEncoder().encode(request)
-        let body = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+        // Only send non-nil fields — build the patch body manually
+        var body: [String: Any] = [:]
+        if let v = request.status   { body["status"]   = v }
+        if let v = request.severity { body["severity"] = v }
+        if let v = request.name     { body["name"]     = v }
+        if let v = request.overview { body["overview"] = v }
         return try await patch(url: url, body: body)
+    }
+
+    func fetchCaseDetections(caseId: String, pageSize: Int = 100) async throws -> CaseDetectionsResponse {
+        let url = buildURL("\(baseURL)/cases/v1/cases/\(caseId)/detections",
+                           params: ["pageSize": "\(pageSize)"])
+        return try await get(url: url)
+    }
+
+    func fetchCaseMitreAttackSummary(caseId: String) async throws -> CaseMitreAttackSummary {
+        let url = "\(baseURL)/cases/v1/cases/\(caseId)/mitre-attack-summary"
+        return try await get(url: url)
     }
 
     // MARK: - HTTP helpers
