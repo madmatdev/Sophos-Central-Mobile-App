@@ -11,7 +11,7 @@ struct DevicesListView: View {
 
             VStack(spacing: 0) {
 
-                // Filter bar
+                // Row 1: Health + online filter pills
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
                         FilterPill(label: "All",         isSelected: viewModel.filterHealth == nil)          { viewModel.filterHealth = nil }
@@ -21,7 +21,6 @@ struct DevicesListView: View {
 
                         Divider().frame(height: 18).foregroundColor(SophosTheme.Colors.divider)
 
-                        // Online toggle pill — combinable with health filter
                         FilterPill(
                             label: "Online",
                             isSelected: viewModel.filterOnline,
@@ -34,6 +33,38 @@ struct DevicesListView: View {
                     .padding(.horizontal, SophosTheme.Spacing.md)
                     .padding(.vertical, SophosTheme.Spacing.sm)
                 }
+                .background(SophosTheme.Colors.navigationBar)
+
+                // Row 2: Device type filter (All / Computers / Servers)
+                HStack(spacing: SophosTheme.Spacing.xs) {
+                    ForEach(DeviceTypeFilter.allCases, id: \.self) { type in
+                        Button { viewModel.filterType = type } label: {
+                            VStack(spacing: 1) {
+                                Text(type.rawValue)
+                                    .font(SophosTheme.Typography.footnote(viewModel.filterType == type ? .semibold : .regular))
+                                    .foregroundColor(viewModel.filterType == type ? .white : SophosTheme.Colors.textSecondary)
+                                if !viewModel.endpoints.isEmpty {
+                                    let count: Int = {
+                                        switch type {
+                                        case .all:       return viewModel.endpoints.count
+                                        case .computers: return viewModel.computerCount
+                                        case .servers:   return viewModel.serverCount
+                                        }
+                                    }()
+                                    Text("\(count)")
+                                        .font(SophosTheme.Typography.caption2())
+                                        .foregroundColor(viewModel.filterType == type ? .white.opacity(0.8) : SophosTheme.Colors.textTertiary)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, SophosTheme.Spacing.xs)
+                            .background(viewModel.filterType == type ? SophosTheme.Colors.sophosBlue : SophosTheme.Colors.backgroundCard2)
+                            .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+                        }
+                    }
+                }
+                .padding(.horizontal, SophosTheme.Spacing.md)
+                .padding(.vertical, SophosTheme.Spacing.sm)
                 .background(SophosTheme.Colors.navigationBar)
 
                 // Summary bar

@@ -11,6 +11,7 @@ final class DevicesViewModel {
     var searchText: String = ""
     var filterHealth: String? = nil   // nil = all, "good", "bad", "suspicious"
     var filterOnline: Bool = false    // true = show only online devices
+    var filterType: DeviceTypeFilter = .all
 
     var actionInProgress: String?     // endpointId currently being acted on
     var actionSuccess: String?
@@ -22,6 +23,11 @@ final class DevicesViewModel {
 
     var filtered: [SophosEndpoint] {
         var list = endpoints
+        switch filterType {
+        case .computers: list = list.filter { $0.os?.isServer != true }
+        case .servers:   list = list.filter { $0.os?.isServer == true }
+        case .all:       break
+        }
         if let health = filterHealth {
             list = list.filter { $0.health?.overall.lowercased() == health }
         }
@@ -212,6 +218,13 @@ final class DevicesViewModel {
         }
     }
 
+    // MARK: - Counts per type (for badge labels)
+
+    var computerCount: Int { endpoints.filter { $0.os?.isServer != true }.count }
+    var serverCount:   Int { endpoints.filter { $0.os?.isServer == true }.count }
+
+    // MARK: - Biometric auth
+
     // MARK: - Biometric auth
 
     private func authenticateBiometric(reason: String) async -> Bool {
@@ -233,4 +246,12 @@ final class DevicesViewModel {
             }
         }) ?? false
     }
+}
+
+// MARK: - Device type filter
+
+enum DeviceTypeFilter: String, CaseIterable {
+    case all       = "All"
+    case computers = "Computers"
+    case servers   = "Servers"
 }
