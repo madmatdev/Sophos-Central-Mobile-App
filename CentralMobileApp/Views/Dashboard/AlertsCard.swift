@@ -1,14 +1,40 @@
 import SwiftUI
 
+// MARK: - Date preset filter
+
+private enum AlertDatePreset: String, CaseIterable {
+    case all    = "All"
+    case today  = "Today"
+    case week   = "7 Days"
+    case month  = "30 Days"
+
+    var startDate: Date? {
+        let cal = Calendar.current
+        switch self {
+        case .all:   return nil
+        case .today: return cal.startOfDay(for: Date())
+        case .week:  return cal.date(byAdding: .day, value: -7,  to: Date())
+        case .month: return cal.date(byAdding: .day, value: -30, to: Date())
+        }
+    }
+}
+
 struct AlertsCard: View {
 
     let alerts: [SophosAlert]
     let isLoading: Bool
     var onViewAll: (() -> Void)?
 
-    private var highAlerts:   [SophosAlert] { alerts.filter { $0.severity.lowercased() == "high" } }
-    private var mediumAlerts: [SophosAlert] { alerts.filter { $0.severity.lowercased() == "medium" } }
-    private var recentAlerts: [SophosAlert] { Array(alerts.prefix(3)) }
+    @State private var datePreset: AlertDatePreset = .all
+
+    private var filteredAlerts: [SophosAlert] {
+        guard let cutoff = datePreset.startDate else { return alerts }
+        return alerts.filter { ($0.raisedDate ?? .distantPast) >= cutoff }
+    }
+
+    private var highAlerts:   [SophosAlert] { filteredAlerts.filter { $0.severity.lowercased() == "high" } }
+    private var mediumAlerts: [SophosAlert] { filteredAlerts.filter { $0.severity.lowercased() == "medium" } }
+    private var recentAlerts: [SophosAlert] { Array(filteredAlerts.prefix(3)) }
 
     var body: some View {
         VStack(alignment: .leading, spacing: SophosTheme.Spacing.md) {
@@ -34,6 +60,23 @@ struct AlertsCard: View {
             } else if alerts.isEmpty {
                 EmptyStateRow(icon: "checkmark.shield", message: "No active alerts")
             } else {
+
+                // Date preset chips
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: SophosTheme.Spacing.xs) {
+                        ForEach(AlertDatePreset.allCases, id: \.self) { preset in
+                            FilterPill(
+                                label: preset.rawValue,
+                                isSelected: datePreset == preset,
+                                icon: preset == .all ? nil : "calendar",
+                                iconColor: SophosTheme.Colors.sophosBlue
+                            ) {
+                                datePreset = preset
+                            }
+                        }
+                    }
+                }
+
                 // Summary counts
                 HStack(spacing: SophosTheme.Spacing.md) {
                     AlertCountBadge(
@@ -47,7 +90,7 @@ struct AlertsCard: View {
                         color: SophosTheme.Colors.severityMedium
                     )
                     AlertCountBadge(
-                        count: alerts.count - highAlerts.count - mediumAlerts.count,
+                        count: filteredAlerts.count - highAlerts.count - mediumAlerts.count,
                         label: "Other",
                         color: SophosTheme.Colors.severityInfo
                     )
@@ -56,11 +99,15 @@ struct AlertsCard: View {
 
                 Divider().background(SophosTheme.Colors.divider)
 
-                // Recent alerts preview (up to 3)
-                ForEach(recentAlerts) { alert in
-                    AlertRowMini(alert: alert)
-                    if alert.id != recentAlerts.last?.id {
-                        Divider().background(SophosTheme.Colors.divider).padding(.leading, 32)
+                if recentAlerts.isEmpty {
+                    EmptyStateRow(icon: "checkmark.shield", message: "No alerts in this period")
+                } else {
+                    // Recent alerts preview (up to 3)
+                    ForEach(recentAlerts) { alert in
+                        AlertRowMini(alert: alert)
+                        if alert.id != recentAlerts.last?.id {
+                            Divider().background(SophosTheme.Colors.divider).padding(.leading, 32)
+                        }
                     }
                 }
 
@@ -71,8 +118,8 @@ struct AlertsCard: View {
                     onViewAll?()
                 } label: {
                     HStack {
-                        if alerts.count > 3 {
-                            Text("View all \(alerts.count) alerts")
+                        if filteredAlerts.count > 3 {
+                            Text("View all \(filteredAlerts.count) alerts")
                                 .font(SophosTheme.Typography.footnote(.semibold))
                         } else {
                             Text("View all alerts")

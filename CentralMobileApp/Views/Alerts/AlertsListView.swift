@@ -9,6 +9,11 @@ struct AlertsListView: View {
     @State private var searchText = ""
     @State private var selectedAlert: SophosAlert?
 
+    // Date range filter
+    @State private var filterFrom: Date? = nil
+    @State private var filterTo: Date? = nil
+    @State private var showDateFilter = false
+
     // Acknowledge-all state
     @State private var showAcknowledgeAllConfirm = false
     @State private var isAcknowledgingAll = false
@@ -16,6 +21,20 @@ struct AlertsListView: View {
 
     private let api = SophosAPIService.shared
     private let severities = ["All", "High", "Medium", "Low", "Info"]
+
+    private var isDateFilterActive: Bool { filterFrom != nil || filterTo != nil }
+
+    private var dateFilterLabel: String {
+        let fmt = DateFormatter()
+        fmt.dateStyle = .short
+        fmt.timeStyle = .short
+        switch (filterFrom, filterTo) {
+        case (let from?, let to?): return "\(fmt.string(from: from)) – \(fmt.string(from: to))"
+        case (let from?, nil):     return "From \(fmt.string(from: from))"
+        case (nil, let to?):       return "Until \(fmt.string(from: to))"
+        default:                   return "Date Range"
+        }
+    }
 
     // Alerts that can be acknowledged
     private var acknowledgeable: [SophosAlert] {
@@ -34,6 +53,12 @@ struct AlertsListView: View {
                 ($0.product ?? "").localizedCaseInsensitiveContains(searchText)
             }
         }
+        if let from = filterFrom {
+            list = list.filter { ($0.raisedDate ?? .distantPast) >= from }
+        }
+        if let to = filterTo {
+            list = list.filter { ($0.raisedDate ?? .distantFuture) <= to }
+        }
         return list
     }
 
@@ -50,7 +75,7 @@ struct AlertsListView: View {
                     }
                 }
 
-                // Severity filter pills
+                // Filter pills: severity + date range
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
                         ForEach(severities, id: \.self) { sev in
@@ -60,6 +85,30 @@ struct AlertsListView: View {
                                             sev.lowercased() == selectedSeverity
                             ) {
                                 selectedSeverity = sev == "All" ? nil : sev.lowercased()
+                            }
+                        }
+
+                        Divider()
+                            .frame(height: 20)
+                            .background(SophosTheme.Colors.divider)
+
+                        FilterPill(
+                            label: dateFilterLabel,
+                            isSelected: isDateFilterActive,
+                            icon: "calendar",
+                            iconColor: SophosTheme.Colors.sophosBlue
+                        ) {
+                            showDateFilter = true
+                        }
+
+                        if isDateFilterActive {
+                            Button {
+                                filterFrom = nil
+                                filterTo   = nil
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(SophosTheme.Colors.textTertiary)
                             }
                         }
                     }
@@ -143,6 +192,11 @@ struct AlertsListView: View {
         }
         .sheet(item: $selectedAlert) { alert in
             AlertDetailView(alert: alert)
+        }
+        .sheet(isPresented: $showDateFilter) {
+            DateRangeFilterSheet(from: $filterFrom, to: $filterTo)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
         }
         .task { await load() }
     }
@@ -318,6 +372,90 @@ struct FilterPill: View {
             .padding(.vertical, SophosTheme.Spacing.xxs)
             .background(isSelected ? SophosTheme.Colors.sophosBlue : SophosTheme.Colors.backgroundCard2)
             .clipShape(Capsule())
+        }
+    }
+}
+
+// MARK: - Date range filter sheet
+
+struct DateRangeFilterSheet: View {
+    @Binding var from: Date?
+    @Binding var to: Date?
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var draftFrom: Date = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+    @State private var draftTo: Date   = Date()
+    @State private var fromEnabled: Bool = false
+    @State private var toEnabled: Bool   = false
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    Toggle("From (start)", isOn: $fromEnabled)
+                        .tint(SophosTheme.Colors.sophosBlue)
+                    if fromEnabled {
+                        DatePicker(
+                            "Start date & time",
+                            selection: $draftFrom,
+                            in: ...( toEnabled ? draftTo : Date() ),
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                        .datePickerStyle(.graphical)
+                        .tint(SophosTheme.Colors.sophosBlue)
+                    }
+                } header: {
+                    Text("From")
+                }
+
+                Section {
+                    Toggle("Until (stop)", isOn: $toEnabled)
+                        .tint(SophosTheme.Colors.sophosBlue)
+                    if toEnabled {
+                        DatePicker(
+                            "Stop date & time",
+                            selection: $draftTo,
+                            in: ( fromEnabled ? draftFrom : .distantPast )...,
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                        .datePickerStyle(.graphical)
+                        .tint(SophosTheme.Colors.sophosBlue)
+                    }
+                } header: {
+                    Text("Until (Stop)")
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(SophosTheme.Colors.backgroundPrimary)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Date Range")
+                        .font(SophosTheme.Typography.headline())
+                        .foregroundColor(SophosTheme.Colors.textPrimary)
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Clear") {
+                        from = nil
+                        to   = nil
+                        dismiss()
+                    }
+                    .foregroundColor(SophosTheme.Colors.statusWarning)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Apply") {
+                        from = fromEnabled ? draftFrom : nil
+                        to   = toEnabled   ? draftTo   : nil
+                        dismiss()
+                    }
+                    .font(SophosTheme.Typography.subheadline(.semibold))
+                    .foregroundColor(SophosTheme.Colors.sophosBlue)
+                }
+            }
+        }
+        .onAppear {
+            if let existing = from { draftFrom = existing; fromEnabled = true }
+            if let existing = to   { draftTo   = existing; toEnabled   = true }
         }
     }
 }
