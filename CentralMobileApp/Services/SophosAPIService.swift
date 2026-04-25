@@ -35,11 +35,26 @@ actor SophosAPIService {
     }
 
     func acknowledgeAlert(alertId: String) async throws {
+        try await performAlertAction(alertId: alertId, action: "acknowledge",
+                                     message: "Acknowledged via Sophos Central Mobile")
+    }
+
+    func clearThreat(alertId: String) async throws {
+        try await performAlertAction(alertId: alertId, action: "clearThreat")
+    }
+
+    func cleanVirus(alertId: String) async throws {
+        try await performAlertAction(alertId: alertId, action: "cleanVirus")
+    }
+
+    func cleanPua(alertId: String) async throws {
+        try await performAlertAction(alertId: alertId, action: "cleanPua")
+    }
+
+    private func performAlertAction(alertId: String, action: String, message: String? = nil) async throws {
         let url = "\(baseURL)/common/v1/alerts/\(alertId)/actions"
-        let body: [String: Any] = [
-            "action": "acknowledge",
-            "message": "Acknowledged via Sophos Central Mobile"
-        ]
+        var body: [String: Any] = ["action": action]
+        if let message { body["message"] = message }
         let _: EmptyResponse = try await post(url: url, body: body)
     }
 

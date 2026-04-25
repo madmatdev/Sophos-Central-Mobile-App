@@ -4,9 +4,10 @@ struct AlertDetailView: View {
 
     let alert: SophosAlert
     @Environment(\.dismiss) private var dismiss
-    @State private var isAcknowledging = false
-    @State private var acknowledgeSuccess = false
-    @State private var acknowledgeError: String?
+
+    @State private var actionInProgress: String?       // action key currently running
+    @State private var completedActions: Set<String> = []
+    @State private var actionErrors: [String: String] = [:]
 
     private let api = SophosAPIService.shared
 
@@ -38,11 +39,12 @@ struct AlertDetailView: View {
                         AlertIdCard(alertId: alert.id)
                         AlertActionsCard(
                             alert: alert,
-                            isAcknowledging: isAcknowledging,
-                            acknowledgeSuccess: acknowledgeSuccess,
-                            acknowledgeError: acknowledgeError,
-                            onAcknowledge: { Task { await acknowledge() } }
-                        )
+                            actionInProgress: actionInProgress,
+                            completedActions: completedActions,
+                            actionErrors: actionErrors
+                        ) { action in
+                            Task { await perform(action: action) }
+                        }
 
                         Spacer().frame(height: SophosTheme.Spacing.xl)
                     }
@@ -60,15 +62,21 @@ struct AlertDetailView: View {
         }
     }
 
-    private func acknowledge() async {
-        isAcknowledging = true
-        acknowledgeError = nil
-        defer { isAcknowledging = false }
+    private func perform(action: String) async {
+        actionInProgress = action
+        actionErrors.removeValue(forKey: action)
+        defer { actionInProgress = nil }
         do {
-            try await api.acknowledgeAlert(alertId: alert.id)
-            acknowledgeSuccess = true
+            switch action {
+            case "acknowledge": try await api.acknowledgeAlert(alertId: alert.id)
+            case "clearThreat": try await api.clearThreat(alertId: alert.id)
+            case "cleanVirus":  try await api.cleanVirus(alertId: alert.id)
+            case "cleanPua":    try await api.cleanPua(alertId: alert.id)
+            default: break
+            }
+            completedActions.insert(action)
         } catch {
-            acknowledgeError = error.localizedDescription
+            actionErrors[action] = error.localizedDescription
         }
     }
 }
@@ -115,50 +123,112 @@ private struct AlertIdCard: View {
 
 private struct AlertActionsCard: View {
     let alert: SophosAlert
-    let isAcknowledging: Bool
-    let acknowledgeSuccess: Bool
-    let acknowledgeError: String?
-    let onAcknowledge: () -> Void
+    let actionInProgress: String?
+    let completedActions: Set<String>
+    let actionErrors: [String: String]
+    let onAction: (String) -> Void
+
+    private let supportedActions = ["acknowledge", "clearThreat", "cleanVirus", "cleanPua"]
+
+    private var availableActions: [String] {
+        guard let allowed = alert.allowedActions else { return [] }
+        return supportedActions.filter { allowed.contains($0) }
+    }
+
     var body: some View {
-        if let actions = alert.allowedActions, actions.contains("acknowledge") {
-            VStack(spacing: SophosTheme.Spacing.sm) {
-                if acknowledgeSuccess {
-                    HStack {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(SophosTheme.Colors.statusHealthy)
-                        Text("Alert acknowledged")
-                            .font(SophosTheme.Typography.subheadline())
-                            .foregroundColor(SophosTheme.Colors.statusHealthy)
-                    }
-                    .padding(SophosTheme.Spacing.sm)
-                    .frame(maxWidth: .infinity)
-                    .background(SophosTheme.Colors.statusHealthy.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
-                } else {
-                    Button(action: onAcknowledge) {
-                        HStack {
-                            if isAcknowledging {
-                                ProgressView().tint(.white).scaleEffect(0.8)
-                            } else {
-                                Image(systemName: "checkmark.circle")
+        if !availableActions.isEmpty {
+            VStack(alignment: .leading, spacing: SophosTheme.Spacing.sm) {
+                Text("Actions")
+                    .sophosSectionHeader()
+                    .padding(.horizontal, SophosTheme.Spacing.md)
+                    .padding(.top, SophosTheme.Spacing.sm)
+
+                ForEach(availableActions, id: \.self) { action in
+                    let meta = ActionMeta(action)
+                    let isRunning   = actionInProgress == action
+                    let isDone      = completedActions.contains(action)
+                    let errorMsg    = actionErrors[action]
+                    let isBlocked   = actionInProgress != nil && !isRunning
+
+                    VStack(spacing: SophosTheme.Spacing.xs) {
+                        if isDone {
+                            HStack {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(SophosTheme.Colors.statusHealthy)
+                                Text("\(meta.label) completed")
+                                    .font(SophosTheme.Typography.subheadline())
+                                    .foregroundColor(SophosTheme.Colors.statusHealthy)
                             }
-                            Text(isAcknowledging ? "Acknowledging..." : "Acknowledge Alert")
+                            .padding(SophosTheme.Spacing.sm)
+                            .frame(maxWidth: .infinity)
+                            .background(SophosTheme.Colors.statusHealthy.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+                        } else {
+                            Button { onAction(action) } label: {
+                                HStack(spacing: SophosTheme.Spacing.sm) {
+                                    if isRunning {
+                                        ProgressView().tint(.white).scaleEffect(0.8)
+                                    } else {
+                                        Image(systemName: meta.icon)
+                                    }
+                                    Text(isRunning ? "\(meta.label)…" : meta.label)
+                                }
+                                .font(SophosTheme.Typography.headline())
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(isBlocked ? meta.color.opacity(0.4) : meta.color)
+                                .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+                            }
+                            .disabled(isRunning || isBlocked)
                         }
-                        .font(SophosTheme.Typography.headline())
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 48)
-                        .background(SophosTheme.Colors.sophosBlue)
-                        .clipShape(RoundedRectangle(cornerRadius: SophosTheme.Radius.sm))
+
+                        if let err = errorMsg {
+                            Text(err)
+                                .font(SophosTheme.Typography.caption())
+                                .foregroundColor(SophosTheme.Colors.statusCritical)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
-                    .disabled(isAcknowledging)
+                    .padding(.horizontal, SophosTheme.Spacing.md)
                 }
-                if let error = acknowledgeError {
-                    Text(error)
-                        .font(SophosTheme.Typography.caption())
-                        .foregroundColor(SophosTheme.Colors.statusCritical)
-                }
+
+                Spacer().frame(height: SophosTheme.Spacing.xs)
             }
+            .sophosCard()
+        }
+    }
+}
+
+// MARK: - Action metadata
+
+private struct ActionMeta {
+    let label: String
+    let icon: String
+    let color: Color
+
+    init(_ action: String) {
+        switch action {
+        case "acknowledge":
+            label = "Acknowledge Alert"
+            icon  = "checkmark.circle"
+            color = SophosTheme.Colors.sophosBlue
+        case "clearThreat":
+            label = "Clear Threat"
+            icon  = "shield.slash"
+            color = SophosTheme.Colors.statusWarning
+        case "cleanVirus":
+            label = "Clean Virus"
+            icon  = "cross.circle"
+            color = SophosTheme.Colors.statusCritical
+        case "cleanPua":
+            label = "Clean PUA"
+            icon  = "trash.circle"
+            color = SophosTheme.Colors.statusCritical
+        default:
+            label = action.capitalized
+            icon  = "bolt.circle"
+            color = SophosTheme.Colors.sophosBlue
         }
     }
 }
