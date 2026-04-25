@@ -1,31 +1,12 @@
 import SwiftUI
 
-// MARK: - Date preset filter
-
-private enum AlertDatePreset: String, CaseIterable {
-    case all    = "All"
-    case today  = "Today"
-    case week   = "7 Days"
-    case month  = "30 Days"
-
-    var startDate: Date? {
-        let cal = Calendar.current
-        switch self {
-        case .all:   return nil
-        case .today: return cal.startOfDay(for: Date())
-        case .week:  return cal.date(byAdding: .day, value: -7,  to: Date())
-        case .month: return cal.date(byAdding: .day, value: -30, to: Date())
-        }
-    }
-}
-
 struct AlertsCard: View {
 
     let alerts: [SophosAlert]
     let isLoading: Bool
     var onViewAll: (() -> Void)?
 
-    @State private var datePreset: AlertDatePreset = .all
+    @State private var datePreset: AlertsDatePreset = .all
 
     private var filteredAlerts: [SophosAlert] {
         guard let cutoff = datePreset.startDate else { return alerts }
@@ -64,9 +45,9 @@ struct AlertsCard: View {
                 // Date preset chips
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
-                        ForEach(AlertDatePreset.allCases, id: \.self) { preset in
+                        ForEach(AlertsDatePreset.allCases, id: \.self) { preset in
                             FilterPill(
-                                label: preset.rawValue,
+                                label: preset.label,
                                 isSelected: datePreset == preset,
                                 icon: preset == .all ? nil : "calendar",
                                 iconColor: SophosTheme.Colors.sophosBlue
