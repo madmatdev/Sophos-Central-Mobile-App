@@ -292,11 +292,12 @@ struct AlertListRow: View {
                     }
                 }
 
-                if let date = alert.raisedDate {
-                    HStack(spacing: 4) {
-                        Image(systemName: "clock")
-                            .font(.system(size: 9))
-                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                // Date + time — always shown
+                HStack(spacing: 4) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 9))
+                        .foregroundColor(SophosTheme.Colors.textTertiary)
+                    if let date = alert.raisedDate {
                         Text(date.formatted(date: .abbreviated, time: .shortened))
                             .font(SophosTheme.Typography.caption2())
                             .foregroundColor(SophosTheme.Colors.textTertiary)
@@ -304,6 +305,10 @@ struct AlertListRow: View {
                             .foregroundColor(SophosTheme.Colors.textTertiary)
                             .font(SophosTheme.Typography.caption2())
                         Text(date, style: .relative)
+                            .font(SophosTheme.Typography.caption2())
+                            .foregroundColor(SophosTheme.Colors.textTertiary)
+                    } else {
+                        Text("Unknown date")
                             .font(SophosTheme.Typography.caption2())
                             .foregroundColor(SophosTheme.Colors.textTertiary)
                     }

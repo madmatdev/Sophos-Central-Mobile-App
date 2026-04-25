@@ -1,5 +1,17 @@
 import Foundation
 
+// MARK: - Date parsing
+
+/// Parses ISO 8601 strings from the Sophos API, handling both fractional-seconds
+/// (e.g. "2024-04-25T10:30:00.000Z") and whole-second (e.g. "2024-04-25T10:30:00Z") forms.
+private func parseISO8601(_ str: String) -> Date? {
+    let fmt = ISO8601DateFormatter()
+    fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    if let date = fmt.date(from: str) { return date }
+    fmt.formatOptions = [.withInternetDateTime]
+    return fmt.date(from: str)
+}
+
 // MARK: - Auth / Token
 
 struct TokenResponse: Codable {
@@ -289,7 +301,7 @@ struct SophosAlert: Codable, Identifiable {
 
     var raisedDate: Date? {
         guard let str = raisedAt else { return nil }
-        return ISO8601DateFormatter().date(from: str)
+        return parseISO8601(str)
     }
 }
 
@@ -364,7 +376,7 @@ struct SophosEndpoint: Codable, Identifiable {
 
     var lastSeenDate: Date? {
         guard let str = lastSeenAt else { return nil }
-        return ISO8601DateFormatter().date(from: str)
+        return parseISO8601(str)
     }
 
     var platformIcon: String {
@@ -483,7 +495,7 @@ struct SophosDetection: Codable, Identifiable {
 
     var generatedDate: Date? {
         guard let str = sensorGeneratedAt else { return nil }
-        return ISO8601DateFormatter().date(from: str)
+        return parseISO8601(str)
     }
 
     var severityLabel: String {
@@ -520,7 +532,7 @@ struct AdaptiveAttackProtectionResponse: Codable {
 
         var expiryDate: Date? {
             guard let str = expiresAt else { return nil }
-            return ISO8601DateFormatter().date(from: str)
+            return parseISO8601(str)
         }
     }
 }
@@ -573,12 +585,12 @@ struct SophosCase: Codable, Identifiable {
 
     var createdDate: Date? {
         guard let str = createdAt else { return nil }
-        return ISO8601DateFormatter().date(from: str)
+        return parseISO8601(str)
     }
 
     var updatedDate: Date? {
         guard let str = updatedAt else { return nil }
-        return ISO8601DateFormatter().date(from: str)
+        return parseISO8601(str)
     }
 
     /// Human-readable status label
