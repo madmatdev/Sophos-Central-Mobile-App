@@ -105,7 +105,7 @@ struct UsersListView: View {
                             .foregroundColor(SophosTheme.Colors.textPrimary)
                         Text(users.isEmpty
                              ? "Could not load the user directory."
-                             : "No users match "\(searchText.isEmpty ? sourceFilter.rawValue : searchText)".")
+                             : "No users match \"\(searchText.isEmpty ? sourceFilter.rawValue : searchText)\".")
                             .font(SophosTheme.Typography.subheadline())
                             .foregroundColor(SophosTheme.Colors.textSecondary)
                             .multilineTextAlignment(.center)
