@@ -40,9 +40,15 @@ struct UsersListView: View {
             list = list.filter { sourceFilter.matches($0) }
         }
         if !searchText.isEmpty {
-            list = list.filter {
-                $0.displayName.localizedCaseInsensitiveContains(searchText) ||
-                ($0.primaryEmail ?? "").localizedCaseInsensitiveContains(searchText)
+            let q = searchText.lowercased()
+            list = list.filter { user in
+                user.displayName.lowercased().contains(q) ||
+                (user.firstName ?? "").lowercased().contains(q) ||
+                (user.lastName ?? "").lowercased().contains(q) ||
+                (user.email ?? "").lowercased().contains(q) ||
+                (user.exchangeLogin ?? "").lowercased().contains(q) ||
+                (user.viaLogin ?? "").lowercased().contains(q) ||
+                (user.name ?? "").lowercased().contains(q)
             }
         }
         return list
@@ -91,15 +97,18 @@ struct UsersListView: View {
                 } else if filtered.isEmpty {
                     Spacer()
                     VStack(spacing: SophosTheme.Spacing.sm) {
-                        Image(systemName: "person.2.slash")
+                        Image(systemName: users.isEmpty ? "person.2.slash" : "magnifyingglass")
                             .font(.system(size: 48))
                             .foregroundColor(SophosTheme.Colors.textTertiary)
-                        Text("No users found")
+                        Text(users.isEmpty ? "No users found" : "No matches")
                             .font(SophosTheme.Typography.headline())
                             .foregroundColor(SophosTheme.Colors.textPrimary)
-                        Text("No users match the current filters.")
+                        Text(users.isEmpty
+                             ? "Could not load the user directory."
+                             : "No users match "\(searchText.isEmpty ? sourceFilter.rawValue : searchText)".")
                             .font(SophosTheme.Typography.subheadline())
                             .foregroundColor(SophosTheme.Colors.textSecondary)
+                            .multilineTextAlignment(.center)
                     }
                     .padding()
                     Spacer()
