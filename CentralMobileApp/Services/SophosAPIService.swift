@@ -225,7 +225,7 @@ actor SophosAPIService {
         return try await patch(url: url, body: body)
     }
 
-    func fetchCaseDetections(caseId: String, pageSize: Int = 100) async throws -> CaseDetectionsResponse {
+    func fetchCaseDetections(caseId: String, pageSize: Int = 50) async throws -> CaseDetectionsResponse {
         let url = buildURL("\(baseURL)/cases/v1/cases/\(caseId)/detections",
                            params: ["pageSize": "\(pageSize)"])
         return try await get(url: url)
