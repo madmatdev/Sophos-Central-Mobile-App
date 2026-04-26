@@ -348,6 +348,12 @@ actor SophosAPIService {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
+            #if DEBUG
+            print("❌ Decode error for \(T.self): \(error)")
+            if let raw = String(data: data, encoding: .utf8) {
+                print("📄 Raw response body:\n\(raw)")
+            }
+            #endif
             throw APIError.decodingError(error.localizedDescription)
         }
     }

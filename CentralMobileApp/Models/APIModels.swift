@@ -628,17 +628,26 @@ struct CaseDetectionsResponse: Codable {
 
 struct CaseDetection: Codable, Identifiable {
     let id: String
+    // Type / name fields — Sophos uses several naming conventions
+    let type: String?
     let detectionType: String?
-    let name: String?
-    let severity: String?          // "critical"|"high"|"medium"|"low"|"informational"
+    let attackType: String?
+    let detectionRule: String?
+    let detectionRuleDescription: String?
+    // Severity is an integer 1-10 (same schema as SophosDetection)
+    let severity: Int?
+    // Timestamp field names vary across API versions
+    let sensorGeneratedAt: String?
     let detectedAt: String?
+    let createdAt: String?
     let device: CaseDetectionDevice?
     let mitreAttacks: [CaseDetectionMitreAttack]?
 
     struct CaseDetectionDevice: Codable {
         let id: String?
-        let hostname: String?
-        let entity: String?        // fallback hostname field
+        let entity: String?    // Sophos detections use "entity" for hostname
+        let hostname: String?  // fallback
+        let type: String?
     }
 
     struct CaseDetectionMitreAttack: Codable {
@@ -656,13 +665,30 @@ struct CaseDetection: Codable, Identifiable {
         }
     }
 
+    // Best available timestamp across field name variants
     var detectedDate: Date? {
-        guard let str = detectedAt else { return nil }
+        let str = sensorGeneratedAt ?? detectedAt ?? createdAt
+        guard let str else { return nil }
         return parseISO8601(str)
     }
 
-    var deviceName: String? {
-        device?.hostname ?? device?.entity
+    // Best available device label
+    var deviceName: String? { device?.entity ?? device?.hostname }
+
+    // Best available display name
+    var displayName: String {
+        detectionRule ?? attackType ?? detectionType ?? type ?? "Unknown Detection"
+    }
+
+    // Convert integer severity → string token used by SeverityBadge / severityColor
+    var severityToken: String {
+        switch severity ?? 0 {
+        case 9...10: return "critical"
+        case 7...8:  return "high"
+        case 4...6:  return "medium"
+        case 1...3:  return "low"
+        default:     return "informational"
+        }
     }
 
     var mitreTacticNames: [String] {

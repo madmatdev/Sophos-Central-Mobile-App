@@ -454,22 +454,20 @@ struct CaseDetectionRow: View {
 
     var body: some View {
         HStack(spacing: SophosTheme.Spacing.sm) {
-            // Severity strip
+            // Severity strip (severityToken converts Int → colour key)
             RoundedRectangle(cornerRadius: 2)
-                .fill(SophosTheme.Colors.severityColor(detection.severity ?? ""))
+                .fill(SophosTheme.Colors.severityColor(detection.severityToken))
                 .frame(width: 4)
                 .frame(minHeight: 52)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(detection.name ?? detection.detectionType ?? "Unknown Detection")
+                Text(detection.displayName)
                     .font(SophosTheme.Typography.subheadline(.semibold))
                     .foregroundColor(SophosTheme.Colors.textPrimary)
                     .lineLimit(2)
 
                 HStack(spacing: SophosTheme.Spacing.xs) {
-                    if let sev = detection.severity {
-                        SeverityBadge(severity: sev)
-                    }
+                    SeverityBadge(severity: detection.severityToken)
                     if let host = detection.deviceName {
                         Image(systemName: "desktopcomputer")
                             .font(.system(size: 10))
