@@ -14,6 +14,9 @@ struct DashboardView: View {
     @State private var showCases       = false
     @State private var showDetections  = false
 
+    // Deep-link: case tapped on dashboard → open in Cases tab
+    @State private var casesDeepLink: SophosCase? = nil
+
     var body: some View {
         TabView(selection: $selectedTab) {
 
@@ -95,7 +98,7 @@ struct DashboardView: View {
 
             // MARK: - Cases Tab
             NavigationStack {
-                CasesListView()
+                CasesListView(deepLinkCase: $casesDeepLink)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .principal) {
@@ -190,7 +193,11 @@ struct DashboardView: View {
                     HighPriorityCasesCard(
                         cases: viewModel.cases,
                         isLoading: viewModel.isLoadingCases,
-                        onViewAll: { selectedTab = .cases }
+                        onViewAll: { selectedTab = .cases },
+                        onCaseSelected: { c in
+                            casesDeepLink = c
+                            selectedTab = .cases
+                        }
                     )
                     .padding(.horizontal, SophosTheme.Spacing.md)
 

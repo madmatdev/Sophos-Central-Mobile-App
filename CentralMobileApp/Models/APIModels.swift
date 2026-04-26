@@ -556,7 +556,7 @@ struct CasesResponse: Codable {
     let pages: Pages?
 }
 
-struct SophosCase: Codable, Identifiable {
+struct SophosCase: Codable, Identifiable, Equatable {
     let id: String
     let tenant: TenantRef?
     let assignee: Assignee?
@@ -573,12 +573,12 @@ struct SophosCase: Codable, Identifiable {
     let createdAt: String?
     let updatedAt: String?
 
-    struct TenantRef: Codable {
+    struct TenantRef: Codable, Equatable {
         let id: String
         let name: String?
     }
 
-    struct Assignee: Codable {
+    struct Assignee: Codable, Equatable {
         let id: String?
         let name: String?
     }

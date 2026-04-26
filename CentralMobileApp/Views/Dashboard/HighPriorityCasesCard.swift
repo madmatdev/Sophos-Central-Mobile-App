@@ -5,6 +5,7 @@ struct HighPriorityCasesCard: View {
     let cases: [SophosCase]
     let isLoading: Bool
     var onViewAll: (() -> Void)?
+    var onCaseSelected: ((SophosCase) -> Void)?
 
     private var openCases:   [SophosCase] { cases.filter { $0.status.lowercased() != "closed" } }
     private var highCases:   [SophosCase] { cases.filter { $0.severity.lowercased() == "high" } }
@@ -49,9 +50,19 @@ struct HighPriorityCasesCard: View {
 
                 Divider().background(SophosTheme.Colors.divider)
 
-                // Case rows
+                // Case rows — tappable to open Case Detail
                 ForEach(previewCases) { c in
-                    CaseRowMini(sophosCase: c)
+                    Button { onCaseSelected?(c) } label: {
+                        HStack(spacing: 0) {
+                            CaseRowMini(sophosCase: c)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 11))
+                                .foregroundColor(SophosTheme.Colors.textTertiary)
+                        }
+                    }
+                    .buttonStyle(.plain)
+
                     if c.id != previewCases.last?.id {
                         Divider().background(SophosTheme.Colors.divider).padding(.leading, 32)
                     }

@@ -57,6 +57,13 @@ private enum CaseSeverity: String, CaseIterable {
 
 struct CasesListView: View {
 
+    // Optional deep-link from the Dashboard — opens the case detail sheet immediately
+    @Binding var deepLinkCase: SophosCase?
+
+    init(deepLinkCase: Binding<SophosCase?> = .constant(nil)) {
+        self._deepLinkCase = deepLinkCase
+    }
+
     @State private var cases: [SophosCase] = []
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -235,6 +242,19 @@ struct CasesListView: View {
             )
         }
         .task { await load() }
+        // Consume deep-link case from Dashboard widget
+        .onAppear {
+            if let c = deepLinkCase {
+                selectedCase = c
+                deepLinkCase = nil
+            }
+        }
+        .onChange(of: deepLinkCase) { _, newCase in
+            if let c = newCase {
+                selectedCase = c
+                deepLinkCase = nil
+            }
+        }
     }
 
     // MARK: - Actions
