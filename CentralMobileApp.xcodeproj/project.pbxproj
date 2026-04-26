@@ -36,6 +36,8 @@
 		E090E113EBDF5F5E5E47633C /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB6D285D43695B56D43B94B /* DevicesViewModel.swift */; };
 		F87C1FF22C60BD6FB2879CAC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236156C5BB9150176F8C6480 /* AuthViewModel.swift */; };
 		FEF3B4C88E06509221FBDA3E /* CentralMobileAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FB91EADA8F085F731329C /* CentralMobileAppApp.swift */; };
+		AA11223344556677BBCC0001 /* UsersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11223344556677AABB0001 /* UsersListView.swift */; };
+		AA11223344556677BBCC0002 /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11223344556677AABB0002 /* UserDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,8 @@
 		EB6BE63B376556071E843BB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F068894226D8A09F3C92078D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FEF0E477711D399C6A3787C9 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		AA11223344556677AABB0001 /* UsersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListView.swift; sourceTree = "<group>"; };
+		AA11223344556677AABB0002 /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -96,9 +100,19 @@
 				AA1186747485D1FE17F2AE4A /* Dashboard */,
 				EE55FF6600AABB22CC33DD44 /* Detections */,
 				F2EB6207B1CAAB0E318B2696 /* Devices */,
+				AA11223344556677CCDD0001 /* People */,
 				6E44BA6CE45D94D015151F15 /* Settings */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AA11223344556677CCDD0001 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				AA11223344556677AABB0001 /* UsersListView.swift */,
+				AA11223344556677AABB0002 /* UserDetailView.swift */,
+			);
+			path = People;
 			sourceTree = "<group>";
 		};
 		23092C26D6A1A6F77EDCF030 = {
@@ -333,6 +347,8 @@
 				1385C84BEEA367D8C3F40059 /* SettingsView.swift in Sources */,
 				93420041A7A45C6BB2460C19 /* SophosAPIService.swift in Sources */,
 				3EFCD39B6D227D460D5443D8 /* SophosTheme.swift in Sources */,
+				AA11223344556677BBCC0001 /* UsersListView.swift in Sources */,
+				AA11223344556677BBCC0002 /* UserDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,6 +34,27 @@ actor SophosAPIService {
         return try await get(url: url)
     }
 
+    /// POST /common/v1/alerts/search — server-side filtered alert fetch.
+    /// Replaces the GET /alerts approach: severity is now applied by the server,
+    /// so callers get up to `pageSize` alerts *per severity* instead of 100 total.
+    func searchAlerts(
+        pageSize: Int = 100,
+        severities: [String] = [],
+        from: Date? = nil,
+        to: Date? = nil
+    ) async throws -> AlertsResponse {
+        let url = "\(baseURL)/common/v1/alerts/search"
+        let iso = ISO8601DateFormatter()
+        var body: [String: Any] = [
+            "pageSize": pageSize,
+            "orderBy":  "raisedAt:desc"
+        ]
+        if !severities.isEmpty { body["severities"] = severities }
+        if let from { body["from"] = iso.string(from: from) }
+        if let to   { body["to"]   = iso.string(from: to) }
+        return try await post(url: url, body: body)
+    }
+
     func acknowledgeAlert(alertId: String) async throws {
         try await performAlertAction(alertId: alertId, action: "acknowledge",
                                      message: "Acknowledged via Sophos Central Mobile")
@@ -223,6 +244,24 @@ actor SophosAPIService {
         if let v = request.name     { body["name"]     = v }
         if let v = request.overview { body["overview"] = v }
         return try await patch(url: url, body: body)
+    }
+
+    // MARK: - Directory Users
+
+    func fetchUsers(pageSize: Int = 100) async throws -> UsersResponse {
+        let url = buildURL("\(baseURL)/common/v1/directory/users",
+                           params: ["pageSize": "\(pageSize)"])
+        return try await get(url: url)
+    }
+
+    func fetchUser(id: String) async throws -> SophosUser {
+        let url = "\(baseURL)/common/v1/directory/users/\(id)"
+        return try await get(url: url)
+    }
+
+    func fetchUserGroups(userId: String) async throws -> UserGroupMembershipsResponse {
+        let url = "\(baseURL)/common/v1/directory/users/\(userId)/groups"
+        return try await get(url: url)
     }
 
     func fetchCaseDetections(caseId: String, pageSize: Int = 50) async throws -> CaseDetectionsResponse {

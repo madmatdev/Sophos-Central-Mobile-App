@@ -270,6 +270,88 @@ struct AlertsResponse: Codable {
     let pages: Pages?
 }
 
+// MARK: - Directory Users
+
+struct UsersResponse: Codable {
+    let items: [SophosUser]
+    let pages: Pages?
+}
+
+struct SophosUser: Codable, Identifiable {
+    let id: String
+    let name: String?
+    let firstName: String?
+    let lastName: String?
+    let email: String?
+    let exchangeLogin: String?   // alternate email field
+    let viaLogin: String?        // login identifier
+    let groups: [UserGroupRef]?
+    let source: String?          // e.g. "AD", "AzureAD", "Sophos"
+    let sourceType: String?      // e.g. "activeDirectory", "azureActiveDirectory"
+    let createdAt: String?
+
+    struct UserGroupRef: Codable {
+        let id: String?
+        let name: String?
+    }
+
+    var displayName: String {
+        if let n = name, !n.isEmpty { return n }
+        let full = [firstName, lastName].compactMap { $0 }.joined(separator: " ")
+        return full.isEmpty ? (viaLogin ?? email ?? "Unknown User") : full
+    }
+
+    var primaryEmail: String? {
+        email ?? exchangeLogin ?? viaLogin
+    }
+
+    var initials: String {
+        let words = displayName.split(separator: " ")
+        let first = words.first?.prefix(1) ?? ""
+        let last  = words.count > 1 ? (words.last?.prefix(1) ?? "") : ""
+        let result = "\(first)\(last)".uppercased()
+        return result.isEmpty ? "?" : result
+    }
+
+    var sourceLabel: String {
+        switch (sourceType ?? source ?? "").lowercased() {
+        case let s where s.contains("azure"):  return "Azure AD"
+        case let s where s.contains("active"): return "Active Directory"
+        case let s where s.contains("sophos"): return "Sophos"
+        case let s where s.contains("google"): return "Google"
+        default:
+            let raw = source ?? sourceType ?? ""
+            return raw.isEmpty ? "Local" : raw
+        }
+    }
+
+    var sourceIcon: String {
+        switch (sourceType ?? source ?? "").lowercased() {
+        case let s where s.contains("azure"):  return "cloud"
+        case let s where s.contains("active"): return "server.rack"
+        case let s where s.contains("sophos"): return "shield"
+        case let s where s.contains("google"): return "globe"
+        default: return "person.circle"
+        }
+    }
+
+    var createdDate: Date? {
+        guard let str = createdAt else { return nil }
+        return parseISO8601(str)
+    }
+}
+
+// User group memberships (from /directory/users/{id}/groups)
+struct UserGroupMembershipsResponse: Codable {
+    let items: [UserGroupMembership]
+    let pages: Pages?
+}
+
+struct UserGroupMembership: Codable, Identifiable {
+    let id: String
+    let name: String?
+}
+
 struct SophosAlert: Codable, Identifiable {
     let id: String
     let description: String?

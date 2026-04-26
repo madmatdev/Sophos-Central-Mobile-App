@@ -96,6 +96,23 @@ struct DashboardView: View {
             }
             .tag(DashboardTab.detections)
 
+            // MARK: - People Tab
+            NavigationStack {
+                UsersListView()
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            Text("People")
+                                .font(SophosTheme.Typography.headline())
+                                .foregroundColor(SophosTheme.Colors.textPrimary)
+                        }
+                    }
+            }
+            .tabItem {
+                Label("People", systemImage: "person.2")
+            }
+            .tag(DashboardTab.people)
+
             // MARK: - Cases Tab
             NavigationStack {
                 CasesListView(deepLinkCase: $casesDeepLink)
@@ -230,7 +247,7 @@ struct DashboardView: View {
 }
 
 enum DashboardTab: Int {
-    case dashboard, alerts, devices, detections, cases, settings
+    case dashboard, alerts, devices, detections, people, cases, settings
 }
 
 // MARK: - Shared skeleton/empty state components

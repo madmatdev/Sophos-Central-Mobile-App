@@ -25,11 +25,9 @@ struct AlertsListView: View {
         alerts.filter { $0.allowedActions?.contains("acknowledge") == true }
     }
 
+    // Severity filter is now server-side; only date + text remain client-side
     private var filtered: [SophosAlert] {
         var list = alerts
-        if let sev = selectedSeverity {
-            list = list.filter { $0.severity.lowercased() == sev.lowercased() }
-        }
         if !searchText.isEmpty {
             list = list.filter {
                 ($0.description ?? "").localizedCaseInsensitiveContains(searchText) ||
@@ -56,7 +54,7 @@ struct AlertsListView: View {
                     }
                 }
 
-                // Row 1: Severity filter pills
+                // Row 1: Severity filter pills — changing severity re-fetches from server
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: SophosTheme.Spacing.xs) {
                         ForEach(severities, id: \.self) { sev in
@@ -65,7 +63,11 @@ struct AlertsListView: View {
                                 isSelected: (sev == "All" && selectedSeverity == nil) ||
                                             sev.lowercased() == selectedSeverity
                             ) {
-                                selectedSeverity = sev == "All" ? nil : sev.lowercased()
+                                let newSev = sev == "All" ? nil : sev.lowercased()
+                                if newSev != selectedSeverity {
+                                    selectedSeverity = newSev
+                                    Task { await load() }
+                                }
                             }
                         }
                     }
@@ -180,7 +182,8 @@ struct AlertsListView: View {
         errorMessage = nil
         defer { isLoading = false }
         do {
-            let response = try await api.fetchAlerts()
+            let sevs = selectedSeverity.map { [$0] } ?? []
+            let response = try await api.searchAlerts(severities: sevs)
             alerts = response.items
         } catch {
             errorMessage = error.localizedDescription
