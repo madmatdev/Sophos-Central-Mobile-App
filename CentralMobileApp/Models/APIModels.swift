@@ -275,6 +275,13 @@ struct AlertsResponse: Codable {
 struct UsersResponse: Codable {
     let items: [SophosUser]
     let pages: Pages?
+
+    // Resilient decode: a bad pages object or missing items key never fails the whole response
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        items = (try? c.decodeIfPresent([SophosUser].self, forKey: .items)) ?? []
+        pages = try? c.decodeIfPresent(Pages.self, forKey: .pages)
+    }
 }
 
 struct SophosUser: Codable, Identifiable {
@@ -290,25 +297,33 @@ struct SophosUser: Codable, Identifiable {
     let sourceType: String?      // e.g. "activeDirectory", "azureActiveDirectory"
     let createdAt: String?
 
-    // Custom decode so a missing or null "id" doesn't fail the entire response
+    // Fully resilient decode: every field uses try? so a type-mismatch on any
+    // single field (wrong JSON type, unexpected structure, etc.) never aborts
+    // decoding of the whole user or the whole response array.
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        id           = (try? c.decodeIfPresent(String.self, forKey: .id)) ?? UUID().uuidString
-        name         = try c.decodeIfPresent(String.self, forKey: .name)
-        firstName    = try c.decodeIfPresent(String.self, forKey: .firstName)
-        lastName     = try c.decodeIfPresent(String.self, forKey: .lastName)
-        email        = try c.decodeIfPresent(String.self, forKey: .email)
-        exchangeLogin = try c.decodeIfPresent(String.self, forKey: .exchangeLogin)
-        viaLogin     = try c.decodeIfPresent(String.self, forKey: .viaLogin)
-        groups       = try c.decodeIfPresent([UserGroupRef].self, forKey: .groups)
-        source       = try c.decodeIfPresent(String.self, forKey: .source)
-        sourceType   = try c.decodeIfPresent(String.self, forKey: .sourceType)
-        createdAt    = try c.decodeIfPresent(String.self, forKey: .createdAt)
+        id            = (try? c.decodeIfPresent(String.self, forKey: .id)) ?? UUID().uuidString
+        name          = try? c.decodeIfPresent(String.self, forKey: .name)
+        firstName     = try? c.decodeIfPresent(String.self, forKey: .firstName)
+        lastName      = try? c.decodeIfPresent(String.self, forKey: .lastName)
+        email         = try? c.decodeIfPresent(String.self, forKey: .email)
+        exchangeLogin = try? c.decodeIfPresent(String.self, forKey: .exchangeLogin)
+        viaLogin      = try? c.decodeIfPresent(String.self, forKey: .viaLogin)
+        groups        = try? c.decodeIfPresent([UserGroupRef].self, forKey: .groups)
+        source        = try? c.decodeIfPresent(String.self, forKey: .source)
+        sourceType    = try? c.decodeIfPresent(String.self, forKey: .sourceType)
+        createdAt     = try? c.decodeIfPresent(String.self, forKey: .createdAt)
     }
 
     struct UserGroupRef: Codable {
         let id: String?
         let name: String?
+        // Resilient so unexpected extra keys don't cause failures
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            id   = try? c.decodeIfPresent(String.self, forKey: .id)
+            name = try? c.decodeIfPresent(String.self, forKey: .name)
+        }
     }
 
     var displayName: String {

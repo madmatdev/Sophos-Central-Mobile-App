@@ -352,6 +352,12 @@ actor SophosAPIService {
            let body = String(data: data, encoding: .utf8) {
             print("❌ Error body: \(body)")
         }
+        // Temporary: log raw response for directory/users to diagnose decode issues
+        if urlStr.contains("directory/users"),
+           let raw = String(data: data, encoding: .utf8) {
+            let preview = raw.prefix(2000)
+            print("📋 directory/users raw response:\n\(preview)")
+        }
         #endif
 
         if http.statusCode == 401 {
