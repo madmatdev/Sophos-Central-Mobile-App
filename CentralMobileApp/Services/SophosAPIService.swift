@@ -421,7 +421,13 @@ enum APIError: LocalizedError {
         case .networkError:             return "Network error. Check your connection."
         case .unauthorized:             return "Session expired. Please sign in again."
         case .requestFailed:            return "Request failed. Please try again."
-        case .httpError(let code):      return "Server error \(code)."
+        case .httpError(let code):
+            switch code {
+            case 403: return "Access denied (403). Ensure your API credentials include directory/user permissions."
+            case 404: return "Endpoint not found (404). This feature may not be available for your account."
+            case 429: return "Too many requests (429). Please wait a moment and try again."
+            default:  return "Server error \(code)."
+            }
         case .apiError(let msg):        return msg
         case .decodingError(let msg):   return "Data error: \(msg)"
         }

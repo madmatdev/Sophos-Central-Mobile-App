@@ -290,6 +290,22 @@ struct SophosUser: Codable, Identifiable {
     let sourceType: String?      // e.g. "activeDirectory", "azureActiveDirectory"
     let createdAt: String?
 
+    // Custom decode so a missing or null "id" doesn't fail the entire response
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id           = (try? c.decodeIfPresent(String.self, forKey: .id)) ?? UUID().uuidString
+        name         = try c.decodeIfPresent(String.self, forKey: .name)
+        firstName    = try c.decodeIfPresent(String.self, forKey: .firstName)
+        lastName     = try c.decodeIfPresent(String.self, forKey: .lastName)
+        email        = try c.decodeIfPresent(String.self, forKey: .email)
+        exchangeLogin = try c.decodeIfPresent(String.self, forKey: .exchangeLogin)
+        viaLogin     = try c.decodeIfPresent(String.self, forKey: .viaLogin)
+        groups       = try c.decodeIfPresent([UserGroupRef].self, forKey: .groups)
+        source       = try c.decodeIfPresent(String.self, forKey: .source)
+        sourceType   = try c.decodeIfPresent(String.self, forKey: .sourceType)
+        createdAt    = try c.decodeIfPresent(String.self, forKey: .createdAt)
+    }
+
     struct UserGroupRef: Codable {
         let id: String?
         let name: String?

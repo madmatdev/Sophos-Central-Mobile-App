@@ -138,7 +138,14 @@ struct UsersListView: View {
         do {
             let response = try await api.fetchUsers()
             users = response.items
+        } catch APIError.httpError(403) {
+            errorMessage = "Access denied. Ensure your API credentials include 'Directory & Users' scope in Sophos Central."
+        } catch APIError.httpError(404) {
+            errorMessage = "People directory not available. This feature requires the Common API with directory access."
+        } catch APIError.decodingError(let msg) {
+            errorMessage = "Failed to parse user data: \(msg)"
         } catch {
+            print("❌ People tab load error: \(error)")
             errorMessage = error.localizedDescription
         }
     }
