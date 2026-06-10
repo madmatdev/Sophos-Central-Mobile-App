@@ -17,9 +17,9 @@ struct AlertsListView: View {
     private let api = SophosAPIService.shared
     private let severities = ["All", "High", "Medium", "Low", "Info"]
 
-    // Alerts that can be acknowledged
+    // Alerts that can be acknowledged, scoped to the current filter
     private var acknowledgeable: [SophosAlert] {
-        alerts.filter { $0.allowedActions?.contains("acknowledge") == true }
+        filtered.filter { $0.allowedActions?.contains("acknowledge") == true }
     }
 
     private var filtered: [SophosAlert] {
